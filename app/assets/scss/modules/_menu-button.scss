@@ -1,0 +1,42 @@
+.menu-link,
+.menu-button {
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
+	padding: 8px 16px;
+	margin: 0;	
+}
+
+.menu-link {
+	text-transform: none;
+}
+
+.menu-button {
+	md-icon:first-child {
+		width: 24px;
+		margin: 0 32px 0 0;
+	}
+
+	+ md-list {
+		padding: 0;
+	}
+
+	.open-indicator {
+		transform: rotate3d(0, 0, 1, 0);
+		transition: transform $transition;
+	}
+
+	&.is-open {
+		// background-color: rgb(238,238,238);
+
+		.open-indicator {
+			transform: rotate3d(0, 0, 1, -180deg);
+		}
+	}
+}
+
+.menu-button-wrapper {
+	& + & {
+		border-top: $divider;
+	}
+}

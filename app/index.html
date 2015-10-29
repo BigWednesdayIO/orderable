@@ -41,17 +41,17 @@
 						</md-button>
 						<span class="toolbar-divider"></span>
 						<ul class="primary-nav">
-							<li ng-repeat="category in ::vm.categories track by category.href">
+							<li ng-repeat="category in ::vm.categories track by category.name">
 								<a ng-href="{{ ::category.href }}" ng-bind="::category.name"></a>
 								<md-content class="sub-nav" ng-if="::category.links.length">
 									<div class="sub-nav__header">
-										<h3 ng-bind="::category.name"></h3>
-										<a ng-href="{{ ::category.href }}">View all&nbsp;›</a>
+										<h3 ng-bind="::category.name" ng-class="{'with-view-all': category.href}"></h3>
+										<a ng-href="{{ ::category.href }}" ng-if="::category.href">View all&nbsp;›</a>
 									</div>
 									<div class="sub-nav__links">
 										<ul class="sub-nav__section" ng-repeat="subcat in ::category.links track by subcat.href">
 											<li>
-												<h4 class="sub-nav__section__heading"><a ng-href="{{ ::subcat.href }}" ng-bind="::subcat.name"></a></h4>
+												<h4 class="sub-nav__section__heading"><a ng-href="{{ ::subcat.href }}" ng-bind="::subcat.name + '&nbsp;›'"></a></h4>
 											</li>
 											<li ng-repeat="link in ::subcat.links track by link.href">
 												<a ng-href="{{ ::link.href }}" ng-bind="::link.name"></a>
@@ -72,7 +72,7 @@
 						<span>EC2Y 9AR</span>
 					</md-button>
 					<span class="toolbar-divider"></span>
-					<md-button class="md-icon-button basket-button" aria-label="View basket">
+					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket">
 						<span class="basket-button__count">5</span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
 					</md-button>
@@ -88,7 +88,7 @@
 						<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
 						<input type="search" class="material-search" placeholder="Search for products or categories" aria-label="Search for products or categories" />
 					</div>
-					<md-button class="md-icon-button basket-button" aria-label="View basket">
+					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket">
 						<span class="basket-button__count">5</span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
 					</md-button>
@@ -108,23 +108,30 @@
 							</h2>
 						</div>
 					</md-toolbar>
-					<md-content layout-padding>
-						<md-button>Suppliers</md-button>
+					<md-content>
+						<md-button class="menu-button">Suppliers</md-button>
 						<hr />
-						<div ng-repeat="category in ::vm.categories track by category.href">
-							<md-button ng-bind="::category.name" aria-label="{{ ::category.name }}"></md-button>
-							<ul ng-repeat="subcat in ::category.links track by subcat.href">
-								<li>
-									<a ng-href="{{ ::subcat.href }}"><strong ng-bind="::subcat.name"></strong></a>
-								</li>
-								<li ng-repeat="link in ::subcat.links track by link.href">
-									<a ng-href="{{ ::link.href }}" ng-bind="::link.name"></a>
-								</li>
-							</ul>
+						<div ng-repeat="category in ::vm.categories track by category.name" class="menu-button-wrapper">
+							<md-button class="menu-button md-default-theme" ng-click="vm.openMenu = (vm.openMenu === category.name) ? '' : category.name" ng-class="{'is-open': vm.openMenu === category.name}" aria-label="{{ ::category.name }}">
+								<span ng-bind="::category.name"></span>
+								<span flex></span>
+								<md-icon class="open-indicator" md-svg-src="/assets/images/icons/chevron-down.svg"></md-icon>
+							</md-button>
+
+							<md-list ng-show="vm.openMenu === category.name" class="animate-slide">
+								<md-list-item ng-repeat="subcat in ::category.links track by subcat.href">
+									<md-button class="menu-link" ng-href="{{ ::subcat.href }}" ng-bind="::subcat.name" aria-label="::subcat.name"></md-button>
+								</md-list-item>
+								<md-list-item ng-if="::category.href">
+									<md-button class="menu-link" ng-href="{{ ::category.href }}" ng-bind="::'View all ' + category.name + '&nbsp;›'" aria-label="View all {{ ::category.name }}">
+										<span></span>
+									</md-button>
+								</md-list-item>
+							</md-list>
 						</div>
 						<hr />
-						<md-button ng-href="#">Account</md-button>
-						<md-button ng-href="#">Help</md-button>
+						<md-button class="menu-link" ng-href="#">Account</md-button>
+						<md-button class="menu-link" ng-href="#">Help</md-button>
 						<md-button>
 							<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
 							<span>EC2Y 9AR</span>

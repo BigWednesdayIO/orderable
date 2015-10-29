@@ -23,3 +23,9 @@ body {
 md-select + md-select {
 	margin-left: 16px;
 }
+
+hr {
+	border: $divider;
+	border-width: 0 0 1px;
+	margin: 0;
+}
