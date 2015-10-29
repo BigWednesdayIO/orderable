@@ -4,6 +4,8 @@ function APIConstant () {
 	API.base = '/api/';
 	API.search = API.base + 'v1/search';
 
+	API.navigation = '/mocks/navigation.json';
+
 	return API;
 }
 

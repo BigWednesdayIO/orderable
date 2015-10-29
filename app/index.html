@@ -18,8 +18,8 @@
 		<link rel="stylesheet" href="assets/css/app.css" />
 	</head>
 	<body layout="column">
-		<header>
-			<md-toolbar layout="row" class="md-accent">
+		<header ng-controller="MenuController as vm">
+			<md-toolbar layout="row" class="md-accent hide-sm hide-md">
 				<div class="md-toolbar-tools">
 					<h2>Crateful</h2>
 					<div class="material-search-wrapper">
@@ -29,31 +29,37 @@
 					<span flex></span>
 				</div>
 			</md-toolbar>
-			<md-toolbar layout="row" class="md-toolbar-secondary md-whiteframe-z2">
+			<md-toolbar layout="row" class="md-toolbar-secondary md-whiteframe-z1 hide-sm hide-md">
 				<div class="md-toolbar-tools" layout-margin>
-					<md-button class="md-icon-button" aria-label="Menu" ng-click="vm.toggleMenu()">
-						<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
-					</md-button>
+					<h1>
+						<md-icon md-svg-src="assets/images/icons/package-variant.svg"></md-icon>
+						<span>Crateful</span>
+					</h1>
 					<nav layout="row">
 						<md-button>
 							Suppliers
 						</md-button>
 						<span class="toolbar-divider"></span>
 						<ul class="primary-nav">
-							<li>
-								<a href="/shop/?category=drinks">Drinks</a>
-								<md-content class="sub-nav">
-									<h3>Foo</h3>
-									<ul>
-										<li><a href="#">bar</a></li>
-										<li><a href="#">bar</a></li>
-										<li><a href="#">bar</a></li>
-										<li><a href="#">bar</a></li>
-										<li><a href="#">bar</a></li>
-									</ul>
+							<li ng-repeat="category in ::vm.categories track by category.href">
+								<a ng-href="{{ ::category.href }}" ng-bind="::category.name"></a>
+								<md-content class="sub-nav" ng-if="::category.links.length">
+									<div class="sub-nav__header">
+										<h3 ng-bind="::category.name"></h3>
+										<a ng-href="{{ ::category.href }}">View all&nbsp;›</a>
+									</div>
+									<div class="sub-nav__links">
+										<ul class="sub-nav__section" ng-repeat="subcat in ::category.links track by subcat.href">
+											<li>
+												<h4 class="sub-nav__section__heading"><a ng-href="{{ ::subcat.href }}" ng-bind="::subcat.name"></a></h4>
+											</li>
+											<li ng-repeat="link in ::subcat.links track by link.href">
+												<a ng-href="{{ ::link.href }}" ng-bind="::link.name"></a>
+											</li>
+										</ul>
+									</div>
 								</md-content>
 							</li>
-							<li><a href="/shop/?category=food">Food</a></li>
 						</ul>
 					</nav>
 					<span flex></span>
@@ -72,9 +78,61 @@
 					</md-button>
 				</div>
 			</md-toolbar>
-		</header>
 
-		<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ui-view="mobile-sidebar"></md-sidenav>
+			<md-toolbar layout="row" class="md-whiteframe-z2 hide-gt-md">
+				<div class="md-toolbar-tools" layout-margin>
+					<md-button class="md-icon-button" aria-label="Menu" ng-click="vm.toggleMenu()">
+						<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
+					</md-button>
+					<div class="material-search-wrapper">
+						<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
+						<input type="search" class="material-search" placeholder="Search for products or categories" aria-label="Search for products or categories" />
+					</div>
+					<md-button class="md-icon-button basket-button" aria-label="View basket">
+						<span class="basket-button__count">5</span>
+						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+
+			<md-sidenav class="md-sidenav-left md-whiteframe-z2 hide-gt-md" md-component-id="menu">
+				<div ng-controller="MenuController as vm">
+					<md-toolbar layout="row">
+						<div class="md-toolbar-tools" layout-margin>
+							<md-button class="md-icon-button" aria-label="Menu" ng-click="vm.toggleMenu()">
+								<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
+							</md-button>
+							<h2>
+								<md-icon md-svg-src="assets/images/icons/package-variant.svg"></md-icon>
+								<span>Crateful</span>
+							</h2>
+						</div>
+					</md-toolbar>
+					<md-content layout-padding>
+						<md-button>Suppliers</md-button>
+						<hr />
+						<div ng-repeat="category in ::vm.categories track by category.href">
+							<md-button ng-bind="::category.name" aria-label="{{ ::category.name }}"></md-button>
+							<ul ng-repeat="subcat in ::category.links track by subcat.href">
+								<li>
+									<a ng-href="{{ ::subcat.href }}"><strong ng-bind="::subcat.name"></strong></a>
+								</li>
+								<li ng-repeat="link in ::subcat.links track by link.href">
+									<a ng-href="{{ ::link.href }}" ng-bind="::link.name"></a>
+								</li>
+							</ul>
+						</div>
+						<hr />
+						<md-button ng-href="#">Account</md-button>
+						<md-button ng-href="#">Help</md-button>
+						<md-button>
+							<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
+							<span>EC2Y 9AR</span>
+						</md-button>
+					</md-content>
+				</div>
+			</md-sidenav>
+		</header>
 
 		<div ui-view="pre-body"></div>
 		<div ui-view="body" flex></div>
