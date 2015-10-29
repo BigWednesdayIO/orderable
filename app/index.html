@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en-GB" ng-app="app">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge" />
+		<title>Crateful by Big Wednesday IO</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<base href="/" />
+
+		<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
+		<link rel="favicon" href="favicon.ico" />
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+		<!-- bower:css -->
+		<link rel="stylesheet" href="assets/vendor/angular-material/angular-material.css" />
+		<!-- endbower -->
+		<link rel="stylesheet" href="assets/css/app.css" />
+	</head>
+	<body layout="column">
+		<header>
+			<md-toolbar layout="row" class="md-accent">
+				<div class="md-toolbar-tools">
+					<h2>Crateful</h2>
+					<div class="material-search-wrapper">
+						<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
+						<input type="search" class="material-search" placeholder="Search for products or categories" aria-label="Search for products or categories" />
+					</div>
+					<span flex></span>
+				</div>
+			</md-toolbar>
+			<md-toolbar layout="row" class="md-toolbar-secondary md-whiteframe-z2">
+				<div class="md-toolbar-tools" layout-margin>
+					<md-button class="md-icon-button" aria-label="Menu" ng-click="vm.toggleMenu()">
+						<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
+					</md-button>
+					<nav layout="row">
+						<md-button>
+							Suppliers
+						</md-button>
+						<span class="toolbar-divider"></span>
+						<ul class="primary-nav">
+							<li>
+								<a href="/shop/?category=drinks">Drinks</a>
+								<md-content class="sub-nav">
+									<h3>Foo</h3>
+									<ul>
+										<li><a href="#">bar</a></li>
+										<li><a href="#">bar</a></li>
+										<li><a href="#">bar</a></li>
+										<li><a href="#">bar</a></li>
+										<li><a href="#">bar</a></li>
+									</ul>
+								</md-content>
+							</li>
+							<li><a href="/shop/?category=food">Food</a></li>
+						</ul>
+					</nav>
+					<span flex></span>
+					<nav class="account-nav">
+						<a href="#">Account</a>
+						<a href="#">Help</a>
+					</nav>
+					<md-button>
+						<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
+						<span>EC2Y 9AR</span>
+					</md-button>
+					<span class="toolbar-divider"></span>
+					<md-button class="md-icon-button basket-button" aria-label="View basket">
+						<span class="basket-button__count">5</span>
+						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+		</header>
+
+		<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ui-view="mobile-sidebar"></md-sidenav>
+
+		<div ui-view="pre-body"></div>
+		<div ui-view="body" flex></div>
+
+		<footer></footer>
+
+
+		<!-- bower:js -->
+		<script src="assets/vendor/angular/angular.js"></script>
+		<script src="assets/vendor/angular-animate/angular-animate.js"></script>
+		<script src="assets/vendor/angular-aria/angular-aria.js"></script>
+		<script src="assets/vendor/angular-material/angular-material.js"></script>
+		<script src="assets/vendor/angular-mocks/angular-mocks.js"></script>
+		<script src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
+		<!-- endbower -->
+		<script src="/assets/js/app.js"></script>
+	</body>
+</html>

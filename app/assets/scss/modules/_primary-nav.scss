@@ -1,0 +1,46 @@
+.primary-nav {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+
+	> li {
+		display: block;
+
+		> a {
+			display: block;
+			padding: 0 10px;
+			height: 48px;
+			line-height: 48px;
+			transition: $transition;
+		}
+	}
+
+	.sub-nav {
+		position: absolute;
+		top: 100%;
+		left: 72px;
+		width: 800px;
+		max-width: calc(100% - 80px);
+		padding: 8px;
+		opacity: 0;
+		visibility: collapse;
+		box-shadow: 0 4px 4px 0 rgba(0,0,0,.3);
+		transition: $transition;
+	}
+
+	> li:hover {
+		> a {
+			height: 49px;
+			margin-bottom: -1px;
+			color: $md-primary;
+			background: $md-primary-text;
+			box-shadow: 0 4px 4px 0 rgba(255, 255, 255,.3)
+		}
+
+		> .sub-nav {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}

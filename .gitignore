@@ -1,0 +1,4 @@
+node_modules
+app/assets/vendor
+app/assets/css
+app/assets/js/app.js

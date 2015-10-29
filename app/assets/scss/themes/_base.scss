@@ -1,0 +1,25 @@
+* {
+	&,
+	&::before,
+	&::after {
+		box-sizing: inherit;
+	}
+}
+
+html {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: $md-accent;
+	font-size: 14px;
+}
+
+[ui-view]:empty {
+	display: none;
+}
+
+md-select + md-select {
+	margin-left: 16px;
+}

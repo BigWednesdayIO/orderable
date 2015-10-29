@@ -1,0 +1,10 @@
+.action-bar {
+	height: 56px;
+	padding: 0 16px;
+	background-color: $md-accent;
+	color: $md-accent-text;
+
+	.md-menu {
+		padding: 0;
+	}
+}
