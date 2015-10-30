@@ -11,7 +11,7 @@ describe('basic authentication interceptor', function() {
 		};
 	}
 
-	beforeEach(module('ucApp'));
+	beforeEach(module('app'));
 
 	beforeEach(function() {
 		inject(function(_$rootScope_, _$q_, _BasicValidationInterceptor_) {

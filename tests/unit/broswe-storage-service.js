@@ -1,7 +1,7 @@
 describe('BrowserStorageService', function() {
 	var browserStorage;
 
-	beforeEach(module('ucApp'));
+	beforeEach(module('app'));
 
 	beforeEach(inject(function(_browserStorage_) {
 		// The injector unwraps the underscores (_) from around the parameter names when matching
