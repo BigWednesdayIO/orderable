@@ -21,7 +21,7 @@
 		<header ng-controller="MenuController as vm">
 			<md-toolbar layout="row" class="md-accent hide-sm hide-md">
 				<div class="md-toolbar-tools">
-					<h2>Crateful</h2>
+					<h2 ng-bind="::vm.brand"></h2>
 					<div class="material-search-wrapper">
 						<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
 						<input type="search" class="material-search" placeholder="Search for products or categories" aria-label="Search for products or categories" />
@@ -33,7 +33,7 @@
 				<div class="md-toolbar-tools" layout-margin>
 					<h1>
 						<md-icon md-svg-src="assets/images/icons/package-variant.svg"></md-icon>
-						<span>Crateful</span>
+						<span ng-bind="::vm.brand"></span>
 					</h1>
 					<nav layout="row">
 						<md-button>
@@ -104,7 +104,7 @@
 							</md-button>
 							<h2>
 								<md-icon md-svg-src="assets/images/icons/package-variant.svg"></md-icon>
-								<span>Crateful</span>
+								<span ng-bind="::vm.brand"></span>
 							</h2>
 						</div>
 					</md-toolbar>
