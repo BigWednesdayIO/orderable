@@ -8,19 +8,13 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider) {
 				}
 			}
 		})
-		.state('shop', {
-			views: {
-				'body@': {
-					templateUrl: 'views/layouts/shop.html'
-				}
-			}
-		})
 		.state('search', {
-			parent: 'shop',
 			url: '/search',
 			views: {
-				'main@shop': {
-					templateUrl: 'views/index.html'
+				body: {
+					controller: 'SearchController as vm',
+					resolve: SearchController.resolve,
+					templateUrl: 'views/search.html'
 				}
 			}
 		});

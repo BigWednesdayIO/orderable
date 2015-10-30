@@ -1,0 +1,52 @@
+<div class="content-wrap">
+	<div layout="row" layout-margin>
+		<div class="breadcrumbs" ng-controller="BreadcrumbsController as vm">
+			<span ng-repeat="crumb in vm.breadcrumbs track by crumb.href">
+				<span ng-if="::!$last">
+					<a class="breadcrumbs__crumb" ng-href="{{ ::crumb.href }}" ng-bind="::crumb.name"></a>
+					<span class="breadcrumbs__spacer">›</span>
+				</span>
+				<span ng-if="::$last">
+					<span class="breadcrumbs__crumb--final" ng-bind="::crumb.name"></span>
+					<a class="breadcrumbs__remove" ng-href="{{ vm.breadcrumbs[$index - 1].href }}">&times;</a>
+				</span>
+			</span>
+		</div>
+	</div>
+
+	<div layout="row" flex>
+		<aside layout-margin>
+			<md-content class="md-whiteframe-z1 facets">
+				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
+					<h3 class="facets__heading md-body-2" ng-bind="::facet.field"></h3>
+					<ul class="facets__values">
+						<li ng-repeat="value in facet.values track by value.value">
+							<a href="#" class="facets__value" ng-bind="::value.value"></a>
+						</li>
+					</ul>
+				</section>
+			</md-content>
+		</aside>
+
+		<main flex layout-margin>
+			<md-content class="md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.suppliers" style="margin-bottom: 40px;">
+				<h2 ng-bind="supplier"></h2>
+				<ul>
+					<li class="product-thumb" ng-repeat="hit in hits">
+						<h3 ng-bind="::hit.name"></h3>
+					</li>
+				</ul>
+			</md-content>
+			<md-content class="md-whiteframe-z1" ng-if="!vm.suppliers">
+				<ul>
+					<li class="product-thumb" ng-repeat="hit in vm.hits">
+						<h3 ng-bind="::hit.product.name"></h3>
+						<mb-button class="md-icon-button" aria-label="Add {{ ::hit.product.name }} to basket">
+							<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
+						</mb-button>
+					</li>
+				</ul>
+			</md-content>
+		</main>
+	</div>
+</div>
