@@ -1,5 +1,13 @@
 function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider
+		.state('home', {
+			url: '/',
+			view: {
+				'@': {
+					templateUrl: 'views/index.html'
+				}
+			}
+		})
 		.state('shop', {
 			views: {
 				'body@': {
@@ -7,9 +15,9 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider) {
 				}
 			}
 		})
-		.state('home', {
+		.state('search', {
 			parent: 'shop',
-			url: '/',
+			url: '/search',
 			views: {
 				'main@shop': {
 					templateUrl: 'views/index.html'

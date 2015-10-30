@@ -24,6 +24,10 @@ md-select + md-select {
 	margin-left: 16px;
 }
 
+.link-button {
+	text-transform: none;
+}
+
 hr {
 	border: $divider;
 	border-width: 0 0 1px;
@@ -33,4 +37,12 @@ hr {
 a {
 	color: inherit;
 	text-decoration: none;
+}
+
+.postcode-form {
+	text-align: center;
+
+	md-input-container {
+		text-align: left;
+	}
 }
