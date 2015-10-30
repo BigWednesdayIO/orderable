@@ -1,14 +1,17 @@
 <div class="content-wrap">
-	<div class="breadcrumbs" ng-controller="BreadcrumbsController as vm" layout-margin>
-		<span ng-repeat="crumb in vm.breadcrumbs track by crumb.href">
-			<span ng-if="::!$last">
-				<a ng-href="{{ ::crumb.href }}" ng-bind="::crumb.name"></a> &gt;
+	<div layout="row" layout-margin>
+		<div class="breadcrumbs" ng-controller="BreadcrumbsController as vm">
+			<span ng-repeat="crumb in vm.breadcrumbs track by crumb.href">
+				<span ng-if="::!$last">
+					<a class="breadcrumbs__crumb" ng-href="{{ ::crumb.href }}" ng-bind="::crumb.name"></a>
+					<span class="breadcrumbs__spacer">›</span>
+				</span>
+				<span ng-if="::$last">
+					<span class="breadcrumbs__crumb--final" ng-bind="::crumb.name"></span>
+					<a class="breadcrumbs__remove" ng-href="{{ vm.breadcrumbs[$index - 1].href }}">&times;</a>
+				</span>
 			</span>
-			<span ng-if="::$last">
-				<span ng-bind="::crumb.name"></span>
-				<a ng-href="{{ vm.breadcrumbs[$index - 1].href }}">[x]</a>
-			</span>
-		</span>
+		</div>
 	</div>
 
 	<div layout="row" flex>

@@ -1,0 +1,31 @@
+.breadcrumbs {
+	margin: 8px;
+
+	&__crumb {
+		&--final {
+			color: $md-primary;
+			font-weight: bold;
+		}
+	}
+
+	&__remove {
+		display: inline-block;
+		height: 12px;
+		width: 12px;
+		margin-left: 2px;
+		line-height: 10px;
+		border-radius: 50%;
+		text-align: center;
+		background: #999;
+		color: $md-warn-text;
+		transition: background $transition;
+
+		&:hover {
+			background: #111;
+		}
+	}
+
+	&__spacer {
+		padding: 0 8px;
+	}
+}
