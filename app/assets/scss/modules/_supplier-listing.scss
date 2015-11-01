@@ -1,0 +1,42 @@
+.supplier-listing {
+	margin-bottom: 40px;
+
+	&__header {
+		padding: 16px 0;
+		border-bottom: $divider;
+		text-align: center;
+		background-position: 50% 50%;
+		background-size: cover;
+		color: white;
+		text-shadow: 1px 1px 10px rgba(0,0,0,.87);
+	}	
+
+	&__logo {
+		margin: 0 auto;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+
+	&__name {
+		margin: 4px 0;
+	}
+
+	&__info {
+		margin: 0;
+	}
+
+	&__products {
+		display: flex;
+		flex-flow: row wrap;
+		padding: 0;
+		margin: 0;
+		list-style-type: none;
+
+		.product-thumb {
+			flex-grow: 1;
+			padding: 20px 20px 10px;
+			border: $divider;
+			border-width: 0 1px 1px 0;
+		}
+	}
+}

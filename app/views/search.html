@@ -64,13 +64,26 @@
 				</ul>
 			</md-content>
 
-			<md-content class="md-whiteframe-z1" ng-if="!vm.hitsBySupplier">
-				<ul>
+			<md-content class="supplier-listing md-whiteframe-z1" ng-if="!!vm.hitsBySupplier">
+				<div class="supplier-listing__header" style="background-image: url('//lorempixel.com/1000/200/food');">
+					<img class="supplier-listing__logo" src="//placehold.it/80x80" alt />
+					<h2 class="supplier-listing__name md-title">Supplier name</h2>
+					<p class="supplier-listing__info md-subhead">Spend £20 for FREE Delivery</p>
+				</div>
+				<ul class="supplier-listing__products">
 					<li class="product-thumb" ng-repeat="hit in vm.hits">
-						<h3 ng-bind="::hit.product.name"></h3>
-						<mb-button class="md-icon-button" aria-label="Add {{ ::hit.product.name }} to basket">
-							<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
-						</mb-button>
+						<a class="product-thumb__link" ng-href="/product/{{ ::hit.product.id }}">
+							<div class="product-thumb__info">
+								<img class="product-thumb__image" src="//placehold.it/180x180" alt />
+								<h3 class="product-thumb__name md-body-1" ng-bind="::hit.product.name"></h3>
+							</div>
+							<div class="product-thumb__actions">
+								<span class="product-thumb__price md-body-2">£4.99</span>
+								<md-button class="md-icon-button">
+									<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
+								</md-button>
+							</div>
+						</a>
 					</li>
 				</ul>
 			</md-content>
