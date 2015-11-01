@@ -13,7 +13,7 @@ function BasicValidationInterceptor ($q, $log) {
 		if (error.status === 401) {
 			$state.go('login');
 		} else {
-			$log.error('API Call failed:', response.config.url, error.status, '-', error.message);
+			$log.error('API Call failed:', (response.config || {}).url, error.status, '-', error.message);
 		}
 
 		return $q.reject(error);
@@ -21,7 +21,9 @@ function BasicValidationInterceptor ($q, $log) {
 
 	return {
 		response: function(response) {
-			if (response.headers()['content-type'].match('application/json')) {
+			var headers = response.headers();
+
+			if ((headers['content-type'] || '').match('application/json')) {
 				if ((!response.data || typeof response.data !== 'object') && response.status !== 204) {
 					return $q.reject(handleResponseError(response));
 				}

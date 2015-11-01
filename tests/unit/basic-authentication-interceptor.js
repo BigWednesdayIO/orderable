@@ -12,12 +12,13 @@ describe('basic authentication interceptor', function() {
 	}
 
 	beforeEach(module('app'));
+	beforeEach(module('htmlTemplates'));
 
 	beforeEach(function() {
 		inject(function(_$rootScope_, _$q_, _BasicValidationInterceptor_) {
 			$rootScope = _$rootScope_;
 			$q = _$q_;
-			BasicValidationInterceptor = _BasicValidationInterceptor_
+			BasicValidationInterceptor = _BasicValidationInterceptor_;
 		});
 	});
 
