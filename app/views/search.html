@@ -29,14 +29,32 @@
 		</aside>
 
 		<main flex layout-margin>
-			<md-content class="md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.suppliers" style="margin-bottom: 40px;">
-				<h2 ng-bind="supplier"></h2>
-				<ul>
+			<md-content class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.suppliers" style="margin-bottom: 40px;">
+				<div class="supplier-box__header">
+					<div class="supplier-box__logo">
+						<img src="//placehold.it/56x56" alt />
+					</div>
+					<h2 class="supplier-box__name md-headline flex" ng-bind="supplier"></h2>
+					<md-button class="supplier-box__more md-primary" ng-href="?supplier={{ supplier }}">More</md-button>
+				</div>
+				<ul class="supplier-box__items">
 					<li class="product-thumb" ng-repeat="hit in hits">
-						<h3 ng-bind="::hit.name"></h3>
+						<a class="product-thumb__link" ng-href="/product/{{ ::hit.id }}">
+							<div class="product-thumb__info">
+								<img src="//placehold.it/180x180" alt />
+								<h3 class="product-thumb__name md-body-1" ng-bind="::hit.name"></h3>
+							</div>
+							<div class="product-thumb__actions">
+								<span class="product-thumb__price md-body-2">£4.99</span>
+								<!-- <md-button class="md-icon-button">
+									<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
+								</md-button> -->
+							</div>
+						</a>
 					</li>
 				</ul>
 			</md-content>
+
 			<md-content class="md-whiteframe-z1" ng-if="!vm.suppliers">
 				<ul>
 					<li class="product-thumb" ng-repeat="hit in vm.hits">
