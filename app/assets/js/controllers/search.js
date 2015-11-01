@@ -4,6 +4,7 @@ function SearchController (searchResponse) {
 	vm.facets = searchResponse.facets;
 
 	vm.suppliers = searchResponse.suppliers;
+	vm.hitsBySupplier = searchResponse.hits_by_supplier;
 
 	vm.hits = searchResponse.hits.map(function(hit) {
 		return {

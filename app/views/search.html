@@ -17,6 +17,15 @@
 	<div layout="row" flex>
 		<aside layout-margin>
 			<md-content class="md-whiteframe-z1 facets">
+				<section class="facets__section" ng-if="vm.suppliers">
+					<h3 class="facets__heading md-body-2">Suppliers</h3>
+					<ul class="facets__values">
+						<li ng-repeat="supplier in vm.suppliers track by supplier">
+							<a ng-href="?supplier={{ supplier }}" class="facets__value" ng-bind="::supplier"></a>
+						</li>
+					</ul>
+				</section>
+
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
 					<h3 class="facets__heading md-body-2" ng-bind="::facet.field"></h3>
 					<ul class="facets__values">
@@ -29,7 +38,7 @@
 		</aside>
 
 		<main flex layout-margin>
-			<md-content class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.suppliers" style="margin-bottom: 40px;">
+			<md-content class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier" style="margin-bottom: 40px;">
 				<div class="supplier-box__header">
 					<div class="supplier-box__logo">
 						<img src="//placehold.it/56x56" alt />
@@ -55,7 +64,7 @@
 				</ul>
 			</md-content>
 
-			<md-content class="md-whiteframe-z1" ng-if="!vm.suppliers">
+			<md-content class="md-whiteframe-z1" ng-if="!vm.hitsBySupplier">
 				<ul>
 					<li class="product-thumb" ng-repeat="hit in vm.hits">
 						<h3 ng-bind="::hit.product.name"></h3>

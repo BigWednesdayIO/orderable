@@ -15,12 +15,13 @@ function SearchService ($http, $q, API, _) {
 			data: params
 		})
 			.then(function(response) {
-				var suppliers = _.groupBy(response.hits, 'supplier');
-				if (_.keys(suppliers).length > 1) {
+				var hits_by_supplier = _.groupBy(response.hits, 'supplier'),
+					suppliers = _.keys(hits_by_supplier);
+				if (suppliers.length > 1) {
+					response.hits_by_supplier = hits_by_supplier;
 					response.suppliers = suppliers;
 				}
 
-				console.log(response.suppliers);
 				return response;
 			});
 	};
