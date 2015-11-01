@@ -22,10 +22,7 @@
 			<md-toolbar layout="row" class="md-accent hide-sm hide-md">
 				<div class="md-toolbar-tools">
 					<h2 ng-bind="::vm.brand"></h2>
-					<div class="material-search-wrapper">
-						<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
-						<input type="search" class="material-search" placeholder="Search for products or categories" aria-label="Search for products or categories" />
-					</div>
+					<search-box></search-box>
 					<span flex></span>
 				</div>
 			</md-toolbar>
@@ -84,10 +81,7 @@
 					<md-button class="md-icon-button" aria-label="Menu" ng-click="vm.toggleMenu()">
 						<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
 					</md-button>
-					<div class="material-search-wrapper">
-						<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
-						<input type="search" class="material-search" placeholder="Search for products or categories" aria-label="Search for products or categories" />
-					</div>
+					<search-box></search-box>
 					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket">
 						<span class="basket-button__count">5</span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>

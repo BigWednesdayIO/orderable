@@ -2,9 +2,7 @@ function SearchService ($http, $q, API, _) {
 	var service = this;
 
 	service.getResults = function(params) {
-		if (!params.hitsPerPage) {
-			params.hitsPerPage = 20;
-		}
+		params.hitsPerPage = params.hitsPerPage || 20;
 
 		return $http({
 			url: API.search,

@@ -15,9 +15,11 @@ function SearchController (searchResponse) {
 }
 
 SearchController.resolve = /* @ngInject */ {
-	searchResponse: function(searchService) {
+	searchResponse: function($stateParams, searchService) {
 		return searchService
-			.getResults({});
+			.getResults({
+				query: $stateParams.query
+			});
 	}
 };
 
