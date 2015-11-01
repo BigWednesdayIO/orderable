@@ -1,24 +1,21 @@
-function BreadcrumbsService ($q) {
+function BreadcrumbsService ($location, $q, _) {
 	var service = this;
-
-	function getSearchQuery () {
-		return 'foo';
-	}
 
 	function getCategories () {
 		return [
 			{
 				name: 'bar',
-				href: '/bar/'
+				href: '/search/bar/'
 			}, {
 				name: 'baz',
-				href: '/bar/baz/'
+				href: '/search/bar/baz/'
 			}
 		]
 	}
 
 	service.getBreadcrumbs = function() {
-		var breadcrumbs, query, categories;
+		var search = $location.search(),
+			breadcrumbs, params, query, supplier, categories;
 
 		breadcrumbs = [
 			{
@@ -27,25 +24,51 @@ function BreadcrumbsService ($q) {
 			}
 		];
 
-		query = getSearchQuery();
+		query = search.query;
 
 		if (query) {
 			breadcrumbs.push({
 				name: '"' + query + '"',
-				href: '/?query=' + query
+				href: '/search/',
+				params: {
+					query: query
+				}
 			});
+		}
+
+		supplier = search.supplier;
+
+		if (supplier) {
+			params = angular.copy(breadcrumbs[breadcrumbs.length - 1].params);
+			params.supplier = supplier;
+
+			breadcrumbs.push({
+				name: supplier,
+				href: '/search/',
+				params: params
+			})
 		}
 
 		categories = getCategories();
 
 		if (query && categories) {
 			categories = categories.map(function(category) {
-				category.href += '?query=' + query;
+				category.params = angular.copy(breadcrumbs[breadcrumbs.length - 1].params);
 				return category;
 			});
 		}
 
 		breadcrumbs = breadcrumbs.concat(categories);
+
+		breadcrumbs = breadcrumbs.map(function(crumb) {
+			if (crumb.params) {
+				crumb.href += '?' + _.map(crumb.params, function(value, key) {
+					return key + '=' + value;
+				}).join('&');
+			}
+
+			return crumb;
+		});
 
 		return $q.when(breadcrumbs);
 	}
