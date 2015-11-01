@@ -13,7 +13,10 @@ function SuppliersService ($q, browserStorage) {
 		postcode = postcode.toLowerCase();
 
 		if (postcode === 'ec2y 9ar') {
-			suppliers = ['CUK'];
+			suppliers = [
+				'Pub Taverns',
+				'Beer & Wine Co'
+			];
 		}
 
 		return $q.when(suppliers);

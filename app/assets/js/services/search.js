@@ -1,5 +1,25 @@
-function SearchService ($http, $q, API, _) {
+function SearchService ($rootScope, $location, $http, $q, API, _) {
 	var service = this;
+
+	var path = $location.path(),
+		search = $location.search();
+
+	$rootScope.$on('$locationChangeSuccess', function() {
+		path = $location.path();
+		search = $location.search();
+	});
+
+	service.buildQueryString = function(params) {
+		return '?' + _.map(params, function(value, key) {
+			return key + '=' + value;
+		}).join('&');
+	};
+
+	service.applyRefinementToUrl = function(key, value) {
+		var params = angular.copy(search);
+		params[key] = value;
+		return path + service.buildQueryString(params);
+	};
 
 	service.getResults = function(params) {
 		params.hitsPerPage = params.hitsPerPage || 20;

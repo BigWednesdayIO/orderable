@@ -1,4 +1,4 @@
-function SearchController (searchResponse) {
+function SearchController ($location, searchService, searchResponse) {
 	var vm = this;
 
 	vm.facets = searchResponse.facets;
@@ -12,6 +12,8 @@ function SearchController (searchResponse) {
 			quantity: 0
 		};
 	});
+
+	vm.applyRefinementToUrl = searchService.applyRefinementToUrl;
 }
 
 SearchController.resolve = /* @ngInject */ {

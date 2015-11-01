@@ -21,7 +21,7 @@
 					<h3 class="facets__heading md-body-2">Suppliers</h3>
 					<ul class="facets__values">
 						<li ng-repeat="supplier in vm.suppliers track by supplier">
-							<a ng-href="?supplier={{ supplier }}" class="facets__value" ng-bind="::supplier"></a>
+							<a ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}" class="facets__value" ng-bind="::supplier"></a>
 						</li>
 					</ul>
 				</section>
@@ -38,19 +38,19 @@
 		</aside>
 
 		<main flex layout-margin>
-			<md-content class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier" style="margin-bottom: 40px;">
+			<md-content class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier">
 				<div class="supplier-box__header">
 					<div class="supplier-box__logo">
 						<img src="//placehold.it/56x56" alt />
 					</div>
 					<h2 class="supplier-box__name md-headline flex" ng-bind="supplier"></h2>
-					<md-button class="supplier-box__more md-primary" ng-href="?supplier={{ supplier }}">More</md-button>
+					<md-button class="supplier-box__more md-primary" ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}">More</md-button>
 				</div>
 				<ul class="supplier-box__items">
 					<li class="product-thumb" ng-repeat="hit in hits">
 						<a class="product-thumb__link" ng-href="/product/{{ ::hit.id }}">
 							<div class="product-thumb__info">
-								<img src="//placehold.it/180x180" alt />
+								<img class="product-thumb__image" src="//placehold.it/180x180" alt />
 								<h3 class="product-thumb__name md-body-1" ng-bind="::hit.name"></h3>
 							</div>
 							<div class="product-thumb__actions">
