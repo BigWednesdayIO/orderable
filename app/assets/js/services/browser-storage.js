@@ -5,7 +5,7 @@ function BrowserStorageService ($window) {
 		var data = localStorage.getItem(key);
 
 		if (!data) {
-			return;
+			return data;
 		}
 
 		return JSON.parse(data);
@@ -15,6 +15,10 @@ function BrowserStorageService ($window) {
 		var value = JSON.stringify(data);
 
 		return localStorage.setItem(key, value);
+	};
+
+	service.removeItem = function(key) {
+		return localStorage.removeItem(key);
 	};
 
 	service.clear = function() {
