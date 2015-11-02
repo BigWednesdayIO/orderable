@@ -2,17 +2,17 @@ function BreadcrumbsService ($location, $q, searchService, _) {
 	var service = this;
 
 	function getCategories (search) {
-		return [
-			{
-				name: 'bar',
-				href: '/search/bar/',
+		var categories = [];
+
+		if (search.category) {
+			categories.push({
+				name: search.category,
+				href: '/search/',
 				params: search
-			}, {
-				name: 'baz',
-				href: '/search/bar/baz/',
-				params: search
-			}
-		]
+			});
+		}
+
+		return categories;
 	}
 
 	service.getBreadcrumbs = function() {

@@ -11,7 +11,7 @@ function BreadcrumbsController ($rootScope, breadcrumbsService) {
 			});
 	}
 
-	$rootScope.$on('$stateChangeSuccess', updateCrumbs);
+	$rootScope.$on('$locationChangeSuccess', updateCrumbs);
 	updateCrumbs();
 }
 
