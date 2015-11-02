@@ -1,27 +1,27 @@
-<md-dialog flex="45">
-	<md-dialog-content layout-padding class="postcode-form">
-		<form name="vm.postcodeForm" ng-submit="vm.choosePostcode($event)" ng-hide="vm.postcodeForm.$submitted && vm.unavailable">
-			<h2 class="md-headline">Welcome to <span ng-bind="::vm.brand"></span></h2>
-			<p class="md-subhead">Enter your postcode to find suppliers in your area</p>
-			<div layout="row" layout-align="center center">
-				<md-input-container style="text-align: left;">
-					<label>Postcode</label>
-					<input ng-model="vm.postcode" placeholder="e.g. EC2Y 9AR" required />
-				</md-input-container>
-				<md-button type="submit" class="md-primary md-raised">Submit</md-button>
-			</div>
-		</form>
+<form class="postcode-form" name="vm.postcodeForm" ng-submit="vm.choosePostcode($event)" ng-hide="vm.postcodeForm.$submitted && (vm.available || vm.unavailable)">
+	<p class="md-subhead">Enter your postcode to find suppliers in your area</p>
+	<div layout="row" layout-align="center start">
+		<md-input-container>
+			<label>Postcode</label>
+			<input ng-model="vm.newPostcode" placeholder="e.g. EC2Y 9AR" required />
+		</md-input-container>
+		<md-button type="submit" class="md-primary md-raised">Submit</md-button>
+	</div>
+</form>
 
-		<div ng-show="vm.postcodeForm.$submitted && vm.unavailable">
-			<p class="md-headline">Looks like there aren't any suppliers in <strong ng-bind="vm.postcode"></strong> yet</p>
-			<md-button class="md-primary md-raised" ng-click="vm.resetForm()">
-				<span>Try another address</span>
-			</md-button>
-			<br />
-			<md-button class="md-primary link-button">
-				<md-icon md-svg-src="assets/images/icons/location.svg"></md-icon>
-				<span>Let me know when there are suppliers in my area</span>
-			</md-button>
-		</div>
-	</md-dialog-content>
-</md-dialog>
+<div ng-show="vm.postcodeForm.$submitted && vm.unavailable">
+	<p class="md-subhead">Looks like there aren't any suppliers in <strong class="postcode" ng-bind="vm.newPostcode"></strong> yet</p>
+	<div class="actions">
+		<md-button class="md-primary md-raised" ng-click="vm.resetForm()">
+			<span>Try another address</span>
+		</md-button>
+		<md-button class="md-primary link-button">
+			<md-icon md-svg-src="assets/images/icons/location.svg"></md-icon>
+			<span>Let me know when there are suppliers in my area</span>
+		</md-button>
+	</div>
+</div>
+
+<div ng-show="vm.available">
+	<p class="md-subhead">Terrific! There are suppliers for <strong class="postcode" ng-bind="vm.postcode"></strong></p>
+</div>

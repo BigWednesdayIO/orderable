@@ -7,14 +7,14 @@ function PostcodeService ($rootScope, $q, $mdDialog, browserStorage) {
 
 	service.updatePostcode = function(newPostcode) {
 		browserStorage.setItem('postcode', newPostcode);
-		$rootScope.$emit('postcodeUpdated');
+		$rootScope.$emit('postcodeUpdated', newPostcode);
 	};
 
 	service.getPostcodeFromUser = function($event) {
 		return $mdDialog
 			.show({
 				targetEvent: $event,
-				templateUrl: 'views/partials/postcode-form.html',
+				templateUrl: 'views/partials/postcode-dialog.html',
 				controller: 'PostcodeController',
 				controllerAs: 'vm'
 			})

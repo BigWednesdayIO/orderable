@@ -1,0 +1,91 @@
+.postcode-wrapper {
+	position: relative;
+}
+
+.postcode-button {
+	md-icon {
+		height: 18px;
+		width: 18px;
+	}
+}
+
+.postcode {
+	text-transform: uppercase;
+}
+
+.postcode-overlay {
+	padding: 24px;
+	text-align: center;
+
+	&__image {
+		margin: 0 auto;
+	}
+
+	&__title {
+		font-size: 32px;
+		color: rgba(0, 0, 0, .54);
+		margin-bottom: 40px;
+	}
+
+	.md-subhead,
+	md-input-container {
+		font-size: 24px;
+	}
+
+	.actions {
+		.md-button {
+			display: block;
+			margin: 8px auto;
+		}
+	}
+}
+
+.postcode-form {
+	md-input-container {
+		text-align: left;
+
+		label {
+			display: none;
+		}
+	}
+
+	.md-button {
+		margin: 0 0 0 16px;
+	}
+}
+
+.action-window {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	left: auto;
+	min-width: 340px;
+	padding: 20px 20px 8px;
+	margin-top: 12px;
+	background: white;
+	color: rgba(0,0,0,0.87);
+
+	p {
+		margin: 0 0 8px;
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		bottom: 100%;
+		right: 40px;
+		border: 12px solid transparent;
+		border-top-width: 0;
+		border-bottom-color: white;
+	}
+
+	.actions {
+		margin-bottom: 4px;
+		text-align: right;
+
+		button {
+			margin: 0 0 8px auto;
+			color: $md-primary;
+		}
+	}
+}

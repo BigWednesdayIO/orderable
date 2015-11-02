@@ -1,11 +1,28 @@
-function PostcodeController ($mdDialog, postcodeService, suppliersService, brand) {
+function PostcodeController ($rootScope, $timeout, $mdDialog, postcodeService, suppliersService, brand) {
 	var vm = this;
 
 	vm.brand = brand;
 
+	postcodeService
+		.getPostcode()
+		.then(function(postcode) {
+			vm.postcode = postcode;
+		});
+
+	$rootScope.$on('postcodeUpdated', function(e, postcode) {
+		vm.postcode = postcode;
+	});
+
+	vm.togglePostcodeForm = function() {
+		vm.showPostcodeForm = !vm.showPostcodeForm;
+		if (!vm.showPostcodeForm) {
+			vm.resetForm();
+		}
+	}
+
 	vm.choosePostcode = function() {
 		suppliersService
-			.getSuppliersForPostcode(vm.postcode)
+			.getSuppliersForPostcode(vm.newPostcode)
 			.then(function(suppliers) {
 				if (!suppliers.length) {
 					vm.unavailable = true;
@@ -13,15 +30,26 @@ function PostcodeController ($mdDialog, postcodeService, suppliersService, brand
 				}
 				suppliersService
 					.saveSuppliers(suppliers);
-				$mdDialog
-					.hide(vm.postcode);
+				postcodeService
+					.updatePostcode(vm.newPostcode);
+				vm.available = true;
+
+				$timeout(function() {
+					vm.showPostcodeForm = false;
+					vm.resetForm();
+
+					$mdDialog
+						.hide(vm.newPostcode);
+				}, 2000)
 			});
 	};
 
 	vm.resetForm = function() {
-		vm.postcodeForm.$submitted = false;
+		vm.available = false;
 		vm.unavailable = false;
-		vm.postcode = '';
+		vm.newPostcode = '';
+		vm.postcodeForm.$setPristine();
+		vm.postcodeForm.$setUntouched();
 	};
 
 	vm.locationAlert = function() {

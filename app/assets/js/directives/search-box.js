@@ -5,7 +5,9 @@ function SearchBoxDirective () {
 		controller: function($state) {
 			var vm = this;
 
-			vm.search = function() {
+			vm.search = function($event) {
+				$event.preventDefault();
+
 				if (!vm.query || vm.query === '') {
 					return;
 				}

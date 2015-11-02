@@ -64,10 +64,13 @@
 						<a href="#">Account</a>
 						<a href="#">Help</a>
 					</nav>
-					<md-button>
-						<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
-						<span>EC2Y 9AR</span>
-					</md-button>
+					<div class="postcode-wrapper" ng-controller="PostcodeController as vm">
+						<md-button class="postcode-button" ng-click="vm.togglePostcodeForm($event)" aria-label="Show postcode form">
+							<md-icon md-svg-src="assets/images/icons/location.svg"></md-icon>
+							<span ng-bind="vm.postcode"></span>
+						</md-button>
+						<div class="action-window md-whiteframe-11dp" ng-show="vm.showPostcodeForm" ng-include="'views/partials/postcode-form.html'"></div>
+					</div>
 					<span class="toolbar-divider"></span>
 					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket">
 						<span class="basket-button__count">5</span>
