@@ -9,7 +9,7 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider) {
 			}
 		})
 		.state('search', {
-			url: '/search/?query&supplier',
+			url: '/search/?query',
 			views: {
 				body: {
 					controller: 'SearchController as vm',

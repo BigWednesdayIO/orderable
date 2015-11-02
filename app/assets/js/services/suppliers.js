@@ -23,7 +23,7 @@ function SuppliersService ($q, browserStorage) {
 	};
 
 	service.getCurrentSuppliers = function() {
-		return $q.when(currentSuppliers);
+		return currentSuppliers;
 	};
 
 	return service;

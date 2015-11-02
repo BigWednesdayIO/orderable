@@ -17,20 +17,23 @@
 	<div layout="row" flex>
 		<aside layout-margin>
 			<md-content class="md-whiteframe-z1 facets">
-				<section class="facets__section" ng-if="vm.suppliers">
+				<!-- <section class="facets__section" ng-if="vm.suppliers">
 					<h3 class="facets__heading md-body-2">Suppliers</h3>
 					<ul class="facets__values">
 						<li ng-repeat="supplier in vm.suppliers track by supplier">
-							<a ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}" class="facets__value" ng-bind="::supplier"></a>
+							<a ng-href="{{ vm.applyRefinementToUrl('supplier', supplier) }}" class="facets__value" ng-bind="::supplier"></a>
 						</li>
 					</ul>
-				</section>
+				</section> -->
 
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
-					<h3 class="facets__heading md-body-2" ng-bind="::facet.field"></h3>
+					<div layout="row" layout-align="space-between start">
+						<h3 class="facets__heading md-body-2" ng-bind="::facet.field"></h3>
+						<a ng-href="{{ vm.removeRefinementFromUrl(facet.field) }}" class="facets__clear" ng-show="vm.search[facet.field]">Clear</a>
+					</div>
 					<ul class="facets__values">
 						<li ng-repeat="value in facet.values track by value.value">
-							<a href="#" class="facets__value" ng-bind="::value.value"></a>
+							<a ng-href="{{ vm.applyRefinementToUrl(facet.field, value.value) }}" class="facets__value" ng-class="{'facets__value--active': vm.search[facet.field] === value.value}" ng-bind="::value.value"></a>
 						</li>
 					</ul>
 				</section>
@@ -64,7 +67,7 @@
 				</ul>
 			</md-content>
 
-			<md-content class="supplier-listing md-whiteframe-z1" ng-if="!!vm.hitsBySupplier">
+			<md-content class="supplier-listing md-whiteframe-z1" ng-if="!vm.hitsBySupplier">
 				<div class="supplier-listing__header" style="background-image: url('//lorempixel.com/1000/200/food');">
 					<img class="supplier-listing__logo" src="//placehold.it/80x80" alt />
 					<h2 class="supplier-listing__name md-title">Supplier name</h2>
@@ -79,7 +82,7 @@
 							</div>
 							<div class="product-thumb__actions">
 								<span class="product-thumb__price md-body-2">£4.99</span>
-								<md-button class="md-icon-button">
+								<md-button class="md-icon-button" aria-label="Add {{ ::hit.product.name }} to basket">
 									<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
 								</md-button>
 							</div>
