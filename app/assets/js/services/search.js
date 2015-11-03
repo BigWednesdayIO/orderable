@@ -38,7 +38,20 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 		}).filter(function(filter) {
 			return reservedWords.indexOf(filter.field) === -1;
 		});
-	}
+	};
+
+	service.getSearchSuggestions = function(query) {
+		return $http({
+			url: API.search_suggestions,
+			method: 'POST',
+			data: {
+				query: query
+			}
+		})
+			.then(function(response) {
+				return response.hits;
+			});
+	};
 
 	service.getResults = function(params) {
 		// TODO enable this when supplier names are supported

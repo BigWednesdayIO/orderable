@@ -2,19 +2,30 @@ function SearchBoxDirective () {
 	return {
 		restrict: 'EA',
 		scope: {},
-		controller: function($state) {
-			var vm = this;
+		controller: function($element, $state, searchService) {
+			var vm = this,
+				$input;
 
-			vm.search = function($event) {
+			vm.getSearchSuggestions = searchService.getSearchSuggestions;
+
+			vm.performSearch = function(query) {
+				$state.go('search', {
+					query: query
+				});
+				if (!$input) {
+					$input = $element.find('input');
+				}
+				$input.blur();
+			};
+
+			vm.searchSubmit = function($event) {
 				$event.preventDefault();
 
 				if (!vm.query || vm.query === '') {
 					return;
 				}
 
-				$state.go('search', {
-					query: vm.query
-				});
+				vm.performSearch(vm.query);
 			};
 		},
 		controllerAs: 'vm',

@@ -4,62 +4,104 @@
 	align-self: stretch;
 	position: relative;
 	max-width: 800px;
-	margin: 8px;
+	margin: 8px 0;
 	color: white;
 
-	.md-accent & {
-		color: rgba(0, 0, 0, .54);
+	@media (min-width: $bp-medium) {
+		margin: 8px;
 	}
 
-	md-icon {
+	.search-icon {
 		position: absolute;
-		top: 50%;
-		margin-top: -12px;
-		left: 16px;
+		top: 0px;
+		left: 0;
+		width: 44px;
+		height: 44px;
+		line-height: 44px;
 		z-index: 2;
 		color: inherit !important;
-	}
 
-	@media (max-width: 600px) {
-		margin-left: 0;
-		margin-right: 0;
-	}
-}
-
-.material-search {
-	flex-shrink: 1;
-	width: 100%;
-	padding: 0 16px 0 68px;
-	border: none;
-	border-radius: 3px;
-	outline: none;
-	color: inherit;
-	font-size: 15px;
-	font-weight: 400;
-	background-color: rgba(255, 255, 255, .16);
-	transition: background-color $transition;
-
-	@media (max-width: 600px) {
-		padding: 0 8px 0 54px;
-	}
-
-	&:focus {
-		background-color: rgba(255,255,255,0.24);
-	}
-
-	.md-accent & {
-		background-color: rgba(255, 255, 255, .54);
-
-		&:focus {
-			background-color: rgba(255, 255, 255, .62);
+		@media (max-width: $bp-medium) {
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			margin: 0 4px;
 		}
 	}
 
-	&::-webkit-input-placeholder {
-		color: inherit;
+	md-autocomplete {
+		width: 100%;
+		border-radius: 3px;
+		background-color: rgba(255, 255, 255, .16);
+
+		input {
+			padding: 0 16px 0 68px;
+			color: inherit;
+			transition: background-color $transition;
+			-webkit-appearance: none;
+
+			&:focus {
+				background-color: rgba(255, 255, 255, .08); // .24 - .16
+			}
+
+			&::-webkit-input-placeholder {
+				color: inherit;
+			}
+
+			@media (max-width: $bp-medium) {
+				padding: 0 8px 0 48px;
+			}
+		}
+
+		button {
+			display: none;
+		}
+	}
+}
+
+md-autocomplete md-autocomplete-wrap,
+md-autocomplete input:not(.md-input) {
+	height: inherit;
+}
+
+md-autocomplete md-autocomplete-wrap {
+	box-shadow: none !important;
+}
+
+.search-form {
+	display: flex;
+	align-items: center;
+	flex: 1;
+
+	@media (min-width: $bp-large) {
+		margin: 0 8px 0 16px;
+
+		md-autocomplete {
+			flex: 1;
+			height: 30px;
+			border: 1px solid rgba(0,0,0,.15);
+			border-right-width: 0;
+
+			input {
+				line-height: 30px;
+			}
+		}
 	}
 
-	&--small {
-		height: 40px;
+	.search-button {
+		margin: 0;
+		box-shadow: none !important;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		height: 30px;
+		min-height: 30px;
+		line-height: 30px;
+		width: 60px;
+		min-width: 60px;
+
+		svg {
+			height: 20px;
+			width: 20px;
+		}
 	}
 }
