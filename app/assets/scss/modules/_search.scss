@@ -1,7 +1,62 @@
+md-autocomplete {
+	md-autocomplete-wrap,
+	input:not(.md-input) {
+		height: inherit;
+	}
+
+	md-autocomplete-wrap {
+		box-shadow: none !important;
+	}
+
+	md-progress-linear {
+		display: none;
+	}
+}
+
+.search-form {
+	display: flex;
+	align-items: center;
+	flex: 1;
+
+	@media (min-width: $bp-large) {
+		margin: 0 8px 0 16px;
+
+		md-autocomplete {
+			flex: 1;
+			height: 30px;
+			border: 1px solid rgba(0,0,0,.15);
+			border-right-width: 0;
+			box-sizing: content-box;
+
+			input {
+				line-height: 30px;
+			}
+		}
+	}
+
+	.search-button {
+		margin: 0;
+		box-shadow: 0 0 1px rgba(0,0,0,.15) !important;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		height: 30px;
+		min-height: 30px;
+		line-height: 30px;
+		width: 60px;
+		min-width: 60px;
+
+		md-icon {
+			height: 20px;
+			width: 20px;
+		}
+	}
+}
+
 .material-search-wrapper {
 	flex: 1;
 	display: flex;
 	align-self: stretch;
+	align-items: stretch;
 	position: relative;
 	max-width: 800px;
 	margin: 8px 0;
@@ -30,6 +85,7 @@
 	}
 
 	md-autocomplete {
+		height: inherit;
 		width: 100%;
 		border-radius: 3px;
 		background-color: rgba(255, 255, 255, .16);
@@ -53,55 +109,21 @@
 			}
 		}
 
-		button {
-			display: none;
-		}
-	}
-}
-
-md-autocomplete md-autocomplete-wrap,
-md-autocomplete input:not(.md-input) {
-	height: inherit;
-}
-
-md-autocomplete md-autocomplete-wrap {
-	box-shadow: none !important;
-}
-
-.search-form {
-	display: flex;
-	align-items: center;
-	flex: 1;
-
-	@media (min-width: $bp-large) {
-		margin: 0 8px 0 16px;
-
-		md-autocomplete {
-			flex: 1;
-			height: 30px;
-			border: 1px solid rgba(0,0,0,.15);
-			border-right-width: 0;
-
-			input {
-				line-height: 30px;
+		@media (min-width: 601px) {
+			md-autocomplete-wrap {
+				height: 44px;
 			}
 		}
-	}
 
-	.search-button {
-		margin: 0;
-		box-shadow: none !important;
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
-		height: 30px;
-		min-height: 30px;
-		line-height: 30px;
-		width: 60px;
-		min-width: 60px;
+		button {
+			position: absolute;
+			right: 0;
+			top: 50%;
+			margin-top: -15px;
 
-		svg {
-			height: 20px;
-			width: 20px;
+			path {
+				fill: inherit;
+			}
 		}
 	}
 }

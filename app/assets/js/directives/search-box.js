@@ -18,6 +18,18 @@ function SearchBoxDirective () {
 				$input.blur();
 			};
 
+			vm.searchIconClick = function() {
+				if (!vm.query || vm.query === '') {
+					if (!$input) {
+						$input = $element.find('input');
+					}
+					$input.focus();
+					return;
+				}
+
+				vm.performSearch(vm.query);
+			};
+
 			vm.searchSubmit = function($event) {
 				$event.preventDefault();
 

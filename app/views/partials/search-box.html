@@ -1,15 +1,12 @@
 <form class="search-form" name="vm.searchForm" method="GET" action="/search/" ng-submit="vm.searchSubmit($event)">
-	<md-button class="md-icon-button search-icon" ng-click="vm.performSearch(vm.query)" aria-label="search">
-		<md-icon class="hide-gt-md" md-svg-src="assets/images/icons/search.svg"></md-icon>
+	<md-button type="button" class="md-icon-button search-icon hide-gt-md" ng-click="vm.searchIconClick()" aria-label="search">
+		<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
 	</md-button>
-	<!-- <input ng-model="vm.query" ng-change="vm.getSuggestions(vm.query)" name="query" type="search" class="material-search" placeholder="Search for products or categories" aria-label="Search for products or categories" /> -->
 	<md-autocomplete
 		md-search-text="vm.query"
 		md-items="hit in vm.getSearchSuggestions(vm.query)"
 		md-item-text="hit.query"
-		md-selected-item-change="vm.performSearch(hit.query)"
 		md-min-length="1"
-		placeholder="Search for products or categories"
 		aria-label="Search for products or categories">
 		<md-item-template>
 			<span md-highlight-text="vm.query" md-highlight-flags="^i">{{ hit.query }}</span>
