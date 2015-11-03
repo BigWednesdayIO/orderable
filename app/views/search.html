@@ -1,12 +1,12 @@
 <div class="content-wrap">
-	<div layout="row" layout-margin>
-		<div class="breadcrumbs" ng-controller="BreadcrumbsController as vm">
+	<div layout="row" layout-padding>
+		<div class="breadcrumbs" ng-controller="BreadcrumbsController as vm" ng-show="vm.breadcrumbs.length > 1">
 			<span ng-repeat="crumb in vm.breadcrumbs track by crumb.href">
-				<span ng-if="::!$last">
+				<span ng-if="!$last">
 					<a class="breadcrumbs__crumb" ng-href="{{ ::crumb.href }}" ng-bind="::crumb.name"></a>
 					<span class="breadcrumbs__spacer">›</span>
 				</span>
-				<span ng-if="::$last">
+				<span ng-if="$last">
 					<span class="breadcrumbs__crumb--final" ng-bind="::crumb.name"></span>
 					<a class="breadcrumbs__remove" ng-href="{{ vm.breadcrumbs[$index - 1].href }}">&times;</a>
 				</span>
@@ -65,7 +65,7 @@
 						</a>
 					</li>
 				</ul>
-			</md-content>
+			</div>
 
 			<md-content class="supplier-listing md-whiteframe-z1" ng-if="!vm.hitsBySupplier">
 				<div class="supplier-listing__header" style="background-image: url('//lorempixel.com/1000/200/food');">
