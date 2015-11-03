@@ -18,18 +18,49 @@
 	text-align: center;
 
 	&__image {
+		display: none;
 		margin: 0 auto;
 	}
 
 	&__title {
-		font-size: 32px;
 		color: rgba(0, 0, 0, .54);
-		margin-bottom: 40px;
+		margin: 0 0 16px;
 	}
 
-	.md-subhead,
-	md-input-container {
-		font-size: 24px;
+	.form-row {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.md-button {
+			margin: 0;
+		}
+	}
+
+	@media (min-width: $bp-large) {
+		&__image {
+			display: block;
+		}
+
+		&__title {
+			font-size: 32px;
+			margin: 20px 0 40px;
+		}
+
+		.md-subhead,
+		md-input-container {
+			font-size: 24px;
+		}
+
+		.form-row {
+			flex-direction: row;
+			justify-content: center;
+			align-items: flex-start;
+
+			.md-button {
+				margin: 0 0 0 16px;
+			}
+		}
 	}
 
 	.actions {
@@ -87,5 +118,11 @@
 			margin: 0 0 8px auto;
 			color: $md-primary;
 		}
+	}
+
+	.form-row {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
 	}
 }

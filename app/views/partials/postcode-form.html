@@ -1,6 +1,6 @@
 <form class="postcode-form" name="vm.postcodeForm" ng-submit="vm.choosePostcode($event)" ng-hide="vm.postcodeForm.$submitted && (vm.available || vm.unavailable)">
 	<p class="md-subhead">Enter your postcode to find suppliers in your area</p>
-	<div layout="row" layout-align="center start">
+	<div class="form-row">
 		<md-input-container>
 			<label>Postcode</label>
 			<input ng-model="vm.newPostcode" placeholder="e.g. EC2Y 9AR" required />
