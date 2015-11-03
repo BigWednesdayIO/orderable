@@ -26,6 +26,10 @@ md-select + md-select {
 
 .link-button {
 	text-transform: none;
+	white-space: normal;
+	line-height: 20px;
+	padding-top: 6px;
+	padding-bottom: 6px;
 }
 
 hr {
@@ -45,4 +49,13 @@ img {
 
 .content-body {
 	background: $md-accent;
+}
+
+loading-indicator {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	height: 5px;
+	opacity: .5;
 }
