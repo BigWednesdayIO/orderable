@@ -41,7 +41,7 @@
 		</aside>
 
 		<main flex layout-margin>
-			<md-content class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier">
+			<div class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier">
 				<div class="supplier-box__header">
 					<div class="supplier-box__logo">
 						<img src="//placehold.it/56x56" alt />
@@ -53,7 +53,7 @@
 					<li class="product-thumb" ng-repeat="hit in hits">
 						<a class="product-thumb__link" ng-href="/product/{{ ::hit.id }}">
 							<div class="product-thumb__info">
-								<img class="product-thumb__image" src="//placehold.it/180x180" alt />
+								<img class="product-thumb__image" src="//placehold.it/180x180" height="180" width="180" alt />
 								<h3 class="product-thumb__name md-body-1" ng-bind="::hit.name"></h3>
 							</div>
 							<div class="product-thumb__actions">
@@ -77,7 +77,7 @@
 					<li class="product-thumb" ng-repeat="hit in vm.hits">
 						<a class="product-thumb__link" ng-href="/product/{{ ::hit.product.id }}">
 							<div class="product-thumb__info">
-								<img class="product-thumb__image" src="//placehold.it/180x180" alt />
+								<img class="product-thumb__image" src="//placehold.it/180x180" height="180" width="180" alt />
 								<h3 class="product-thumb__name md-body-1" ng-bind="::hit.product.name"></h3>
 							</div>
 							<div class="product-thumb__actions">

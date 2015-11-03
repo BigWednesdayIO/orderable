@@ -1,5 +1,6 @@
 .supplier-box {
 	margin-bottom: 40px;
+	background: white;
 
 	&__header {
 		display: flex;
@@ -31,5 +32,10 @@
 		margin: 0;
 		overflow: auto;
 		list-style-type: none;
+	}
+
+	.product-thumb {
+		width: 212px;
+		flex-shrink: 0;
 	}
 }
