@@ -1,5 +1,6 @@
 .supplier-listing {
 	margin-bottom: 40px;
+	background: white;
 
 	&__header {
 		padding: 16px 0;
@@ -33,9 +34,18 @@
 		list-style-type: none;
 
 		.product-thumb {
-			width: 25%;
+			display: inline-flex;
+			width: 50%;
 			border: $divider;
 			border-width: 0 1px 1px 0;
+
+			@media (min-width: 480px) and (max-width: 599px), (min-width: 720px) and (max-width: 899px) {
+				width: (100%/3);
+			}
+
+			@media (min-width: 900px) {
+				width: 25%;
+			}
 
 			&__link {
 				padding: 20px 20px 10px;

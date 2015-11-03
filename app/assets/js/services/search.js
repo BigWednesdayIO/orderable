@@ -82,15 +82,6 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 					response.suppliers = suppliers;
 				}
 
-				// TODO remove when facet values are case corrected
-				response.facets = response.facets.map(function(facet) {
-					facet.values = facet.values.map(function(value) {
-						value.value = value.value.toLowerCase();
-						return value;
-					});
-					return facet;
-				});
-
 				return response;
 			});
 	};

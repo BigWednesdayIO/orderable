@@ -15,7 +15,7 @@
 	</div>
 
 	<div layout="row" flex>
-		<aside layout-margin>
+		<aside class="hide-sm" layout-margin>
 			<md-content class="md-whiteframe-z1 facets">
 				<!-- <section class="facets__section" ng-if="vm.suppliers">
 					<h3 class="facets__heading md-body-2">Suppliers</h3>
@@ -40,7 +40,7 @@
 			</md-content>
 		</aside>
 
-		<main flex layout-margin>
+		<main flex layout-margin style="overflow: auto;">
 			<div class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier">
 				<div class="supplier-box__header">
 					<div class="supplier-box__logo">
@@ -67,7 +67,7 @@
 				</ul>
 			</div>
 
-			<md-content class="supplier-listing md-whiteframe-z1" ng-if="!vm.hitsBySupplier">
+			<div class="supplier-listing md-whiteframe-z1" ng-if="!vm.hitsBySupplier">
 				<div class="supplier-listing__header" style="background-image: url('//lorempixel.com/1000/200/food');">
 					<img class="supplier-listing__logo" src="//placehold.it/80x80" alt />
 					<h2 class="supplier-listing__name md-title">Supplier name</h2>
@@ -89,7 +89,7 @@
 						</a>
 					</li>
 				</ul>
-			</md-content>
+			</div>
 		</main>
 	</div>
 </div>
