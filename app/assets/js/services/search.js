@@ -58,9 +58,6 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 		return $http({
 			url: API.search,
 			method: 'POST',
-			headers: {
-				Authorization: 'Bearer NG0TuV~u2ni#BP|'
-			},
 			data: params
 		})
 			.then(function(response) {

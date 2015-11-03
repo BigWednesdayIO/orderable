@@ -6,7 +6,9 @@ function APIConstant () {
 
 	API.navigation = '/mocks/navigation.json';
 
-	API.search = 'https://api.bigwednesday.io/1/search/indexes/crateful-products/query';
+	API.search_base = 'https://api.bigwednesday.io/1/search/indexes/';
+	API.search = API.search_base + 'crateful-products/query';
+	API.search_suggestions = API.search_base + 'crateful-suggestions/query'
 
 	return API;
 }

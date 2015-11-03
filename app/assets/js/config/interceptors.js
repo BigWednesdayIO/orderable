@@ -1,6 +1,7 @@
 function InterceptorsConfig ($httpProvider) {
 	$httpProvider.interceptors.push(
-		'BasicValidationInterceptor'
+		'BasicValidationInterceptor',
+		'AuthorizationInterceptor'
 	);
 }
 
