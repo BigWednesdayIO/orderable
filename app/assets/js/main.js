@@ -16,6 +16,11 @@ function checkForPostcode ($state, postcodeService) {
 		});
 }
 
+function bindMediaToRoot ($rootScope, $mdMedia) {
+	$rootScope.$mdMedia = $mdMedia;
+}
+
 angular
 	.module('app')
-	.run(checkForPostcode);
+	.run(checkForPostcode)
+	.run(bindMediaToRoot);
