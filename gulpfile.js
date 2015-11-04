@@ -30,7 +30,7 @@ gulp.task('build:js', function() {
 	return gulp
 		.src([
 			'app/assets/js/main.js',
-			'app/assets/js/{config,constants,controllers,directives,filters,interceptors,services}/*.js'
+			'app/assets/js/{config,constants,run,controllers,directives,filters,interceptors,services}/*.js'
 		])
 		.pipe(eslint())
 		.pipe(eslint.format())
