@@ -42,10 +42,10 @@ function SuppliersService ($q, browserStorage) {
 		var brandImage = {
 			'Pub Taverns': 'assets/images/pub-buying-club-logo.jpg',
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
-			'placeholder': '//placehold.it/86x60'
+			'placeholder': '//placehold.it/86x60?text='
 		};
 
-		return brandImage[supplier] || brandImage.placeholder;
+		return brandImage[supplier] || brandImage.placeholder + supplier;
 	};
 
 	return service;
