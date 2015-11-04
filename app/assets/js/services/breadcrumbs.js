@@ -1,18 +1,21 @@
-function BreadcrumbsService ($location, $q, searchService, _) {
+function BreadcrumbsService ($location, $q, searchService, categoriesService, _) {
 	var service = this;
 
 	function getCategories (search) {
-		var categories = [];
-
-		if (search.category) {
-			categories.push({
-				name: search.category,
-				href: '/search/',
-				params: search
-			});
+		if (!search.category_hierachy) {
+			return $q.when([]);
 		}
 
-		return categories;
+		return categoriesService
+			.getHierarchyForCategory(search.category_hierachy)
+			.then(function(categories) {
+				return categories.map(function(category) {
+					category.href = '/search/';
+					category.params = angular.copy(search);
+					category.params.category_hierachy = category.id;
+					return category;
+				});
+			});
 	}
 
 	service.getBreadcrumbs = function() {
@@ -51,17 +54,19 @@ function BreadcrumbsService ($location, $q, searchService, _) {
 			})
 		}
 
-		breadcrumbs = breadcrumbs.concat(getCategories(search));
+		breadcrumbs = breadcrumbs.concat();
 
-		breadcrumbs = breadcrumbs.map(function(crumb) {
-			if (crumb.params) {
-				crumb.href += searchService.buildQueryString(crumb.params);
-			}
-
-			return crumb;
-		});
-
-		return $q.when(breadcrumbs);
+		return getCategories(search)
+			.then(function(categories) {
+				return breadcrumbs
+					.concat(categories)
+					.map(function(crumb) {
+						if (crumb.params) {
+							crumb.href += searchService.buildQueryString(crumb.params);
+						}
+						return crumb;
+					});
+			})
 	}
 }
 

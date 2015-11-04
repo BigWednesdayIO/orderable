@@ -10,6 +10,8 @@ function APIConstant () {
 	API.search = API.search_base + 'crateful-products/query';
 	API.search_suggestions = API.search_base + 'crateful-suggestions/query'
 
+	API.categories = 'https://raw.githubusercontent.com/BigWednesdayIO/categories-api/master/categories.json';
+
 	return API;
 }
 
