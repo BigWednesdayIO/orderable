@@ -59,3 +59,9 @@ loading-indicator {
 	height: 5px;
 	opacity: .5;
 }
+
+a,
+button,
+[ng-click] {
+	touch-action: manipulation;
+}

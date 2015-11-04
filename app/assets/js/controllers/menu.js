@@ -1,5 +1,13 @@
-function MenuController ($mdSidenav, navigationService, brand) {
-	var vm = this;
+function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, suppliersService, brand) {
+	var vm = this,
+		closeTimer;
+
+	function closeListener (event) {
+		if (event.target.closest('.suppliers-dropdown')) {
+			return;
+		}
+		vm.hideSuppliers(0);
+	}
 
 	vm.brand = brand
 
@@ -7,6 +15,27 @@ function MenuController ($mdSidenav, navigationService, brand) {
 		$mdSidenav('menu')
 			.toggle();
 	}
+
+	vm.suppliers = suppliersService.getCurrentSuppliers();
+
+	vm.getBrandImageForSupplier = suppliersService.getBrandImageForSupplier;
+
+	vm.toggleShowSuppliers = function() {
+		vm.suppliersAreShown ? vm.hideSuppliers(0) : vm.showSuppliers();
+	};
+
+	vm.hideSuppliers = function(delay) {
+		closeTimer = $timeout(function() {
+			vm.suppliersAreShown = false;
+			eventWrapper.removeEventListener('click', closeListener);
+		}, delay);
+	};
+
+	vm.showSuppliers = function() {
+		$timeout.cancel(closeTimer);
+		vm.suppliersAreShown = true;
+		eventWrapper.addEventListener('click', closeListener, false);
+	};
 
 	navigationService
 		.getNavigation()

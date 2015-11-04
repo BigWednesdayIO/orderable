@@ -1,0 +1,27 @@
+.logo {
+	display: flex;
+	flex-grow: 0;
+	text-decoration: none;
+
+	&__text {
+		font-size: 24px;
+		line-height: 30px;
+		font-weight: 400;
+		color: #606060;
+		text-transform: lowercase;
+		word-spacing: -6px;
+
+		&--highlight {
+			color: #888;
+		}
+
+		&__block {
+			// Stops breaking mid-phrase
+			display: inline-block;
+		}
+
+		&:hover {
+			color: #606060;
+		}
+	}
+}
