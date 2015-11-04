@@ -15,7 +15,9 @@ function SuppliersService ($q, browserStorage) {
 		if (postcode === 'ec2y 9ar') {
 			suppliers = [
 				'Pub Taverns',
-				'Beer & Wine Co'
+				'Beer & Wine Co',
+				'Wallmart',
+				'Best Buy'
 			];
 		}
 

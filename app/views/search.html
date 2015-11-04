@@ -41,53 +41,27 @@
 		</aside>
 
 		<main flex layout-margin style="overflow: auto;">
-			<div class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier">
-				<div class="supplier-box__header">
+			<div class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier" ng-if="!vm.search.supplier">
+				<a class="supplier-box__header" ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}">
 					<div class="supplier-box__logo">
-						<img src="//placehold.it/56x56" alt />
+						<img ng-src="{{ ::vm.getLogoForSupplier(supplier) }}" height="56" width="56" alt />
 					</div>
 					<h2 class="supplier-box__name md-headline flex" ng-bind="supplier"></h2>
-					<md-button class="supplier-box__more md-primary" ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}">More</md-button>
-				</div>
+					<md-button class="supplier-box__more md-primary">More</md-button>
+				</a>
 				<ul class="supplier-box__items">
-					<li class="product-thumb" ng-repeat="hit in hits">
-						<a class="product-thumb__link" ng-href="/product/{{ ::hit.id }}">
-							<div class="product-thumb__info">
-								<img class="product-thumb__image" src="//placehold.it/180x180" height="180" width="180" alt />
-								<h3 class="product-thumb__name md-body-1" ng-bind="::hit.name"></h3>
-							</div>
-							<div class="product-thumb__actions">
-								<span class="product-thumb__price md-body-2">£4.99</span>
-								<!-- <md-button class="md-icon-button">
-									<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
-								</md-button> -->
-							</div>
-						</a>
-					</li>
+					<li product-thumb product="hit" add-to-basket="false" ng-repeat="hit in vm.hits"></li>
 				</ul>
 			</div>
 
-			<div class="supplier-listing md-whiteframe-z1" ng-if="!vm.hitsBySupplier">
+			<div class="supplier-listing md-whiteframe-z1" ng-if="vm.search.supplier">
 				<div class="supplier-listing__header" style="background-image: url('//lorempixel.com/1000/200/food');">
-					<img class="supplier-listing__logo" src="//placehold.it/80x80" alt />
-					<h2 class="supplier-listing__name md-title">Supplier name</h2>
+					<img class="supplier-listing__logo" ng-src="{{ ::vm.getLogoForSupplier(vm.search.supplier) }}" height="80" width="80" alt />
+					<h2 class="supplier-listing__name md-title" ng-bind="::vm.search.supplier"></h2>
 					<p class="supplier-listing__info md-subhead">Spend £20 for FREE Delivery</p>
 				</div>
 				<ul class="supplier-listing__products">
-					<li class="product-thumb" ng-repeat="hit in vm.hits">
-						<a class="product-thumb__link" ng-href="/product/{{ ::hit.product.id }}">
-							<div class="product-thumb__info">
-								<img class="product-thumb__image" src="//placehold.it/180x180" height="180" width="180" alt />
-								<h3 class="product-thumb__name md-body-1" ng-bind="::hit.product.name"></h3>
-							</div>
-							<div class="product-thumb__actions">
-								<span class="product-thumb__price md-body-2">£4.99</span>
-								<md-button class="md-icon-button" aria-label="Add {{ ::hit.product.name }} to basket">
-									<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
-								</md-button>
-							</div>
-						</a>
-					</li>
+					<li product-thumb product="hit" add-to-basket="true" ng-repeat="hit in vm.hits"></li>
 				</ul>
 			</div>
 		</main>

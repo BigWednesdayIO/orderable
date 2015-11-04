@@ -39,6 +39,17 @@
 	}
 
 	&__price {
+		display: flex;
 		font-weight: 600;
+
+		&--now {
+			color: $md-primary;
+		}
+
+		&--was {
+			text-decoration: line-through;
+			margin-left: 8px;
+			font-weight: 400;
+		}
 	}
 }

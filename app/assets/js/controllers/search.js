@@ -1,18 +1,14 @@
-function SearchController ($rootScope, $stateParams, $location, searchService, searchResponse) {
+function SearchController ($rootScope, $stateParams, $location, suppliersService, searchService, searchResponse) {
 	var vm = this;
 
 	function bindSearchResponse (response) {
 		vm.facets = response.facets;
 
 		vm.suppliers = response.suppliers;
+
 		vm.hitsBySupplier = response.hitsBySupplier;
 
-		vm.hits = response.hits.map(function(hit) {
-			return {
-				product: hit,
-				quantity: 0
-			};
-		});
+		vm.hits = response.hits;
 
 		vm.search = $location.search();
 	}
@@ -20,7 +16,10 @@ function SearchController ($rootScope, $stateParams, $location, searchService, s
 	bindSearchResponse(searchResponse);
 
 	vm.applyRefinementToUrl = searchService.applyRefinementToUrl;
+
 	vm.removeRefinementFromUrl = searchService.removeRefinementFromUrl;
+
+	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
 
 	$rootScope.$on('$locationChangeSuccess', function() {
 		searchService
