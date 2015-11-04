@@ -1,3 +1,3 @@
 angular
 	.module('app')
-	.constant('brand', 'Crateful');
+	.constant('brand', 'Big Wednesday IO');
