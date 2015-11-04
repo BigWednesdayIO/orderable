@@ -28,7 +28,7 @@
 
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
 					<div layout="row" layout-align="space-between start">
-						<h3 class="facets__heading md-body-2" ng-bind="::facet.field"></h3>
+						<h3 class="facets__heading md-body-2" ng-bind="::(facet.field.match('category_') ? 'category' : facet.field)"></h3>
 						<a ng-href="{{ vm.removeRefinementFromUrl(facet.field) }}" class="facets__clear" ng-show="vm.search[facet.field]">Clear</a>
 					</div>
 					<ul class="facets__values">
