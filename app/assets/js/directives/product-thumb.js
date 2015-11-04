@@ -8,10 +8,18 @@ function ProductThumbDirective () {
 		link: function(scope, element) {
 			element.addClass('product-thumb');
 		},
-		controller: function() {
+		controller: function(productImageBaseUrl) {
 			var vm = this;
 
-			vm.product.image = '//placehold.it/180x180';
+			vm.product.image = (function(id) {
+				if (!id) {
+					return '//placehold.it/180x180';
+				}
+				id = id.slice(1);
+				return productImageBaseUrl + '/' + id[0] + '/' + id[1] + '/' + id[2] + '/' + id + '_A_p.jpg';
+			})(vm.product.objectID)
+
+			vm.product.id = vm.product.objectID;
 		},
 		controllerAs: 'vm',
 		bindToController: true,
