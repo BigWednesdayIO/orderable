@@ -33,7 +33,7 @@
 					</div>
 					<ul class="facets__values">
 						<li ng-repeat="value in facet.values track by value.value">
-							<a ng-href="{{ vm.applyRefinementToUrl(facet.field, value.value) }}" class="facets__value" ng-class="{'facets__value--active': vm.search[facet.field] === value.value}" ng-bind="::value.value"></a>
+							<a ng-href="{{ vm.applyRefinementToUrl(facet.field, value.value) }}" class="facets__value" ng-class="{'facets__value--active': vm.search[facet.field] === value.value}" ng-bind="::(value.display_name || value.value)"></a>
 						</li>
 					</ul>
 				</section>

@@ -1,4 +1,4 @@
-function SearchService ($rootScope, $location, $http, $q, API, suppliersService, _) {
+function SearchService ($rootScope, $location, $http, $q, API, suppliersService, categoriesService, _) {
 	var service = this;
 
 	var path = $location.path(),
@@ -12,7 +12,9 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 	service.buildQueryString = function(params) {
 		return '?' + _.map(params, function(value, key) {
 			return key + '=' + value;
-		}).join('&');
+		})
+			.sort()
+			.join('&');
 	};
 
 	service.applyRefinementToUrl = function(key, value) {
@@ -75,14 +77,32 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 		})
 			.then(function(response) {
 				var hitsBySupplier = _.groupBy(response.hits, 'supplier'),
-					suppliers = _.keys(hitsBySupplier);
+					suppliers = _.keys(hitsBySupplier),
+					index,
+					categories;
 
-				if (suppliers.length > 1) {
-					response.hitsBySupplier = hitsBySupplier;
-					response.suppliers = suppliers;
+				response.hitsBySupplier = hitsBySupplier;
+				response.suppliers = suppliers;
+
+				index = _.findIndex(response.facets, {field: 'category_code'});
+
+				if (index === -1) {
+					return response;
 				}
 
-				return response;
+				categories = response.facets[index].values;
+				return $q.all(categories.map(function(category) {
+					return categoriesService
+						.getNameForCategory(category.value);
+				}))
+					.then(function(names) {
+						response.facets[index].field = 'category_hierachy';
+						response.facets[index].values = categories.map(function(category, i) {
+							category.display_name = names[i];
+							return category;
+						});
+						return response;
+					});
 			});
 	};
 }
