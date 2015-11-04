@@ -23,7 +23,7 @@ function BasicValidationInterceptor ($q, $log) {
 		response: function(response) {
 			var headers = response.headers();
 
-			if ((headers['content-type'] || '').match('application/json')) {
+			if ((headers['content-type'] || '').match('application/json') || response.config.url.match(/.+\.json$/)) {
 				if ((!response.data || typeof response.data !== 'object') && response.status !== 204) {
 					return $q.reject(handleResponseError(response));
 				}
