@@ -24,8 +24,15 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 	};
 
 	service.removeRefinementFromUrl = function(key) {
-		var params = angular.copy(search);
-		delete params[key];
+		var params = angular.copy(search),
+			ids;
+		if (key === 'category_hierarchy' && params[key].indexOf('.') > -1) {
+			ids = params[key].split('.');
+			// Removes last part of chain
+			params[key] = ids.slice(0, ids.length - 1).join('.');
+		} else {
+			delete params[key];
+		}
 		return path + service.buildQueryString(params);
 	};
 
@@ -79,7 +86,8 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 				var hitsBySupplier = _.groupBy(response.hits, 'supplier'),
 					suppliers = _.keys(hitsBySupplier),
 					index,
-					categories;
+					categories,
+					chosenCategory;
 
 				response.hitsBySupplier = hitsBySupplier;
 				response.suppliers = suppliers;
@@ -91,12 +99,22 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 				}
 
 				categories = response.facets[index].values;
+
+				chosenCategory = _.find(params.filters, {field: 'category_hierarchy'});
+				if (chosenCategory) {
+					categories.unshift({
+						value: chosenCategory.term
+					});
+					categories = _.uniq(categories, 'value');
+				}
+
 				return $q.all(categories.map(function(category) {
 					return categoriesService
 						.getNameForCategory(category.value);
 				}))
 					.then(function(names) {
 						response.facets[index].field = 'category_hierarchy';
+						response.facets[index].display_name = 'Category';
 						response.facets[index].values = categories.map(function(category, i) {
 							category.display_name = names[i];
 							return category;
