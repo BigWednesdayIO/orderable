@@ -2,17 +2,17 @@ function BreadcrumbsService ($location, $q, searchService, categoriesService, _)
 	var service = this;
 
 	function getCategories (search) {
-		if (!search.category_hierachy) {
+		if (!search.category_hierarchy) {
 			return $q.when([]);
 		}
 
 		return categoriesService
-			.getHierarchyForCategory(search.category_hierachy)
+			.getHierarchyForCategory(search.category_hierarchy)
 			.then(function(categories) {
 				return categories.map(function(category) {
 					category.href = '/search/';
 					category.params = angular.copy(search);
-					category.params.category_hierachy = category.id;
+					category.params.category_hierarchy = category.id;
 					return category;
 				});
 			});
