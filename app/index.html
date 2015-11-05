@@ -17,9 +17,9 @@
 		<!-- endbower -->
 		<link rel="stylesheet" href="assets/css/app.css" />
 	</head>
-	<body layout="column">
-		<div class="event-wrapper" flex layout="column">
-			<md-toolbar layout="row" class="md-accent" ng-if="$mdMedia('gt-md')" layout="column">
+	<body class="layout-column">
+		<div class="event-wrapper flex layout-column">
+			<md-toolbar class="md-accent layout-row hide-sm hide-md" ng-if="$mdMedia('gt-md')">
 				<div class="md-toolbar-tools">
 					<h2>
 						<a href="/" class="logo">
@@ -27,12 +27,13 @@
 						</a>
 					</h2>
 					<search-box></search-box>
-					<span flex></span>
+					<span class="flex"></span>
 				</div>
 			</md-toolbar>
-			<md-toolbar layout="row" class="md-toolbar-secondary md-whiteframe-z1" ng-if="$mdMedia('gt-md')" ng-controller="MenuController as vm" layout="column">
-				<div class="md-toolbar-tools" layout-margin>
-					<nav layout="row">
+			<md-toolbar class="md-toolbar-secondary layout-row md-whiteframe-z1 hide-sm hide-md" ng-if="$mdMedia('gt-md')" ng-controller="MenuController as vm">
+				<div class="md-toolbar-tools layout-margin">
+					<nav class="layout-row">
+						<h2 class="layout-column layout-align-center-center" style="margin-right: 8px;">Eating &amp; Drinking Out</h2>
 						<div class="suppliers-dropdown" ng-class="{'is-open': vm.suppliersAreShown}" ng-mouseleave="vm.hideSuppliers(250)">
 							<a href="#" class="suppliers-dropdown__button" ng-click="vm.toggleShowSuppliers()">
 								<span>Suppliers</span>
@@ -71,7 +72,7 @@
 							</li>
 						</ul>
 					</nav>
-					<span flex></span>
+					<span class="flex"></span>
 					<nav class="account-nav">
 						<a href="#">Account</a>
 						<a href="#">Help</a>
@@ -81,25 +82,25 @@
 							<md-icon md-svg-src="assets/images/icons/location.svg"></md-icon>
 							<span ng-bind="vm.postcode"></span>
 						</md-button>
-						<div class="action-window md-whiteframe-11dp" ng-show="vm.showPostcodeForm" ng-include="'views/partials/postcode-form.html'"></div>
+						<div class="action-window md-whiteframe-11dp" ng-show="vm.showPostcodeForm" ng-include="'views/partials/postcode-form.html'" ng-cloak></div>
 					</div>
 					<span class="toolbar-divider"></span>
-					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket">
-						<span class="basket-button__count">5</span>
+					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket" basket-button>
+						<span class="basket-button__count" basket-count ng-cloak></span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
 					</md-button>
 				</div>
 				<loading-indicator></loading-indicator>
 			</md-toolbar>
 
-			<md-toolbar layout="row" class="md-whiteframe-z2" ng-if="!$mdMedia('gt-md')" ng-controller="MenuController as vm" layout="column">
-				<div class="md-toolbar-tools" layout-margin>
+			<md-toolbar class="md-whiteframe-z2 layout-row hide-gt-md" ng-if="!$mdMedia('gt-md')" ng-controller="MenuController as vm">
+				<div class="md-toolbar-tools layout-margin">
 					<md-button class="md-icon-button" aria-label="Menu" ng-click="vm.toggleMenu()">
 						<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
 					</md-button>
 					<search-box class="material-search-wrapper"></search-box>
 					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket">
-						<span class="basket-button__count">5</span>
+						<span class="basket-button__count" basket-count ng-cloak></span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
 					</md-button>
 				</div>
@@ -108,13 +109,13 @@
 
 			<md-content class="content-body">
 				<div ui-view="pre-body"></div>
-				<div ui-view="body" flex></div>
+				<div ui-view="body" class="flex"></div>
 			</md-content>
 
-			<md-sidenav class="md-sidenav-left md-whiteframe-z2" ng-if="!$mdMedia('gt-md')" md-component-id="menu">
+			<md-sidenav class="md-sidenav-left md-whiteframe-z2 hide-gt-md" ng-if="!$mdMedia('gt-md')" md-component-id="menu" ng-cloak>
 				<div ng-controller="MenuController as vm">
-					<md-toolbar layout="row">
-						<div class="md-toolbar-tools" layout-margin>
+					<md-toolbar class="layout-row">
+						<div class="md-toolbar-tools layout-margin">
 							<md-button class="md-icon-button" aria-label="Menu" ng-click="vm.toggleMenu()">
 								<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
 							</md-button>
@@ -130,7 +131,7 @@
 						<div ng-repeat="category in ::vm.categories track by category.name" class="menu-button-wrapper">
 							<md-button class="menu-button md-default-theme" ng-click="vm.openMenu = (vm.openMenu === category.name) ? '' : category.name" ng-class="{'is-open': vm.openMenu === category.name}" aria-label="{{ ::category.name }}">
 								<span ng-bind="::category.name"></span>
-								<span flex></span>
+								<span class="flex"></span>
 								<md-icon class="open-indicator" md-svg-src="/assets/images/icons/chevron-down.svg"></md-icon>
 							</md-button>
 
@@ -148,9 +149,9 @@
 						<hr />
 						<md-button class="menu-link" ng-href="#">Account</md-button>
 						<md-button class="menu-link" ng-href="#">Help</md-button>
-						<md-button>
+						<md-button aria-label="Change location">
 							<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
-							<span>EC2Y 9AR</span>
+							<span ng-bind="vm.postcode"></span>
 						</md-button>
 					</md-content>
 				</div>

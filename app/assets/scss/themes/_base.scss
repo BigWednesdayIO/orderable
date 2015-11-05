@@ -65,3 +65,7 @@ button,
 [ng-click] {
 	touch-action: manipulation;
 }
+
+[ng-cloak] {
+	display: none;
+}

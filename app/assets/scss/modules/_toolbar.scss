@@ -24,3 +24,8 @@ md-toolbar {
 	margin: auto -1px;
 	background: rgba(255, 255, 255, .65);
 }
+
+md-toolbar:not(.md-accent) {
+	background: $md-primary;
+	color: $md-primary-text;
+}
