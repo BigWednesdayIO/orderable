@@ -8,7 +8,7 @@
 			<span ng-class="::{'product-thumb__price--now': vm.product.was_price}" ng-bind="::vm.product.price | currency: '£'"></span>
 			<span ng-show="::vm.product.was_price" class="product-thumb__price--was"  ng-bind="::vm.product.was_price | currency: '£'"></span>
 		</span>
-		<md-button ng-if="vm.addToBasket" class="md-icon-button" aria-label="Add {{ ::vm.product.name }} to basket">
+		<md-button ng-if="vm.basket" ng-click="vm.addToBasket($event)" class="md-icon-button" aria-label="Add {{ ::vm.product.name }} to basket">
 			<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
 		</md-button>
 	</div>

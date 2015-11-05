@@ -3,12 +3,12 @@ function ProductThumbDirective () {
 		restrict: 'EA',
 		scope: {
 			product: '=',
-			addToBasket: '='
+			basket: '='
 		},
 		link: function(scope, element) {
 			element.addClass('product-thumb');
 		},
-		controller: function(productImageBaseUrl) {
+		controller: function(productImageBaseUrl, basketService) {
 			var vm = this;
 
 			vm.product.image = (function(id) {
@@ -20,6 +20,12 @@ function ProductThumbDirective () {
 			})(vm.product.objectID)
 
 			vm.product.id = vm.product.objectID;
+
+			vm.addToBasket = function($event) {
+				$event.preventDefault();
+				basketService
+					.addToBasket();
+			};
 		},
 		controllerAs: 'vm',
 		bindToController: true,
