@@ -26,7 +26,7 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 	service.removeRefinementFromUrl = function(key) {
 		var params = angular.copy(search),
 			ids;
-		if (key === 'category_hierarchy' && params[key].indexOf('.') > -1) {
+		if (key === 'category_hierarchy' && (params[key] || '').indexOf('.') > -1) {
 			ids = params[key].split('.');
 			// Removes last part of chain
 			params[key] = ids.slice(0, ids.length - 1).join('.');
