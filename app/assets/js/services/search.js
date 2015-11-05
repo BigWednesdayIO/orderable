@@ -96,7 +96,7 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 						.getNameForCategory(category.value);
 				}))
 					.then(function(names) {
-						response.facets[index].field = 'category_hierachy';
+						response.facets[index].field = 'category_hierarchy';
 						response.facets[index].values = categories.map(function(category, i) {
 							category.display_name = names[i];
 							return category;
