@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    id = "io.bigwednesday.crateful"
+    version = "0.0.1" >
+
+    <name>Crateful</name>
+
+    <description>A marketplace to make it easy for independent retailers in the eating and drinking out industry to order the supplies they need to operate their businesses</description>
+
+    <author href="http://bigwednesday.io" email="michael@bigwednesday.io">
+        Michael Strutt / Big Wednesday IO
+    </author>
+
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" />
+
+    <access origin="*"/>
+</widget>
