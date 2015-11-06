@@ -6,7 +6,20 @@
 		<title>Crateful by Big Wednesday IO</title>
 		<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1" />
 
-		<base href="/" />
+		<base id="base" href="/" />
+
+		<script>
+			var fileBase = '/';
+			window.isApp = !document.URL.match(/^https?:\//);
+
+			if (window.isApp) {
+				fileBase = document.URL.replace(/.+:\/+(.+)/, function(match, $1) {
+					return '/' + $1;
+				});
+			}
+
+			document.getElementById('base').setAttribute('href', fileBase);
+		</script>
 
 		<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
 		<link rel="favicon" href="favicon.ico" />
@@ -42,7 +55,7 @@
 							<md-content class="sub-nav" ng-mouseenter="vm.showSuppliers()">
 								<ul class="sub-nav__suppliers">
 									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers">
-										<a ng-href="/search/?supplier={{ ::supplier }}" class="sub-nav__supplier__link">
+										<a ng-href="search/?supplier={{ ::supplier }}" class="sub-nav__supplier__link">
 											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier) }}" class="sub-nav__supplier__image" height="60" alt="{{}}" />
 										</a>
 									</li>
@@ -85,7 +98,7 @@
 						<div class="action-window md-whiteframe-11dp" ng-show="vm.showPostcodeForm" ng-include="'views/partials/postcode-form.html'" ng-cloak></div>
 					</div>
 					<span class="toolbar-divider"></span>
-					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket" basket-button>
+					<md-button class="md-icon-button basket-button" ng-href="basket/" aria-label="View basket" basket-button>
 						<span class="basket-button__count" basket-count ng-cloak></span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
 					</md-button>
@@ -99,7 +112,7 @@
 						<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
 					</md-button>
 					<search-box class="material-search-wrapper"></search-box>
-					<md-button class="md-icon-button basket-button" ng-href="/basket/" aria-label="View basket">
+					<md-button class="md-icon-button basket-button" ng-href="basket/" aria-label="View basket">
 						<span class="basket-button__count" basket-count ng-cloak></span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
 					</md-button>
@@ -171,6 +184,6 @@
 		<script src="assets/vendor/lodash/lodash.js"></script>
 		<script src="assets/vendor/fastclick/lib/fastclick.js"></script>
 		<!-- endbower -->
-		<script src="/assets/js/app.js"></script>
+		<script src="assets/js/app.js"></script>
 	</body>
 </html>

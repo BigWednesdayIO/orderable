@@ -1,4 +1,4 @@
-function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider) {
+function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $provide, isApp) {
 	$stateProvider
 		.state('home', {
 			url: '/',
@@ -21,7 +21,19 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider) {
 
 	$urlRouterProvider.otherwise("/");
 
-	$locationProvider.html5Mode(true);
+	$locationProvider.html5Mode({
+		enabled: true,
+		rewriteLinks: true
+	});
+
+	if (isApp) {
+		$provide.decorator('$sniffer', function($delegate) {
+			$delegate.history = false;
+			return $delegate;
+		});
+
+		$locationProvider.hashPrefix('!');
+	}
 }
 
 angular

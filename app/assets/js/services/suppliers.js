@@ -32,7 +32,7 @@ function SuppliersService ($q, browserStorage) {
 		var logos = {
 			'Pub Taverns': 'assets/images/pub-buying-club-logo.jpg',
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
-			'placeholder': '//placehold.it/80x80'
+			'placeholder': 'http://placehold.it/80x80'
 		};
 
 		return logos[supplier] || logos.placeholder;
@@ -42,7 +42,7 @@ function SuppliersService ($q, browserStorage) {
 		var brandImage = {
 			'Pub Taverns': 'assets/images/pub-buying-club-logo.jpg',
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
-			'placeholder': '//placehold.it/86x60?text='
+			'placeholder': 'http://placehold.it/86x60?text='
 		};
 
 		return brandImage[supplier] || brandImage.placeholder + supplier;
