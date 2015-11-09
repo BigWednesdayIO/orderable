@@ -44,16 +44,6 @@
 	&__price {
 		display: flex;
 		font-weight: 600;
-
-		&--now {
-			color: $md-primary;
-		}
-
-		&--was {
-			text-decoration: line-through;
-			margin-left: 8px;
-			font-weight: 400;
-		}
 	}
 
 	&__quantity-wrapper {
@@ -66,23 +56,5 @@
 
 	&:hover .md-button md-icon {
 		color: $md-primary;
-	}
-}
-
-.md-icon-button.md-icon-button--quantity {
-	$button-size: 30px;
-	height: $button-size;
-	min-height: $button-size;
-	width: $button-size;
-	min-width: 0;
-	padding: 5px;
-	line-height: $button-size - 10px;
-	margin: 0;
-
-	md-icon {
-		height: 20px;
-		width: 20px;
-		vertical-align: top;
-		transition: color $transition;
 	}
 }

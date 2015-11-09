@@ -6,7 +6,8 @@ function APIConstant () {
 
 	API.navigation = 'mocks/navigation.json';
 
-	API.search = API.base + 'indexes/crateful-products/query';
+	API.products = API.base + 'indexes/crateful-products';
+	API.search = API.products + '/query';
 	API.search_suggestions = API.base + 'indexes/crateful-suggestions/query'
 
 	API.categories = 'https://raw.githubusercontent.com/BigWednesdayIO/categories-api/master/categories.json';

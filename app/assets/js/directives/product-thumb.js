@@ -31,7 +31,7 @@ function ProductThumbDirective () {
 				.getProductQuantity(vm.product)
 				.then(function(quantity) {
 					vm.quantity = quantity;
-				})
+				});
 		},
 		controllerAs: 'vm',
 		bindToController: true,

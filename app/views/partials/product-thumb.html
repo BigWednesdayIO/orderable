@@ -4,10 +4,7 @@
 		<h3 class="product-thumb__name md-body-1" ng-bind="::vm.product.name"></h3>
 	</div>
 	<div class="product-thumb__actions">
-		<span class="product-thumb__price md-body-2">
-			<span ng-class="::{'product-thumb__price--now': vm.product.was_price}" ng-bind="::vm.product.price | currency: '£'"></span>
-			<span ng-show="::vm.product.was_price" class="product-thumb__price--was"  ng-bind="::vm.product.was_price | currency: '£'"></span>
-		</span>
+		<span class="product-thumb__price md-body-2" price product="vm.product"></span>
 		<md-button ng-if="::vm.basket" ng-show="vm.quantity === 0" ng-click="vm.addToBasket($event, 1)" class="md-icon-button" aria-label="Add {{ ::vm.product.name }} to basket">
 			<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
 		</md-button>

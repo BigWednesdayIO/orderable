@@ -17,6 +17,16 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 					templateUrl: 'views/search.html'
 				}
 			}
+		})
+		.state('product-details', {
+			url: '/product/:id',
+			views: {
+				body: {
+					controller: 'ProductDetailsController as vm',
+					resolve: ProductDetailsController.resolve,
+					templateUrl: 'views/product-details.html'
+				}
+			}
 		});
 
 	$urlRouterProvider.otherwise("/");

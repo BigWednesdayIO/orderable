@@ -1,0 +1,11 @@
+.price {
+	&--now {
+		color: $md-primary;
+	}
+
+	&--was {
+		text-decoration: line-through;
+		margin-left: 8px;
+		font-weight: 400;
+	}
+}
