@@ -1,5 +1,6 @@
 .product-thumb {
 	display: flex;
+	flex-flow: column nowrap;
 
 	&__link {
 		display: flex;
@@ -36,6 +37,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		height: 48px;
 		margin-right: -16px;
 	}
 
@@ -52,5 +54,35 @@
 			margin-left: 8px;
 			font-weight: 400;
 		}
+	}
+
+	&__quantity-wrapper {
+		margin-bottom: 4px;
+	}
+
+	&__quantity {
+		font-size: 18px;
+	}
+
+	&:hover .md-button md-icon {
+		color: $md-primary;
+	}
+}
+
+.md-icon-button.md-icon-button--quantity {
+	$button-size: 30px;
+	height: $button-size;
+	min-height: $button-size;
+	width: $button-size;
+	min-width: 0;
+	padding: 5px;
+	line-height: $button-size - 10px;
+	margin: 0;
+
+	md-icon {
+		height: 20px;
+		width: 20px;
+		vertical-align: top;
+		transition: color $transition;
 	}
 }

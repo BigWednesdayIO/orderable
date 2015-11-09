@@ -8,8 +8,17 @@
 			<span ng-class="::{'product-thumb__price--now': vm.product.was_price}" ng-bind="::vm.product.price | currency: '£'"></span>
 			<span ng-show="::vm.product.was_price" class="product-thumb__price--was"  ng-bind="::vm.product.was_price | currency: '£'"></span>
 		</span>
-		<md-button ng-if="vm.basket" ng-click="vm.addToBasket($event)" class="md-icon-button" aria-label="Add {{ ::vm.product.name }} to basket">
+		<md-button ng-if="::vm.basket" ng-show="vm.quantity === 0" ng-click="vm.addToBasket($event, 1)" class="md-icon-button" aria-label="Add {{ ::vm.product.name }} to basket">
 			<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
 		</md-button>
+		<div ng-if="::vm.basket" ng-show="vm.quantity > 0" class="product-thumb__quantity-wrapper layout-row layout-align-center-center">
+			<md-button class="md-icon-button md-icon-button--quantity" ng-click="vm.changeQuantity($event, -1)" aria-label="Remove 1 from basket">
+				<md-icon md-svg-src="assets/images/icons/minus-circle.svg"></md-icon>
+			</md-button>
+			<span class="product-thumb__quantity" ng-bind="vm.quantity"></span>
+			<md-button class="md-icon-button md-icon-button--quantity" ng-click="vm.changeQuantity($event, +1)" aria-label="Add 1 to basket">
+				<md-icon md-svg-src="assets/images/icons/plus-circle.svg"></md-icon>
+			</md-button>
+		</div>
 	</div>
 </a>

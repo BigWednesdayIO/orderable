@@ -8,7 +8,7 @@
 		height: 18px;
 		min-width: 18px;
 		font-size: 11px;
-		line-height: 19px;
+		line-height: 18px;
 		border-radius: 50%;
 		background: $md-warn;
 		color: $md-warn-text;
@@ -17,5 +17,43 @@
 	&__icon {
 		height: 28px;
 		width: 28px;
+	}
+}
+
+$basket-animation-duration: .75s;
+
+.basket-updated-0 {
+	animation: pulseA $basket-animation-duration;
+}
+
+.basket-updated-1 {
+	animation: pulseB $basket-animation-duration;
+}
+
+@keyframes pulseA {
+	from {
+		transform: scale3d(1, 1, 1) rotateX(0.1deg);
+	}
+
+	50% {
+		transform: scale3d(1.10, 1.10, 1.10) rotateX(0.1deg);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1) rotateX(0.1deg);
+	}
+}
+
+@keyframes pulseB {
+	from {
+		transform: scale3d(1, 1, 1) rotateX(0.1deg);
+	}
+
+	50% {
+		transform: scale3d(1.10, 1.10, 1.10) rotateX(0.1deg);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1) rotateX(0.1deg);
 	}
 }

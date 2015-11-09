@@ -50,6 +50,7 @@
 		&--active {
 			font-weight: 500;
 			color: $md-primary;
+			cursor: default;
 
 			&:hover {
 				text-decoration: none;
