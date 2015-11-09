@@ -43,7 +43,7 @@
 		<main flex layout-margin style="overflow: auto;">
 			<div class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier" ng-if="!vm.search.supplier">
 				<a class="supplier-box__header" ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}">
-					<div class="supplier-box__logo">
+					<div class="supplier-logo supplier-box__logo">
 						<img ng-src="{{ ::vm.getLogoForSupplier(supplier) }}" height="56" width="56" alt />
 					</div>
 					<h2 class="supplier-box__name md-headline flex" ng-bind="supplier"></h2>

@@ -128,7 +128,11 @@ function BasketService ($rootScope, $q, browserStorage, _) {
 		}
 
 		return $q.when(service.basket.order_forms[supplierIndex].line_items[productIndex].quantity);
-	}
+	};
+
+	service.getServerBasket = function() {
+		return $q.when(service.basket);
+	};
 
 	return service;
 }

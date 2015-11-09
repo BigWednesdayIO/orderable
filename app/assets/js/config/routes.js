@@ -27,6 +27,16 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 					templateUrl: 'views/product-details.html'
 				}
 			}
+		})
+		.state('basket', {
+			url: '/basket/',
+			views: {
+				body: {
+					controller: 'BasketController as vm',
+					resolve: BasketController.resolve,
+					templateUrl: 'views/basket.html'
+				}
+			}
 		});
 
 	$urlRouterProvider.otherwise("/");

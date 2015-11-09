@@ -1,0 +1,55 @@
+<main class="content-wrap">
+	<md-content class="basket md-whiteframe-z1 layout-padding">
+		<div class="layout-row layout-align-space-between-center">
+			<h1 class="md-headline">Basket</h1>
+			<div style="text-align: right;">
+				<md-button class="md-primary md-raised">Go to checkout</md-button>
+				<div>Subtotal: <strong ng-bind="vm.basket.subtotal | currency: '£'"></strong></div>
+			</div>
+		</div>
+
+		<ul class="basket__order-forms">
+			<li class="basket__order-form" ng-repeat="order_form in vm.basket.order_forms track by order_form.supplier">
+				<div class="layout-row layout-align-start-center md-accent-panel">
+					<div class="supplier-logo" style="margin: 20px">
+						<img ng-src="{{ ::vm.getLogoForSupplier(order_form.supplier) }}" height="56" width="56" alt />
+					</div>
+					<h2 class="md-headline flex">
+						<a ng-href="search/?supplier={{ ::order_form.supplier }}" ng-bind="::order_form.supplier"></a>
+					</h2>
+					<strong class="basket__order-form__subtotal" ng-bind="order_form.subtotal | currency: '£'"></strong>
+				</div>
+
+				<table class="basket__line-items">
+					<tr class="basket__line-item" ng-repeat="line_item in order_form.line_items track by line_item.product.id">
+						<td class="basket__line-item__thumb-wrapper">
+							<img class="basket__line-item__thumb" ng-src="{{ ::line_item.product.thumbnail_image_url }}" alt="{{ ::line_item.product.name }}" />
+						</td>
+						<td>
+							<h3 class="basket__line-item__name md-subhead">
+								<a ng-href="produc/{{ ::line_item.product.id }}" ng-bind="::line_item.product.name"></a>
+							</h3>
+							<div class="basket__line-item__price" price product="::line_item.product"></div>
+							<div class="basket__line-item__actions">
+								<md-button class="md-primary">Remove</md-button>
+								<!-- <md-button class="md-primary">Save for later</md-button> -->
+							</div>
+						</td>
+						<td>
+							<md-input-container md-no-float class="basket__line-item__quantity md-block">
+								<input ng-model="line_item.quantity" placeholder="Qty">
+							</md-input-container>
+						</td>
+						<td class="basket__line-item__subtotal" ng-bind="line_item.subtotal | currency: '£'"></td>
+					</tr>
+				</table>
+			</li>
+		</ul>
+
+		<div style="text-align: right">
+			<div>Subtotal: <strong ng-bind="vm.basket.subtotal | currency: '£'"></strong></div>
+			<md-button class="md-primary md-raised">Go to checkout</md-button>
+		</div>
+
+	</md-content>
+</main>
