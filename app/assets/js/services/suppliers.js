@@ -48,6 +48,16 @@ function SuppliersService ($q, browserStorage) {
 		return brandImage[supplier] || brandImage.placeholder + supplier;
 	};
 
+	service.getLoyaltySchemeForSupplier = function(supplier) {
+		return {
+			supplier: supplier,
+			logo: service.getLogoForSupplier(supplier),
+			brandImage: service.getBrandImageForSupplier(supplier),
+			name: supplier + ' Rewards',
+			label: supplier + ' Rewards number'
+		};
+	};
+
 	return service;
 }
 

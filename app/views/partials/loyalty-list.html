@@ -1,0 +1,11 @@
+<ul class="loyalty-list">
+	<li class="loyalty-list__item layout-row layout-align-start-center" ng-repeat="loyaltyScheme in vm.loyaltySchemes track by loyaltyScheme.supplier">
+		<div class="supplier-logo">
+			<img ng-src="{{ ::loyaltyScheme.logo }}" height="56" width="56" alt />
+		</div>
+		<h3 class="loyalty-list__name md-subhead flex flex-gt-sm-25" ng-bind="::loyaltyScheme.name"></h3>
+		<md-input-container md-no-float class="loyalty-list__input flex-sm-100 flex-md-50 flex-gt-md-25">
+			<input ng-model="loyaltyScheme.number" placeholder="{{ ::loyaltyScheme.label }}" />
+		</md-input-container>
+	</li>
+</ul>

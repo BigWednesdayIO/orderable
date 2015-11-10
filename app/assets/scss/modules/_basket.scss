@@ -1,20 +1,38 @@
 // Page-specific
 
 .basket {
-	max-width: 960px;
-	margin: 0 auto;
+	background: white;
+	margin: 0 auto 40px;
 
 	@media (min-width: $bp-large) {
 		margin-top: 20px;
 	}
 
+	&__actions {
+		text-align: right;
+
+		.md-button {
+			display: block;
+			margin: 0 0 8px auto;
+		}
+
+		.md-button + &__subtotal,
+		&__subtotal + .md-button {
+			margin-top: 16px;
+		}
+	}
+
 	&__order-forms {
 		padding: 0;
+		margin: 16px 0;
 		list-style-type: none;
 		border-bottom: 4px solid $divider-color;
 	}
 
 	&__order-form {
+		position: relative;
+		overflow: hidden;
+
 		&__subtotal {
 			padding-right: 10px;
 
@@ -99,12 +117,33 @@
 		&__quantity {
 			margin: auto;
 			padding: 0;
-			width: 2em;
+			width: 3em;
 			text-align: center;
+		}
+
+		&__update-btn {
+			position: absolute;
+			right: 0;
+			min-width: 0;
+			margin: 0;
+			opacity: 0;
+			transform: translateX(150%);
+			transition: transform $transition, opacity $transition;
+
+			@media (min-width: $bp-medium) {
+				right: 15px;
+			}
+
+			&.is-visible {
+				opacity: 1;
+				transform: translateX(0);
+			}
 		}
 
 		&__subtotal {
 			text-align: right;
+			line-height: 36px;
+			min-width: 65px;
 		}
 	}
 }

@@ -126,8 +126,8 @@
 				<div ui-view="body" class="flex"></div>
 			</md-content>
 
-			<md-sidenav class="md-sidenav-left md-whiteframe-z2 hide-gt-md" ng-if="!$mdMedia('gt-md')" md-component-id="menu" ng-cloak>
-				<div ng-controller="MenuController as vm">
+			<md-sidenav class="md-sidenav-left md-whiteframe-z2 hide-gt-md" md-component-id="menu" ng-cloak>
+				<div ng-controller="MenuController as vm" ng-if="!$mdMedia('gt-md')">
 					<md-toolbar class="layout-row">
 						<div class="md-toolbar-tools layout-margin">
 							<md-button class="md-icon-button" aria-label="Menu" ng-click="vm.toggleMenu()">

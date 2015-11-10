@@ -41,15 +41,17 @@
 		</aside>
 
 		<main flex layout-margin style="overflow: auto;">
-			<div class="supplier-box md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier" ng-if="!vm.search.supplier">
-				<a class="supplier-box__header" ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}">
-					<div class="supplier-logo supplier-box__logo">
+			<div class="content-box featured md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier" ng-if="!vm.search.supplier">
+				<a class="content-box__header layout-row layout-align-space-between-center" ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}">
+					<div class="supplier-logo content-box__logo">
 						<img ng-src="{{ ::vm.getLogoForSupplier(supplier) }}" height="56" width="56" alt />
 					</div>
-					<h2 class="supplier-box__name md-headline flex" ng-bind="supplier"></h2>
-					<md-button class="supplier-box__more md-primary">More</md-button>
+					<h2 class="content-box__title md-headline flex" ng-bind="supplier"></h2>
+					<div class="content-box__action">
+						<md-button class="featured__more md-primary">More</md-button>
+					</div>
 				</a>
-				<ul class="supplier-box__items">
+				<ul class="featured__items">
 					<li product-thumb product="hit" basket="false" ng-repeat="hit in hits track by hit.objectID"></li>
 				</ul>
 			</div>
