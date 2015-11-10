@@ -2,13 +2,13 @@ angular
 	.module('app')
 	.constant('sortOptions', [
 		{
-			display_name: 'Relevance',
+			display_name: 'Sort: Relevance',
 			value: 'relevance'
 		}, {
-			display_name: 'Price: High to Low',
-			value: 'price_desc'
+			display_name: 'Sort: Price low to high',
+			value: 'price.asc'
 		}, {
-			display_name: 'Price: Low to High',
-			value: 'price_asc'
+			display_name: 'Sort: Price high to low',
+			value: 'price.desc'
 		}
 	]);

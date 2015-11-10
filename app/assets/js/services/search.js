@@ -37,9 +37,9 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 	};
 
 	service.getFiltersFromUrl = function() {
-		var reservedWords = ['query'];
+		var reservedWords = ['query', 'sort'];
 
-		return _.map($location.search(), function(value, key) {
+		return _.map(search, function(value, key) {
 			return {
 				field: key,
 				term: value
@@ -47,6 +47,21 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 		}).filter(function(filter) {
 			return reservedWords.indexOf(filter.field) === -1;
 		});
+	};
+
+	service.getSortOptionFromUrl = function() {
+		var sort = search.sort;
+
+		if (!sort || sort === 'relevance') {
+			return;
+		}
+
+		sort = sort.split('.');
+
+		return [{
+			field: sort[0],
+			direction: sort[1]
+		}];
 	};
 
 	service.getSearchSuggestions = function(query) {

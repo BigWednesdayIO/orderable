@@ -1,5 +1,5 @@
 <div class="content-wrap">
-	<div layout="row" layout-padding>
+	<div class="layout-gt-sm-row layout-align-space-between-center layout-padding">
 		<div class="breadcrumbs" ng-controller="BreadcrumbsController as vm" ng-show="vm.breadcrumbs.length > 1">
 			<span ng-repeat="crumb in vm.breadcrumbs track by crumb.href">
 				<span ng-if="!$last">
@@ -12,20 +12,20 @@
 				</span>
 			</span>
 		</div>
+
+		<div class="sort-options layout-row layout-align-space-between-center">
+			<div style="margin-right: 16px; margin-top: 4px;"><strong ng-bind="vm.hits.length < 20 ? vm.hits.length : '1000+'"></strong> results</div>
+			<md-input-container md-no-float>
+				<md-select ng-model="vm.sortBy" ng-change="vm.applySort()" aria-label="Sorting options">
+					<md-option ng-repeat="option in vm.sortOptions" ng-value="option.value" ng-bind="option.display_name"></md-option>
+				</md-select>
+			</md-input-container>
+		</div>
 	</div>
 
 	<div layout="row" flex>
 		<aside class="hide-sm" layout-margin>
 			<md-content class="md-whiteframe-z1 facets">
-				<!-- <section class="facets__section" ng-if="vm.suppliers">
-					<h3 class="facets__heading md-body-2">Suppliers</h3>
-					<ul class="facets__values">
-						<li ng-repeat="supplier in vm.suppliers track by supplier">
-							<a ng-href="{{ vm.applyRefinementToUrl('supplier', supplier) }}" class="facets__value" ng-bind="::supplier"></a>
-						</li>
-					</ul>
-				</section> -->
-
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
 					<div layout="row" layout-align="space-between start">
 						<h3 class="facets__heading md-body-2" ng-bind="::(facet.display_name || facet.field)"></h3>

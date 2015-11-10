@@ -1,4 +1,4 @@
-function SearchController ($rootScope, $stateParams, $location, suppliersService, searchService, searchResponse) {
+function SearchController ($rootScope, $stateParams, $location, suppliersService, searchService, sortOptions, searchResponse) {
 	var vm = this;
 
 	function bindSearchResponse (response) {
@@ -21,11 +21,20 @@ function SearchController ($rootScope, $stateParams, $location, suppliersService
 
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
 
+	vm.sortOptions = sortOptions;
+
+	vm.sortBy = vm.search.sort || sortOptions[0].value;
+
+	vm.applySort = function() {
+		$location.url(searchService.applyRefinementToUrl('sort', vm.sortBy));
+	};
+
 	$rootScope.$on('$locationChangeSuccess', function() {
 		searchService
 			.getResults({
 				query: $stateParams.query,
-				filters: searchService.getFiltersFromUrl()
+				filters: searchService.getFiltersFromUrl(),
+				sort: searchService.getSortOptionFromUrl()
 			})
 			.then(bindSearchResponse);
 	})
@@ -36,7 +45,8 @@ SearchController.resolve = /* @ngInject */ {
 		return searchService
 			.getResults({
 				query: $stateParams.query,
-				filters: searchService.getFiltersFromUrl()
+				filters: searchService.getFiltersFromUrl(),
+				sort: searchService.getSortOptionFromUrl()
 			});
 	}
 };
