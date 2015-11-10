@@ -6,7 +6,7 @@
 					<a class="breadcrumbs__crumb" ng-href="{{ ::crumb.href }}" ng-bind="::crumb.name"></a>
 					<span class="breadcrumbs__spacer">›</span>
 				</span>
-				<span ng-if="$last">
+				<span ng-if="$last" style="display: inline-block">
 					<span class="breadcrumbs__crumb--final" ng-bind="::crumb.name"></span>
 					<a class="breadcrumbs__remove" ng-href="{{ vm.breadcrumbs[$index - 1].href }}">&times;</a>
 				</span>

@@ -63,17 +63,16 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 	};
 
 	service.getResults = function(params) {
-		// TODO enable this when supplier names are supported
-		/* var filters = params.filters || [],
-			index = _.findIndex(filters, {field: 'suppliers'});
+		var filters = params.filters || [],
+			index = _.findIndex(filters, {field: 'supplier'});
 
 		if (index === -1) {
 			filters.push({
-				field: 'suppliers',
-				term: suppliersService.getCurrentSuppliers()
+				field: 'supplier',
+				terms: suppliersService.getCurrentSuppliers()
 			});
 			params.filters = filters;
-		} */
+		}
 
 		params.hitsPerPage = params.hitsPerPage || 20;
 
