@@ -1,0 +1,19 @@
+.delivery-calendar {
+	position: absolute;
+	top: 72px;
+	left: 0;
+	right: 0;
+	max-width: 380px;
+	background: white;
+	z-index: 9;
+	font-size: 16px;
+
+	&__header {
+		padding: 4px;
+		border-bottom: $divider;
+	}
+
+	&__options {
+		padding: 0 8px;
+	}
+}

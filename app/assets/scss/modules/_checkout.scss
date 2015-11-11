@@ -1,0 +1,117 @@
+.checkout {
+	padding-top: 16px;
+
+	&__container {
+		padding: 12px 20px;
+		background: white;
+	}
+
+	&__heading {
+		padding-bottom: 12px;
+		border-bottom: $divider;
+		margin: 0 0 24px;
+	}
+
+	&__form-section {
+		&__heading {
+			padding: 0 0 16px;
+			margin: 0;
+			color: rgba(0, 0, 0, .54);
+
+			@media (min-width: $bp-large) {
+				padding-top: 0;
+			}
+		}
+
+		& + & {
+			margin-top: 16px;
+
+			@media (min-width: $bp-large) {
+				margin-top: 32px;
+			}
+		}
+
+		& + & &__heading {
+			padding-top: 24px;
+			border-top: $divider;
+
+			@media (min-width: $bp-large) {
+				padding-top: 32px;
+				border: 0 none;
+			}
+		}
+
+		@media (min-width: $bp-large) {
+			& + & &__fields {
+				padding-top: 32px;
+				border-top: $divider;
+			}
+		}
+	}
+
+	&__delivery-window {
+		position: relative;
+
+		& + & {
+			margin-top: 24px;
+		}
+	}
+
+	&__sign-option,
+	&__delivery-option {
+		font-size: 16px;
+	}
+
+	&__delivery-option {
+		margin-top: 8px;
+
+		&__current {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+
+	&__summary {
+		@media (min-width: $bp-medium) {
+			width: 320px;
+		}
+
+		&__details {
+			th, td {
+				padding: 2px 0;
+			}
+
+			th {
+				font-weight: normal;
+				text-align: left;
+				color: rgba(0, 0, 0, .54);
+			}
+
+			td {
+				font-size: 16px;
+				text-align: right;
+			}
+		}
+
+		&__total {
+			th, td {
+				padding-top: 32px;
+			}
+
+			th {
+				color: inherit;
+				font-size: 24px;
+			}
+
+			td {
+				vertical-align: bottom;
+				line-height: 26px;
+			}
+		}
+	}
+
+	&__action {
+		margin: 16px 0 8px;
+		width: 100%;
+	}
+}

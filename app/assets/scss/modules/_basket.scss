@@ -23,9 +23,7 @@
 	}
 
 	&__order-forms {
-		padding: 0;
 		margin: 16px 0;
-		list-style-type: none;
 		border-bottom: 4px solid $divider-color;
 	}
 
@@ -40,11 +38,6 @@
 				padding-right: 20px;
 			}
 		}
-	}
-
-	&__line-items {
-		width: 100%;
-		border-collapse: collapse;
 	}
 
 	&__line-item {

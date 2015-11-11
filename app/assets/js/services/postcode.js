@@ -16,7 +16,8 @@ function PostcodeService ($rootScope, $q, $mdDialog, browserStorage) {
 				targetEvent: $event,
 				templateUrl: 'views/partials/postcode-dialog.html',
 				controller: 'PostcodeController',
-				controllerAs: 'vm'
+				controllerAs: 'vm',
+				escapeToClose: false
 			})
 			.then(function(postcode) {
 				if (postcode) {

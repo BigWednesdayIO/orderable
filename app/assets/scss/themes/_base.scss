@@ -90,3 +90,74 @@ h1, h2, h3, h4, h5, h6 {
 		text-decoration: underline;
 	}
 }
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.unstyled-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.md-button.align-text {
+	margin: 0 -6px;
+}
+
+.md-dialog--padded {
+	padding: 20px;
+
+	.md-actions {
+		padding: 0;
+		margin-bottom: -8px;
+	}
+}
+
+md-radio-group {
+	&.layout-row,
+	&.layout-gt-sm-row {
+		@media (min-width: $bp-medium) {
+			md-radio-button + md-radio-button {
+				margin-left: 0;
+			}
+		}
+	}
+}
+
+md-tabs.custom-tabs .md-tab {
+	color: rgba(0,0,0,0.54);
+
+	&.md-active {
+		color: $md-primary;
+	}
+}
+
+.calendar-date {
+	padding: 8px;
+	margin: 0;
+	line-height: normal;
+
+	&__day {
+		display: block;
+		margin-bottom: 4px;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	&__date {
+		display: block;
+		height: 35px;
+		width: 35px;
+		line-height: 35px;
+		text-align: center;
+		border-radius: 50%;
+		margin: 0 auto;
+
+		.md-primary & {
+			background: $md-primary;
+			color: $md-primary-text;
+		}
+	}
+}

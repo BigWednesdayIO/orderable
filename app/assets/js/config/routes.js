@@ -37,6 +37,16 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 					templateUrl: 'views/basket.html'
 				}
 			}
+		})
+		.state('checkout', {
+			url: '/checkout/',
+			views: {
+				body: {
+					controller: 'CheckoutController as vm',
+					resolve: CheckoutController.resolve,
+					templateUrl: 'views/checkout.html'
+				}
+			}
 		});
 
 	$urlRouterProvider.otherwise("/");

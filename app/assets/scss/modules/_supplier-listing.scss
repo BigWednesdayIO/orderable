@@ -35,9 +35,6 @@
 	&__products {
 		display: flex;
 		flex-flow: row wrap;
-		padding: 0;
-		margin: 0;
-		list-style-type: none;
 
 		.product-thumb {
 			display: inline-flex;

@@ -10,6 +10,8 @@ function SearchController ($rootScope, $stateParams, $location, suppliersService
 
 		vm.hits = response.hits;
 
+		vm.totalHits = response.totalHits;
+
 		vm.search = $location.search();
 	}
 

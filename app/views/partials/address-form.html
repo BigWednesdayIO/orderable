@@ -1,0 +1,47 @@
+<md-dialog class="md-dialog--padded">
+	<md-dialog-content>
+		<h2 class="md-headline">Edit address</h2>
+		<form>
+			<div class="layout-row">
+				<md-input-container class="flex-gt-sm-50">
+					<label>Name</label>
+					<input ng-model="vm.address.name" required />
+				</md-input-container>
+			</div>
+			<md-input-container>
+				<label>Company Name</label>
+				<input ng-model="vm.address.company" required />
+			</md-input-container>
+			<md-input-container>
+				<label>Address</label>
+				<input ng-model="vm.address.line_1" required />
+			</md-input-container>
+			<md-input-container>
+				<label>Address line 2</label>
+				<input ng-model="vm.address.line_2" />
+			</md-input-container>
+			<md-input-container ng-show="vm.address.line_2 || vm.address.line_3">
+				<label>Address line 3</label>
+				<input ng-model="vm.address.line_3" />
+			</md-input-container>
+			<div class="layout-gt-sm-row">
+				<md-input-container class="flex">
+					<label>City</label>
+					<input ng-model="vm.address.city" required />
+				</md-input-container>
+				<md-input-container class="flex">
+					<label>County</label>
+					<input ng-model="vm.address.region" />
+				</md-input-container>
+				<md-input-container class="flex">
+					<label>Postcode</label>
+					<input ng-model="vm.address.postcode" required />
+				</md-input-container>
+			</div>
+		</form>
+	</md-dialog-content>
+	<div class="md-actions">
+		<md-button class="md-primary" ng-click="vm.cancel()">Cancel</md-button>
+		<md-button class="md-primary md-raised" ng-click="vm.save()">Save</md-button>
+	</div>
+</md-dialog>

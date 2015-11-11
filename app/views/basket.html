@@ -3,12 +3,12 @@
 		<div class="layout-row layout-align-space-between-center">
 			<h1 class="md-headline" style="padding-left: 25px;">Basket</h1>
 			<div class="basket__actions">
-				<md-button class="md-primary md-raised">Go to checkout</md-button>
+				<md-button class="md-primary md-raised" ng-click="vm.beginCheckout()">Go to checkout</md-button>
 				<div class="basket__actions__subtotal">Subtotal: <strong ng-bind="vm.basket.subtotal | currency: '£'"></strong></div>
 			</div>
 		</div>
 
-		<ul class="basket__order-forms">
+		<ul class="basket__order-forms unstyled-list">
 			<li class="basket__order-form" ng-repeat="order_form in vm.basket.order_forms track by order_form.supplier">
 				<div class="layout-row layout-align-start-center md-accent-panel">
 					<div class="supplier-logo" style="margin: 20px">
@@ -51,7 +51,7 @@
 
 		<div class="basket__actions">
 			<div class="basket__actions__subtotal">Subtotal: <strong ng-bind="vm.basket.subtotal | currency: '£'"></strong></div>
-			<md-button class="md-primary md-raised">Go to checkout</md-button>
+			<md-button class="md-primary md-raised" ng-click="vm.beginCheckout()">Go to checkout</md-button>
 		</div>
 	</section>
 

@@ -1,4 +1,4 @@
-function BasketController ($rootScope, $timeout, basketService, suppliersService) {
+function BasketController ($rootScope, $state, $timeout, basketService, checkoutService, suppliersService) {
 	var vm = this,
 		blurTimer;
 
@@ -33,6 +33,14 @@ function BasketController ($rootScope, $timeout, basketService, suppliersService
 	vm.basketSuppliers = vm.basket.order_forms.map(function(order_form) {
 		return order_form.supplier;
 	});
+
+	vm.beginCheckout = function() {
+		checkoutService
+			.beginCheckout(vm.basket)
+			.then(function() {
+				$state.go('checkout');
+			});
+	};
 }
 
 BasketController.resolve = /* @ngInject */ {
