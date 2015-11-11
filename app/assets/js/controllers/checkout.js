@@ -1,14 +1,9 @@
-function CheckoutController ($timeout, checkoutService, addressService, suppliersService, checkoutData, deliveryDates) {
+function CheckoutController ($scope, $document, $timeout, checkoutService, addressService, suppliersService, checkoutData, deliveryDates) {
 	var vm = this;
 
 	vm.checkout = checkoutData;
 
 	vm.deliveryDates = deliveryDates;
-
-	vm.checkout.basket.order_forms = vm.checkout.basket.order_forms.map(function(order_form) {
-		order_form.delivery_window = vm.deliveryDates[order_form.supplier][0].windows[0];
-		return order_form;
-	});
 
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
 
@@ -19,18 +14,6 @@ function CheckoutController ($timeout, checkoutService, addressService, supplier
 			.then(function(newAddress) {
 				vm.checkout[addressName] = newAddress;
 			});
-	};
-
-	vm.changeWindow = function(order_form) {
-		vm.showOptions = order_form.supplier;
-		vm.showDay = order_form.delivery_window.date;
-	};
-
-	vm.selectWindow = function(order_form, deliveryWindow) {
-		order_form.delivery_window = deliveryWindow;
-		$timeout(function() {
-			vm.showOptions = false;
-		}, 200);
 	};
 }
 

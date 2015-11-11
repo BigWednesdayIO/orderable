@@ -1,0 +1,32 @@
+<div class="checkout__delivery-option" ng-class="{'checkout__delivery-option--open': vm.showOptions}">
+	<md-icon md-svg-src="assets/images/icons/event.svg"></md-icon>
+	<span class="checkout__delivery-option__current"><span ng-bind="vm.orderForm.delivery_window.date_display_name"></span>, <span ng-bind="vm.orderForm.delivery_window.display_name"></span> (<span ng-bind="vm.orderForm.delivery_window.price | currency: '£'"></span>)</span>
+	<md-button class="md-primary" ng-click="vm.changeWindow()">Change window</md-button>
+
+	<div class="delivery-calendar md-whiteframe-z2" ng-show="vm.showOptions">
+		<div class="delivery-calendar__header layout-row layout-align-center">
+			<md-button class="calendar-date" ng-repeat="delivery in ::vm.deliveryDates track by delivery.date" ng-click="vm.showDay = delivery.date" ng-class="{'md-primary': vm.showDay === delivery.date}" aria-label="{{ ::delivery.display_name }}">
+				<span class="calendar-date__day" ng-bind="::delivery.display_name.split(',')[0]"></span>
+				<span class="calendar-date__date" ng-bind="::delivery.date | date: 'd'"></span>
+			</md-button>
+		</div>
+
+		<div class="delivery-calendar__options">
+			<div ng-repeat="delivery in ::vm.deliveryDates track by delivery.date" ng-show="vm.showDay === delivery.date">
+				<md-list>
+					<md-list-item ng-repeat="window in ::delivery.windows track by $index" style="position: relative;">
+						<md-button class="md-no-style" ng-class="{'md-primary': vm.orderForm.delivery_window === window}" ng-click="vm.selectWindow(window)" ng-disabled="!window.available">
+							<div class="layout-row">
+								<span ng-bind="::($index === 0 ? window.date_display_name + ', ' : '') + window.display_name"></span>
+								<span class="flex"></span>
+								<span ng-show="::window.available" ng-bind="::window.price | currency: '£'"></span>
+								<span ng-hide="::window.available">SOLD OUT</span>
+							</div>
+						</md-button>
+						<md-divider ng-if="::$first"></md-divider>
+					</md-list-item>
+				</md-list>
+			</div>
+		</div>
+	</div>
+</div>
