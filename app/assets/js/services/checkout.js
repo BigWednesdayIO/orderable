@@ -1,40 +1,13 @@
-function CheckoutService ($http, $q) {
+function CheckoutService ($http, $q, $mdDialog) {
 	var service = {},
 		checkout;
 
 	service.beginCheckout = function(basket) {
 		// Post basket to API to kick things off
 		checkout = {
-			delivery_address: {
-				name: 'Full Name',
-				company: 'A Company',
-				line_1: '234 High Street',
-				line_2: null,
-				line_3: null,
-				city: 'London',
-				region: 'London',
-				postcode: 'SW1 1AB',
-				country: 'GB'
-			},
-			billing_address: {
-				name: 'Full Name',
-				email: 'test_customer@bigwednesday.io',
-				company: 'A Company',
-				line_1: '234 High Street',
-				line_2: null,
-				line_3: null,
-				city: 'London',
-				region: 'London',
-				postcode: 'SW1 1AB',
-				country: 'GB'
-			},
-			payment: {
-				card_number: '4242424242424242',
-				card_type: 'VISA',
-				csc: '123',
-				expiry_month: 8,
-				expiry_year: 2016
-			},
+			delivery_address: {},
+			billing_address: {},
+			payment: {},
 			basket: basket
 		};
 
@@ -60,6 +33,20 @@ function CheckoutService ($http, $q) {
 		}
 
 		return deferred.promise;
+	};
+
+	service.editPayment = function($event, paymentInfo) {
+		return $mdDialog
+			.show({
+				targetEvent: $event,
+				templateUrl: 'views/partials/payment-form.html',
+				controller: 'PaymentController',
+				controllerAs: 'vm',
+				locals: {
+					paymentInfo: angular.copy(paymentInfo)
+				},
+				clickOutsideToClose: true
+			});
 	};
 
 	return service;

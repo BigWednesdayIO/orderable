@@ -161,3 +161,22 @@ md-tabs.custom-tabs .md-tab {
 		}
 	}
 }
+
+fieldset {
+	position: relative;
+	padding: 20px 0 0;
+	margin: 0;
+	border: 0 none;
+
+	legend {
+		position: absolute;
+		top: 7px;
+		color: rgba(0,0,0,0.54);
+		font-size: 14px * .75;
+		line-height: 14px;
+	}
+
+	md-input-container {
+		display: inline-flex;
+	}
+}

@@ -38,7 +38,16 @@
 				</li>
 				<li class="checkout__form-section layout-gt-md-row">
 					<h2 class="checkout__form-section__heading md-subhead flex-gt-md-25">Payment</h2>
-					<div class="checkout__form-section__fields flex">[form fields]</div>
+					<div class="checkout__form-section__fields flex">
+						<div style="font-size: 16px;">
+							<div ng-show="vm.checkout.payment.card_number">
+								<span ng-bind="vm.checkout.payment.card_type"></span>: <span ng-bind="vm.checkout.payment.card_number | cardMask"></span>, Expires <span ng-bind="vm.checkout.payment.expiry_month"></span>/<span ng-bind="vm.checkout.payment.expiry_year"></span>
+							</div>
+						</div>
+						<md-button class="md-primary align-text" ng-click="vm.editPayment($event)">Edit payment method</md-button>
+						<address-summary address="vm.checkout.billing_address" style="margin-top: 12px;"></address-summary>
+						<md-button class="md-primary align-text" ng-click="vm.editAddress($event, 'billing')">Edit billing address</md-button>
+					</div>
 				</li>
 			</ol>
 		</main>

@@ -18,7 +18,7 @@ function DeliveryWindowDirective ($document) {
 				$document.off('click', closeDeliveryWindow)
 			});
 		},
-		controller: function($scope, $timeout) {
+		controller: function($rootScope, $scope, $timeout) {
 			var vm = this;
 
 			$scope.closeOptions = function() {
@@ -26,6 +26,7 @@ function DeliveryWindowDirective ($document) {
 			};
 
 			vm.orderForm.delivery_window = vm.deliveryDates[0].windows[0];
+			$rootScope.$emit('deliveryUpdated');
 
 			vm.showDay = vm.deliveryDates[0].date;
 
@@ -35,6 +36,7 @@ function DeliveryWindowDirective ($document) {
 
 			vm.selectWindow = function(deliveryWindow) {
 				vm.orderForm.delivery_window = deliveryWindow;
+				$rootScope.$emit('deliveryUpdated');
 				$timeout(function() {
 					vm.showOptions = false;
 				}, 200);

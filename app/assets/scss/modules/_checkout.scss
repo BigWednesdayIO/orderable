@@ -13,6 +13,12 @@
 	}
 
 	&__form-section {
+		margin-bottom: 16px;
+
+		@media (min-width: $bp-large) {
+			margin-bottom: 32px;
+		}
+
 		&__heading {
 			padding: 0 0 16px;
 			margin: 0;
@@ -20,14 +26,6 @@
 
 			@media (min-width: $bp-large) {
 				padding-top: 0;
-			}
-		}
-
-		& + & {
-			margin-top: 16px;
-
-			@media (min-width: $bp-large) {
-				margin-top: 32px;
 			}
 		}
 

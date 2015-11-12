@@ -1,13 +1,19 @@
 <md-dialog class="md-dialog--padded">
 	<md-dialog-content>
 		<h2 class="md-headline">Edit address</h2>
-		<form>
+		<form name="vm.addressForm" ng-submit="vm.save($event)">
 			<div class="layout-row">
 				<md-input-container class="flex-gt-sm-50">
 					<label>Name</label>
 					<input ng-model="vm.address.name" required />
 				</md-input-container>
 			</div>
+
+			<md-input-container ng-repeat="extraField in ::vm.extraFields">
+				<label ng-bind="extraField.label"></label>
+				<input type="{{ ::extraField.type || 'text' }}" ng-model="vm.address[extraField.field]" ng-requited="extraField.required" />
+			</md-input-container>
+
 			<md-input-container>
 				<label>Company Name</label>
 				<input ng-model="vm.address.company" required />

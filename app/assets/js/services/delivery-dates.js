@@ -4,7 +4,19 @@ function DeliveryDatesService ($q, $filter) {
 	var $date = $filter('date');
 
 	service.getDatesForOrderForm = function(order_form) {
-		var dates = ['2015-11-11', '2015-11-12', '2015-11-13'].map(function(date, i) {
+		var dates = [
+				new Date(),
+				new Date(),
+				new Date()
+			],
+			now = dates[0],
+			dayOfMonth = now.getDay();
+
+		dates = dates.map(function(date, i) {
+			// Now days in a row, starting today
+			date.setDate(dayOfMonth + i);
+			return $date(date, 'yyyy-MM-dd');
+		}).map(function(date, i) {
 			return {
 				date: date,
 				windows: [
@@ -35,11 +47,8 @@ function DeliveryDatesService ($q, $filter) {
 					}
 				]
 			};
-		});
-
-		dates = dates.map(function(delivery) {
-			var now = new Date(),
-				isToday = $date(delivery.date, 'yyyy MM dd') === $date(now, 'yyyy MM dd');
+		}).map(function(delivery) {
+			var isToday = $date(delivery.date, 'yyyy MM dd') === $date(now, 'yyyy MM dd');
 
 			delivery.display_name = isToday ? 'Today' : $date(delivery.date, 'EEE, MMM d');
 

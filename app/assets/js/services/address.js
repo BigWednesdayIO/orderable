@@ -1,7 +1,7 @@
 function AddressService ($mdDialog, $q) {
 	var service = this;
 
-	service.editAddress = function($event, address) {
+	service.editAddress = function($event, address, extraFields) {
 		return $mdDialog
 			.show({
 				targetEvent: $event,
@@ -9,7 +9,8 @@ function AddressService ($mdDialog, $q) {
 				controller: 'AddressController',
 				controllerAs: 'vm',
 				locals: {
-					address: angular.copy(address)
+					address: angular.copy(address),
+					extraFields: extraFields
 				},
 				clickOutsideToClose: true
 			});

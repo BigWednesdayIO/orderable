@@ -1,0 +1,34 @@
+<md-dialog class="md-dialog--padded" style="width: 87.5%; max-width: 360px;">
+	<md-dialog-content>
+		<h2 class="md-headline">Edit payment method</h2>
+		<form name="vm.paymentForm" ng-submit="vm.save($event)">
+			<md-input-container>
+				<label>Credit or debit card</label>
+				<input type="tel" ng-model="vm.payment.card_number" required pattern="([0-9]{4}(\s+|-)?){4}" />
+			</md-input-container>
+			
+			<div class="layout-row layout-align-space-between-end" style="margin-bottom: 24px">
+				<fieldset>
+					<legend>Expiration date</legend>
+					<md-input-container md-no-float style="width: 3em">
+						<input type="tel" placeholder="MM" ng-model="vm.payment.expiry_month" required maxlength="2" pattern="[0-1]?[0-9]" />
+					</md-input-container>
+					<span>&nbsp;/&nbsp;</span>
+					<md-input-container md-no-float style="width: 3em">
+						<input type="tel" placeholder="YY" ng-model="vm.payment.expiry_year" required maxlength="4" pattern="(20)?[0-9]{2}" />
+					</md-input-container>
+				</fieldset>
+
+				<md-input-container md-no-float>
+					<label>Security code</label>
+					<input type="tel" placeholder="CVC" ng-model="vm.payment.csc" style="width: 4em" required maxlength="3" pattern="[0-9]{3}" />
+				</md-input-container>
+			</div>
+
+		</form>
+	</md-dialog-content>
+	<div class="md-actions">
+		<md-button class="md-primary" ng-click="vm.cancel()">Cancel</md-button>
+		<md-button class="md-primary md-raised" ng-click="vm.save()">Save</md-button>
+	</div>
+</md-dialog>

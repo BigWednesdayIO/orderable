@@ -1,4 +1,4 @@
-function CheckoutController ($scope, $document, $timeout, checkoutService, addressService, suppliersService, checkoutData, deliveryDates) {
+function CheckoutController ($rootScope, checkoutService, addressService, suppliersService, checkoutData, deliveryDates) {
 	var vm = this;
 
 	vm.checkout = checkoutData;
@@ -8,13 +8,38 @@ function CheckoutController ($scope, $document, $timeout, checkoutService, addre
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
 
 	vm.editAddress = function($event, addressName) {
+		var extraFields = [];
+
+		if (addressName === 'billing') {
+			extraFields.push({
+				label: 'Email address',
+				type: 'email',
+				field: 'email',
+				required: true
+			});
+		}
+
 		addressName += '_address';
 		addressService
-			.editAddress($event, vm.checkout[addressName])
+			.editAddress($event, vm.checkout[addressName], extraFields)
 			.then(function(newAddress) {
 				vm.checkout[addressName] = newAddress;
 			});
 	};
+
+	vm.editPayment = function($event) {
+		checkoutService
+			.editPayment($event, vm.checkout.payment)
+			.then(function(newPayment) {
+				vm.checkout.payment = newPayment;
+			});
+	};
+
+	$rootScope.$on('deliveryUpdated', function() {
+		vm.checkout.basket.shipping_total = vm.checkout.basket.order_forms.reduce(function(total, order_form) {
+			return total + (((order_form.delivery_window || {}).price || 0) * 100);
+		}, 0) / 100;
+	});
 }
 
 CheckoutController.resolve = /* @ngInject */ {
