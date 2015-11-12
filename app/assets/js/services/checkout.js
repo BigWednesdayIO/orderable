@@ -1,4 +1,4 @@
-function CheckoutService ($http, $q, $mdDialog) {
+function CheckoutService ($http, $q, $mdDialog, basketService, API) {
 	var service = {},
 		checkout;
 
@@ -21,8 +21,15 @@ function CheckoutService ($http, $q, $mdDialog) {
 		return $q.when(checkout);
 	};
 
-	service.getCheckout = function() {
+	service.getCheckout = function(id) {
 		var deferred = $q.defer();
+
+		if (id) {
+			return $http({
+				method: 'GET',
+				url: API.checkouts + '/' + id
+			});
+		}
 
 		if (checkout) {
 			deferred.resolve(checkout);
@@ -48,6 +55,29 @@ function CheckoutService ($http, $q, $mdDialog) {
 				clickOutsideToClose: true
 			});
 	};
+
+	service.completeCheckout = function(data) {
+		if (!data.delivery_address.name || !data.billing_address.name || !data.payment.card_number) {
+			return $q.reject({
+				message: 'Please fill out all parts of the checkout form'
+			});
+		}
+
+		data.payment.expiry_year += 2000;
+
+		return $http({
+			method: 'POST',
+			url: API.checkouts,
+			data: data
+		})
+			.then(function(checkoutResponse) {
+				return basketService
+					.createBasket()
+					.then(function() {
+						return checkoutResponse;
+					});
+			});
+	}
 
 	return service;
 }

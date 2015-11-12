@@ -1,4 +1,4 @@
-function CheckoutController ($rootScope, checkoutService, addressService, suppliersService, checkoutData, deliveryDates) {
+function CheckoutController ($rootScope, $state, checkoutService, addressService, suppliersService, checkoutData, deliveryDates) {
 	var vm = this;
 
 	vm.checkout = checkoutData;
@@ -34,6 +34,16 @@ function CheckoutController ($rootScope, checkoutService, addressService, suppli
 				vm.checkout.payment = newPayment;
 			});
 	};
+
+	vm.completeCheckout = function() {
+		checkoutService
+			.completeCheckout(vm.checkout)
+			.then(function(response) {
+				$state.go('order-confirmation', {
+					id: response.id
+				});
+			});
+	}
 
 	$rootScope.$on('deliveryUpdated', function() {
 		vm.checkout.basket.shipping_total = vm.checkout.basket.order_forms.reduce(function(total, order_form) {

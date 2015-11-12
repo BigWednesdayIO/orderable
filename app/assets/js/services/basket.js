@@ -1,6 +1,18 @@
 function BasketService ($rootScope, $q, browserStorage, _) {
 	var service = {};
 
+	function emptyBakset () {
+		return {
+			id: 'WEB123456',
+			currency: 'GBP',
+			subtotal: 0,
+			tax: 0,
+			total: 0,
+			line_item_count: 0,
+			order_forms: []
+		}
+	};
+
 	function toPence (value) {
 		return value * 100;
 	}
@@ -47,17 +59,17 @@ function BasketService ($rootScope, $q, browserStorage, _) {
 		$rootScope.$emit('basketUpdated', service.basket.line_item_count);
 	}
 
-	service.basket = browserStorage.getItem('basket') || {
-		id: 'WEB123456',
-		currency: 'GBP',
-		subtotal: 0,
-		tax: 0,
-		total: 0,
-		line_item_count: 0,
-		order_forms: []
-	};
+	service.basket = browserStorage.getItem('basket') || emptyBakset();
 
 	calculateTotals();
+
+	service.createBasket = function() {
+		_.forEach(emptyBakset(), function(value, key) {
+			service.basket[key] = value;
+		});
+		calculateTotals();
+		return $q.when(service.basket);
+	}
 
 	service.addToBasket = function(product, quantity) {
 		var supplierIndex = _.findIndex(service.basket.order_forms, {supplier: product.supplier}),

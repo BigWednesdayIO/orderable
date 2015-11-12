@@ -47,6 +47,16 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 					templateUrl: 'views/checkout.html'
 				}
 			}
+		})
+		.state('order-confirmation', {
+			url: '/order-confirmation/:id/',
+			views: {
+				body: {
+					controller: 'OrderConfirmationController as vm',
+					resolve: OrderConfirmationController.resolve,
+					templateUrl: 'views/order-confirmation.html'
+				}
+			}
 		});
 
 	$urlRouterProvider.otherwise("/");

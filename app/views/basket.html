@@ -8,8 +8,8 @@
 			</div>
 		</div>
 
-		<ul class="basket__order-forms unstyled-list">
-			<li class="basket__order-form" ng-repeat="order_form in vm.basket.order_forms track by order_form.supplier">
+		<ul class="order-forms unstyled-list">
+			<li class="order-form" ng-repeat="order_form in vm.basket.order_forms track by order_form.supplier">
 				<div class="layout-row layout-align-start-center md-accent-panel">
 					<div class="supplier-logo" style="margin: 20px">
 						<img ng-src="{{ ::vm.getLogoForSupplier(order_form.supplier) }}" height="56" width="56" alt />
@@ -17,31 +17,31 @@
 					<h2 class="md-headline flex">
 						<a ng-href="search/?supplier={{ ::order_form.supplier }}" ng-bind="::order_form.supplier"></a>
 					</h2>
-					<strong class="basket__order-form__subtotal" ng-bind="order_form.subtotal | currency: '£'"></strong>
+					<strong class="order-form__subtotal" ng-bind="order_form.subtotal | currency: '£'"></strong>
 				</div>
 
-				<table class="basket__line-items">
-					<tr class="basket__line-item" ng-repeat="line_item in order_form.line_items track by line_item.product.id" ng-init="vm.quantity[line_item.product.id] = line_item.quantity">
-						<td class="basket__line-item__thumb-wrapper">
-							<img class="basket__line-item__thumb" ng-src="{{ ::line_item.product.thumbnail_image_url }}" alt="{{ ::line_item.product.name }}" />
+				<table class="line-items">
+					<tr class="line-item" ng-repeat="line_item in order_form.line_items track by line_item.product.id" ng-init="vm.quantity[line_item.product.id] = line_item.quantity">
+						<td class="line-item__thumb-wrapper">
+							<img class="line-item__thumb" ng-src="{{ ::line_item.product.thumbnail_image_url }}" alt="{{ ::line_item.product.name }}" />
 						</td>
 						<td>
-							<h3 class="basket__line-item__name md-subhead">
+							<h3 class="line-item__name md-subhead">
 								<a ng-href="product/{{ ::line_item.product.id }}" ng-bind="::line_item.product.name"></a>
 							</h3>
-							<div class="basket__line-item__price" price product="::line_item.product"></div>
-							<div class="basket__line-item__actions">
+							<div class="line-item__price" price product="::line_item.product"></div>
+							<div class="line-item__actions">
 								<md-button class="md-primary" ng-click="vm.removeFromBasket(line_item.product)">Remove</md-button>
 								<!-- <md-button class="md-primary">Save for later</md-button> -->
 							</div>
 						</td>
 						<td>
-							<md-input-container md-no-float class="basket__line-item__quantity md-block">
+							<md-input-container md-no-float class="line-item__quantity md-block">
 								<input type="number" min="1" ng-model="vm.quantity[line_item.product.id]" placeholder="Qty" ng-focus="vm.quantityFocus[line_item.product.id] = true" ng-blur="vm.handleBlur(line_item)">
 							</md-input-container>
 						</td>
-						<td class="basket__line-item__subtotal">
-							<md-button class="md-primary md-raised basket__line-item__update-btn" ng-class="{'is-visible': vm.quantityFocus[line_item.product.id]}" ng-click="vm.updateQuantity(line_item.product, vm.quantity[line_item.product.id])">Update</md-button>
+						<td class="line-item__subtotal">
+							<md-button class="md-primary md-raised line-item__update-btn" ng-class="{'is-visible': vm.quantityFocus[line_item.product.id]}" ng-click="vm.updateQuantity(line_item.product, vm.quantity[line_item.product.id])">Update</md-button>
 							<span ng-bind="line_item.subtotal | currency: '£'"></span>
 						</td>
 					</tr>

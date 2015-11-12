@@ -1,0 +1,76 @@
+<div class="content-wrap">
+	<div class="layout-gt-sm-row layout-align-space-between-start">
+		<main class="md-whiteframe-z1 layout-margin layout-padding flex" style="background: white">
+			<header class="layout-gt-sm-row layout-align-space-between-center">
+				<h1 class="md-headline">Order confirmation</h1>
+				<p class="md-subhead">Placed on <span ng-bind="::vm.order.created_dt | date: 'EEE, MMM d'"></span> at <span ng-bind="::vm.order.created_dt | date: 'h a'"></span></p>
+			</header>
+
+			<ul class="order-forms unstyled-list">
+				<li class="order-form" ng-repeat="order_form in ::vm.order.basket.order_forms track by order_form.supplier">
+					<div class="layout-row layout-align-start-center md-accent-panel">
+						<div class="supplier-logo" style="margin: 20px">
+							<img ng-src="{{ ::vm.getLogoForSupplier(order_form.supplier) }}" height="56" width="56" alt />
+						</div>
+						<h2 class="md-headline flex">
+							<a ng-href="search/?supplier={{ ::order_form.supplier }}" ng-bind="::order_form.supplier"></a>
+						</h2>
+						<strong class="order-form__subtotal" ng-bind="::order_form.subtotal | currency: '£'"></strong>
+					</div>
+
+					<table class="line-items">
+						<tr class="line-item" ng-repeat="line_item in ::order_form.line_items track by line_item.product.id">
+							<td class="line-item__thumb-wrapper">
+								<img class="line-item__thumb" ng-src="{{ ::line_item.product.thumbnail_image_url }}" alt="{{ ::line_item.product.name }}" />
+							</td>
+							<td>
+								<h3 class="line-item__name md-subhead">
+									<a ng-href="product/{{ ::line_item.product.id }}" ng-bind="::line_item.product.name"></a>
+								</h3>
+								<div class="line-item__price" price product="::line_item.product"></div>
+							</td>
+							<td ng-bind="::line_item.quantity"></td>
+							<td class="line-item__subtotal" ng-bind="::line_item.subtotal | currency: '£'"></td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+
+			<div style="padding: 12px 20px;">
+				<table class="checkout__summary__details">
+					<tbody>
+						<tr>
+							<th scope="row">Item(s)</th>
+							<td ng-bind="::vm.order.basket.subtotal | currency: '£'"></td>
+						</tr>
+						<tr>
+							<th scope="row">Tax</th>
+							<td ng-bind="::vm.order.basket.tax | currency: '£'"></td>
+						</tr>
+						<tr>
+							<th scope="row">Delivery</th>
+							<td>
+								<span ng-show="::vm.order.basket.shipping_total === 0">FREE</span>
+								<span ng-show="::vm.order.basket.shipping_total > 0" ng-bind="::vm.order.basket.shipping_total | currency: '£'"></span>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot class="checkout__summary__total">
+						<tr>
+							<th scope="row">Order total</th>
+							<td ng-bind="::vm.order.basket.total | currency: '£'"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</main>
+
+		<aside class="md-whiteframe-z1 layout-margin layout-padding" style="background: white; min-width: 300px">
+			<h2 class="md-subhead">Delivery address</h2>
+			<address-summary address="::vm.order.delivery_address"></address-summary>
+
+			<h2 class="md-subhead">Billing address</h2>
+			<address-summary address="::vm.order.billing_address"></address-summary>
+		</aside>
+	</div>
+</div>
