@@ -60,7 +60,7 @@
 							<md-content class="sub-nav" ng-mouseenter="vm.showSuppliers()">
 								<ul class="sub-nav__suppliers unstyled-list">
 									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers">
-										<a ng-href="search/?supplier={{ ::supplier }}" class="sub-nav__supplier__link">
+										<a ng-href="{{ ::vm.getUrlForSupplier(supplier) }}" class="sub-nav__supplier__link">
 											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier) }}" class="sub-nav__supplier__image" height="60" alt="{{}}" />
 										</a>
 									</li>
