@@ -55,6 +55,9 @@
 					<li product-thumb product="hit" basket="true" ng-repeat="hit in vm.hits track by hit.objectID"></li>
 				</ul>
 			</div>
+			<div class="layout-row layout-align-space-around-center" style="margin: -16px 0 16px;" ng-hide="vm.hits.length === vm.totalHits">
+				<md-progress-circular md-mode="{{ vm.loadingNextPage ? 'indeterminate' : '' }}"></md-progress-circular>
+			</div>
 		</main>
 	</div>
 </div>

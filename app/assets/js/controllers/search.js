@@ -1,5 +1,39 @@
-function SearchController ($rootScope, $stateParams, $location, suppliersService, searchService, sortOptions, searchResponse) {
-	var vm = this;
+function SearchController ($rootScope, $scope, $stateParams, $location, $element, suppliersService, searchService, sortOptions, searchResponse) {
+	var vm = this,
+		searchPage = 1,
+		raw = $element[0],
+		threshold = 400;
+
+	function getSearchResults () {
+		return searchService
+			.getResults({
+				query: $stateParams.query,
+				filters: searchService.getFiltersFromUrl(),
+				sort: searchService.getSortOptionFromUrl(),
+				page: searchPage
+			})
+	}
+
+	function loadNextPage () {
+		if (vm.loadingNextPage || vm.hits.length === vm.totalHits) {
+			return;
+		}
+
+		vm.loadingNextPage = true;
+		searchPage++;
+
+		getSearchResults()
+			.then(function(response) {
+				vm.hits = vm.hits.concat(response.hits);
+				vm.loadingNextPage = false;
+			});
+	}
+
+	function checkScrollPosition () {
+		if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight - threshold) {
+			loadNextPage();
+		}
+	}
 
 	function bindSearchResponse (response) {
 		vm.facets = response.facets;
@@ -13,6 +47,12 @@ function SearchController ($rootScope, $stateParams, $location, suppliersService
 		vm.totalHits = response.totalHits;
 
 		vm.search = $location.search();
+
+		if (vm.search.supplier) {
+			$element.on('scroll', checkScrollPosition);
+		} else {
+			$element.off('scroll', checkScrollPosition);
+		}
 	}
 
 	bindSearchResponse(searchResponse);
@@ -32,14 +72,14 @@ function SearchController ($rootScope, $stateParams, $location, suppliersService
 	};
 
 	$rootScope.$on('$locationChangeSuccess', function() {
-		searchService
-			.getResults({
-				query: $stateParams.query,
-				filters: searchService.getFiltersFromUrl(),
-				sort: searchService.getSortOptionFromUrl()
-			})
+		searchPage = 1;
+		getSearchResults()
 			.then(bindSearchResponse);
-	})
+	});
+
+	$scope.$on('$destroy', function() {
+		$element.off('scroll', checkScrollPosition);
+	});
 }
 
 SearchController.resolve = /* @ngInject */ {
