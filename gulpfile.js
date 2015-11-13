@@ -6,12 +6,23 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	ngAnnotate = require('gulp-ng-annotate'),
 	wiredep = require('wiredep'),
-	connect = require('gulp-connect');
+	connect = require('gulp-connect'),
+	rev = require('gulp-rev'),
+	minifyCss = require('gulp-minify-css'),
+	uglify = require('gulp-uglify'),
+	usemin = require('gulp-usemin'),
+	del = require('del');
 
 function handleError (err) {
 	console.log(err.toString());
 	this.emit('end');
 }
+
+gulp.task('build:preclean', function() {
+	return del([
+		'build'
+	]);
+});
 
 gulp.task('build:css', function() {
 	return gulp
@@ -42,7 +53,32 @@ gulp.task('build:js', function() {
 		.pipe(connect.reload());
 });
 
-gulp.task('build', ['build:css', 'build:js']);
+gulp.task('build:copy', ['build:preclean', 'build:css', 'build:js'], function() {
+	return gulp
+		.src([
+			'app/**',
+			'!app/assets/{scss,css,js,vendor}{,/**}'
+		])
+		.pipe(gulp.dest('build'));
+});
+
+gulp.task('build:assets', ['build:copy'], function() {
+	return gulp
+		.src('app/index.html')
+		.pipe(usemin({
+			css: [
+				minifyCss(),
+				rev()
+			],
+			js: [
+				uglify(),
+				rev()
+			]
+		}))
+		.pipe(gulp.dest('build'));
+});
+
+gulp.task('build', ['build:assets']);
 
 gulp.task('lint', function() {
 	return gulp

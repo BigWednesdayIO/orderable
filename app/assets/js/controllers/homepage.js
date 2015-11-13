@@ -36,7 +36,11 @@ HomepageController.resolve = /* @ngInject */ {
 			});
 	},
 	homepageHero: function($http) {
-		return $http.get('assets/images/orderable-hero.jpg');
+		return $http({
+			method: 'GET',
+			url: 'assets/images/orderable-hero.jpg',
+			cache: true
+		});
 	}
 };
 
