@@ -8,7 +8,7 @@ machine:
 
 checkout:
   post:
-    - git clone git@github.com:BigWednesdayIO/kubernetes-deployment-scripts.git scripts
+    - git submodule update --init
 
 dependencies:
   cache_directories:
@@ -23,8 +23,8 @@ deployment:
   dev:
     branch: master
     commands:
-      - scripts/rolling_deploy.sh orderable app=orderable development ${PWD} ${PWD}/kubernetes/rc.json
+      - deploy_scripts/rolling_deploy.sh orderable app=orderable development ${PWD} ${PWD}/kubernetes/rc.json
   prod:
     branch: production
     commands:
-      - scripts/rolling_deploy.sh orderable app=orderable production ${PWD} ${PWD}/kubernetes/rc.json
+      - deploy_scripts/rolling_deploy.sh orderable app=orderable production ${PWD} ${PWD}/kubernetes/rc.json
