@@ -4,7 +4,8 @@ function HomepageController (suppliersService, supplierList, featuredSupplierPro
 	vm.suppliers = supplierList.map(function(supplier) {
 		return {
 			name: supplier,
-			logo: suppliersService.getLogoForSupplier(supplier)
+			logo: suppliersService.getLogoForSupplier(supplier),
+			href: 'search/?supplier=' + encodeURIComponent(supplier)
 		};
 	});
 
@@ -35,7 +36,11 @@ HomepageController.resolve = /* @ngInject */ {
 			});
 	},
 	homepageHero: function($http) {
-		return $http.get('assets/images/orderable-hero.jpg');
+		return $http({
+			method: 'GET',
+			url: 'assets/images/orderable-hero.jpg',
+			cache: true
+		});
 	}
 };
 
