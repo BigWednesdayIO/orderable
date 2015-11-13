@@ -15,6 +15,7 @@ dependencies:
     - ~/google-cloud-sdk
   override:
     - scripts/ensure_glcoud_installed.sh
+    - npm install -g gulp
     - gulp build
 
 deployment:
