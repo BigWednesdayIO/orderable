@@ -4,7 +4,7 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 	var path = $location.path().slice(1),
 		search = $location.search();
 
-	$rootScope.$on('$locationChangeSuccess', function() {
+	$rootScope.$on('$locationChangeStart', function() {
 		path = $location.path().slice(1);
 		search = $location.search();
 	});

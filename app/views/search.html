@@ -16,7 +16,7 @@
 		<span class="flex"></span>
 
 		<div class="sort-options layout-row layout-align-space-between-center">
-			<div style="margin-right: 16px; margin-top: 4px;"><strong ng-bind="vm.totalHits < 1000 ? vm.totalHits : '1000+'"></strong> result<span ng-show="vm.totalHits > 1">s</span></div>
+			<div style="margin-right: 16px; margin-top: 4px;"><strong ng-bind="vm.totalHits < 1000 ? vm.totalHits : '1000+'"></strong> result<span ng-show="vm.totalHits !== 1">s</span></div>
 			<md-input-container md-no-float>
 				<md-select ng-model="vm.sortBy" ng-change="vm.applySort()" aria-label="Sorting options">
 					<md-option ng-repeat="option in vm.sortOptions" ng-value="option.value" ng-bind="option.display_name"></md-option>
@@ -43,6 +43,8 @@
 		</aside>
 
 		<main flex layout-margin style="overflow: auto;">
+			<div ng-if="!vm.hits.length">No search results</div>
+
 			<div ng-if="!vm.search.supplier">
 				<supplier-featured-items ng-repeat="(supplier, hits) in vm.hitsBySupplier" supplier="supplier" hits="hits"></supplier-featured-items>
 			</div>
