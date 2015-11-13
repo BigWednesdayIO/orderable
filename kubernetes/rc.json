@@ -19,14 +19,6 @@
         }
       },
       "spec": {
-        "volumes": [
-          {
-            "name": "ssl-certs",
-            "secret": {
-              "secretName": "starorderableco"
-            }
-          }
-        ],
         "containers": [
           {
             "name": "website",
@@ -34,13 +26,7 @@
             "env": [],
             "ports": [
               {
-                "containerPort": 443
-              }
-            ],
-            "volumeMounts": [
-              {
-                "mountPath": "/etc/nginx/ssl",
-                "name": "ssl-certs"
+                "containerPort": 80
               }
             ]
           }
