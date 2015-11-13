@@ -67,6 +67,11 @@ CheckoutController.resolve = /* @ngInject */ {
 				.getDatesForOrderForm(order_form);
 			return promises;
 		}, {}));
+	},
+	redirectEmptyBasket: function($state, basketService) {
+		if (!basket.basketService.line_items.length) {
+			$state.go('home');
+		}
 	}
 };
 

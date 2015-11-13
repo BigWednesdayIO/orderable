@@ -47,6 +47,11 @@ BasketController.resolve = /* @ngInject */ {
 	serverBasket: function(basketService) {
 		return basketService
 			.getServerBasket();
+	},
+	redirectEmptyBasket: function($state, basketService) {
+		if (!basket.basketService.line_items.length) {
+			$state.go('home');
+		}
 	}
 };
 
