@@ -2,7 +2,7 @@
 	<md-dialog-content class="postcode-overlay">
 		<div class="postcode-overlay__header">
 			<img class="postcode-overlay__image hide-sm" src="assets/images/orderable-logo.svg" width="120" height="120" style="margin-top: 10px;" alt />
-			<h2 class="md-headline postcode-overlay__title" ng-hide="vm.postcodeForm.$submitted && vm.unavailable || vm.available">Welcome to <span ng-bind="::vm.brand"></span><br />Suppliers you love</h2>
+			<h2 class="md-headline postcode-overlay__title" ng-hide="vm.postcodeForm.$submitted && vm.unavailable || vm.available">Welcome to <span ng-bind="::vm.brand"></span></h2>
 		</div>
 		<form class="postcode-form" name="vm.postcodeForm" ng-submit="vm.choosePostcode($event)" ng-hide="vm.postcodeForm.$submitted && (vm.available || vm.unavailable)">
 			<p class="md-subhead">Enter your postcode to find suppliers in your area</p>

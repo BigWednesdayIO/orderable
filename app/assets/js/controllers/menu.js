@@ -1,4 +1,4 @@
-function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, suppliersService, brand) {
+function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, suppliersService, menuColours, brand) {
 	var vm = this,
 		closeTimer;
 
@@ -9,7 +9,9 @@ function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, 
 		vm.hideSuppliers(0);
 	}
 
-	vm.brand = brand
+	vm.brand = brand;
+
+	vm.menuColours = menuColours;
 
 	vm.toggleMenu = function() {
 		$mdSidenav('menu')

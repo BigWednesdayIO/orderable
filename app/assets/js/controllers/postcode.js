@@ -43,7 +43,7 @@ function PostcodeController ($rootScope, $timeout, $mdDialog, postcodeService, s
 
 			$mdDialog
 				.hide(vm.newPostcode);
-		}, 2000)
+		}, 200)
 	};
 
 	vm.resetForm = function() {

@@ -7,7 +7,7 @@ function SupplierFeaturedItemsDirective ($window) {
 			buttonText: '@'
 		},
 		controller: function($scope, searchService, suppliersService) {
-			$scope.href = searchService.applyRefinementToUrl('supplier', $scope.supplier);
+			$scope.href = 'search/' + searchService.applyRefinementToUrl('supplier', $scope.supplier);
 
 			$scope.logo = suppliersService.getLogoForSupplier($scope.supplier);
 		},

@@ -33,6 +33,9 @@ HomepageController.resolve = /* @ngInject */ {
 					};
 				});
 			});
+	},
+	homepageHero: function($http) {
+		return $http.get('assets/images/orderable-hero.jpg');
 	}
 };
 

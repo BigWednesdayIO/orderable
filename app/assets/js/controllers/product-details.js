@@ -52,11 +52,12 @@ function ProductDetailsController (basketService, suppliersService, productData,
 }
 
 ProductDetailsController.resolve = /* @ngInject */ {
-	productData: function($stateParams, productsService) {
+	productData: function($sce, $stateParams, productsService) {
 		return productsService
 			.getProductById($stateParams.id)
 			.then(function(product) {
 				product.id = product.objectID;
+				product.long_description = $sce.trustAsHtml(product.long_description);
 				return product;
 			});
 	}
