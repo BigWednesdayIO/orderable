@@ -1,0 +1,14 @@
+<div class="content-box featured md-whiteframe-z1">
+	<a class="content-box__header layout-row layout-align-space-between-center" ng-href="{{ ::href }}">
+		<div class="supplier-logo content-box__logo">
+			<img ng-src="{{ ::vm.logo }}" height="56" width="56" alt />
+		</div>
+		<h2 class="content-box__title md-headline flex" ng-bind="vm.supplier"></h2>
+		<div class="content-box__action">
+			<md-button class="featured__more md-primary" ng-bind="::vm.buttonText || 'More'" aria-label="{{ ::vm.buttonText || 'More' }}"></md-button>
+		</div>
+	</a>
+	<ul class="featured__items unstyled-list">
+		<li product-thumb product="hit" basket="false" ng-repeat="hit in vm.hits track by hit.objectID"></li>
+	</ul>
+</div>

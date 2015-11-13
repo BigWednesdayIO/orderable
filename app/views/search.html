@@ -41,19 +41,8 @@
 		</aside>
 
 		<main flex layout-margin style="overflow: auto;">
-			<div class="content-box featured md-whiteframe-z1" ng-repeat="(supplier, hits) in vm.hitsBySupplier" ng-if="!vm.search.supplier">
-				<a class="content-box__header layout-row layout-align-space-between-center" ng-href="{{ ::vm.applyRefinementToUrl('supplier', supplier) }}">
-					<div class="supplier-logo content-box__logo">
-						<img ng-src="{{ ::vm.getLogoForSupplier(supplier) }}" height="56" width="56" alt />
-					</div>
-					<h2 class="content-box__title md-headline flex" ng-bind="supplier"></h2>
-					<div class="content-box__action">
-						<md-button class="featured__more md-primary">More</md-button>
-					</div>
-				</a>
-				<ul class="featured__items unstyled-list">
-					<li product-thumb product="hit" basket="false" ng-repeat="hit in hits track by hit.objectID"></li>
-				</ul>
+			<div ng-if="!vm.search.supplier">
+				<supplier-featured-items ng-repeat="(supplier, hits) in vm.hitsBySupplier" supplier="supplier" hits="hits"></supplier-featured-items>
 			</div>
 
 			<div class="supplier-listing md-whiteframe-z1" ng-if="vm.search.supplier">

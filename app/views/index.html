@@ -1,3 +1,28 @@
-<md-content class="md-whiteframe-z1" layout-padding>
-	<h2>Home</h2>
-</md-content>
+<div class="hero" style="background-image: url(http://bigwednesday.io/assets/images/hero--pbc.jpg)">
+	<div class="content-wrap">
+		<div class="hero__banner">
+			<p style="margin-top: 0;">Great suppliers delivering to your business</p>
+			<h1>All the supplies you need, in one place</h1>
+			<md-button class="align-text">
+				Sign up now
+				<md-icon md-svg-src="assets/images/icons/arrow-right-circle.svg"></md-icon>
+			</md-button>
+		</div>
+	</div>
+</div>
+
+<div class="supplier-logo-box">
+	<div class="content-wrap">
+		<div class="layout-row layout-align-center-center">
+			<a ng-href="search/?supplier={{ ::supplier.name }}" class="supplier-logo" ng-repeat="supplier in ::vm.suppliers">
+				<img ng-src="{{ ::supplier.logo }}" height="80" width="80" alt="{{ ::supplier.name }}" />
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="content-wrap">
+	<main class="layout-margin">
+		<supplier-featured-items ng-repeat="featured in ::vm.featuredSupplierProducts" supplier="::featured.supplier" hits="::featured.hits" button-text="Shop store"></supplier-featured-items>
+	</main>
+</div>

@@ -180,3 +180,15 @@ fieldset {
 		display: inline-flex;
 	}
 }
+
+.supplier-logo-box {
+	border: $divider;
+	border-left-width: 0;
+	border-right-width: 0;
+	background: white;
+	margin-bottom: 40px;
+
+	.supplier-logo {
+		margin: 20px;
+	}
+}

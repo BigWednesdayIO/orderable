@@ -32,6 +32,8 @@ function SuppliersService ($q, browserStorage) {
 		var logos = {
 			'Pub Taverns': 'assets/images/pub-buying-club-logo.jpg',
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
+			'Best Buy': 'assets/images/best-buy-logo.png',
+			'Wallmart': 'assets/images/walmart-logo.png',
 			'placeholder': 'http://placehold.it/80x80'
 		};
 
@@ -42,6 +44,8 @@ function SuppliersService ($q, browserStorage) {
 		var brandImage = {
 			'Pub Taverns': 'assets/images/pub-buying-club-logo.jpg',
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
+			'Best Buy': 'assets/images/best-buy-tile.png',
+			'Wallmart': 'assets/images/walmart-tile.jpg',
 			'placeholder': 'http://placehold.it/86x60?text='
 		};
 
