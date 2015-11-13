@@ -9,7 +9,7 @@
     "karma-single-run": "karma start tests/karma.conf.js --single-run",
     "protractor": "protractor tests/protractor.conf.js",
     "setuptest": "node_modules/protractor/bin/webdriver-manager update && node_modules/protractor/bin/webdriver-manager start",
-    "test": "gulp lint && npm run karma-single-run",
+    "test": "gulp lint",
     "wiredep": "wiredep -s app/index.html -e jquery"
   },
   "author": "Big Wednesday IO",
