@@ -5,7 +5,7 @@
 			<div class="layout-row">
 				<md-input-container class="flex-gt-sm-50">
 					<label>Name</label>
-					<input ng-model="vm.address.name" required />
+					<input name="fullname" ng-model="vm.address.name" required />
 				</md-input-container>
 			</div>
 
@@ -16,32 +16,32 @@
 
 			<md-input-container>
 				<label>Company Name</label>
-				<input ng-model="vm.address.company" required />
+				<input name="company" ng-model="vm.address.company" required />
 			</md-input-container>
 			<md-input-container>
 				<label>Address</label>
-				<input ng-model="vm.address.line_1" required />
+				<input name="address1" ng-model="vm.address.line_1" required />
 			</md-input-container>
 			<md-input-container>
 				<label>Address line 2</label>
-				<input ng-model="vm.address.line_2" />
+				<input name="address2" ng-model="vm.address.line_2" />
 			</md-input-container>
 			<md-input-container ng-show="vm.address.line_2 || vm.address.line_3">
 				<label>Address line 3</label>
-				<input ng-model="vm.address.line_3" />
+				<input name="address3" ng-model="vm.address.line_3" />
 			</md-input-container>
 			<div class="layout-gt-sm-row">
 				<md-input-container class="flex">
 					<label>City</label>
-					<input ng-model="vm.address.city" required />
+					<input name="city" ng-model="vm.address.city" required />
 				</md-input-container>
 				<md-input-container class="flex">
 					<label>County</label>
-					<input ng-model="vm.address.region" />
+					<input name="county" ng-model="vm.address.region" />
 				</md-input-container>
 				<md-input-container class="flex">
 					<label>Postcode</label>
-					<input ng-model="vm.address.postcode" required />
+					<input name="postcode" ng-model="vm.address.postcode" required />
 				</md-input-container>
 			</div>
 		</form>

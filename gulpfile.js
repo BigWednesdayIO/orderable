@@ -92,7 +92,7 @@ gulp.task('lint', function() {
 		.pipe(eslint.failOnError());
 });
 
-gulp.task('serve', function() {
+gulp.task('serve', ['build:css', 'build:js'], function() {
 	connect.server({
 		root: 'app',
 		port: 9000,
@@ -116,4 +116,4 @@ gulp.task('watch', function() {
 	gulp.watch('app/{index,views/{,*/}*}.html', ['reload']);
 });
 
-gulp.task('default', ['build', 'serve', 'watch']);
+gulp.task('default', ['serve', 'watch']);
