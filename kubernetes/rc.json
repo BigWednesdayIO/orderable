@@ -1,0 +1,37 @@
+{
+  "apiVersion": "v1",
+  "kind": "ReplicationController",
+  "metadata": {
+    "name": "orderable-rc-{{TAG}}",
+    "labels": {
+      "app": "orderable",
+      "env": "{{NAMESPACE}}"
+    }
+  },
+  "spec": {
+    "replicas": {{REPLICAS}},
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "orderable",
+          "env": "{{NAMESPACE}}",
+          "deployment": "{{DEPLOYMENT_ID}}"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "website",
+            "image": "{{QUALIFIED_IMAGE_NAME}}",
+            "env": [],
+            "ports": [
+              {
+                "containerPort": 80
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

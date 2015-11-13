@@ -1,0 +1,30 @@
+machine:
+  python:
+    version: 2.7.3
+  node:
+    version: 0.12.7
+  services:
+    - docker
+
+checkout:
+  post:
+    - git submodule update --init
+
+dependencies:
+  cache_directories:
+    - ~/google-cloud-sdk
+  override:
+    - scripts/ensure_glcoud_installed.sh
+    - npm install -g gulp
+    - npm install
+    - gulp build
+
+deployment:
+  dev:
+    branch: master
+    commands:
+      - deploy_scripts/rolling_deploy.sh orderable app=orderable development ${PWD} ${PWD}/kubernetes/rc.json
+  prod:
+    branch: production
+    commands:
+      - deploy_scripts/rolling_deploy.sh orderable app=orderable production ${PWD} ${PWD}/kubernetes/rc.json
