@@ -189,6 +189,20 @@ fieldset {
 	margin-bottom: 40px;
 
 	.supplier-logo {
-		margin: 20px;
+		margin: 10px;
+
+		> img {
+			width: 60px;
+			height: 60px;
+		}
+
+		@media (min-width: $bp-medium) {
+			margin: 20px;
+
+			> img {
+				width: 80px;
+				height: 80px;
+			}
+		}
 	}
 }

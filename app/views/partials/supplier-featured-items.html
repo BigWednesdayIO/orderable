@@ -1,14 +1,24 @@
 <div class="content-box featured md-whiteframe-z1">
 	<a class="content-box__header layout-row layout-align-space-between-center" ng-href="{{ ::href }}">
 		<div class="supplier-logo content-box__logo">
-			<img ng-src="{{ ::vm.logo }}" height="56" width="56" alt />
+			<img ng-src="{{ ::logo }}" height="56" width="56" alt />
 		</div>
-		<h2 class="content-box__title md-headline flex" ng-bind="vm.supplier"></h2>
+		<h2 class="content-box__title md-headline flex" ng-bind="supplier"></h2>
 		<div class="content-box__action">
-			<md-button class="featured__more md-primary" ng-bind="::vm.buttonText || 'More'" aria-label="{{ ::vm.buttonText || 'More' }}"></md-button>
+			<md-button class="featured__more md-primary" ng-bind="::buttonText || 'More'" aria-label="{{ ::buttonText || 'More' }}"></md-button>
 		</div>
 	</a>
-	<ul class="featured__items unstyled-list">
-		<li product-thumb product="hit" basket="false" ng-repeat="hit in vm.hits track by hit.objectID"></li>
-	</ul>
+	<div id="viewport" class="featured__viewport" md-swipe-left="slideRight($event)" md-swipe-right="slideLeft($event)">
+		<md-button class="md-fab md-hue-1 featured__paging featured__paging--prev" ng-click="slideLeft($event)" ng-hide="farLeft" aria-label="slide left">
+			<md-icon md-svg-src="assets/images/icons/chevron-left.svg"></md-icon>
+		</md-button>
+		<md-button class="md-fab md-hue-1 featured__paging featured__paging--next" ng-click="slideRight($event)" ng-hide="farRight" aria-label="slide right">
+			<md-icon md-svg-src="assets/images/icons/chevron-right.svg"></md-icon>
+		</md-button>
+		<div class="featured__items-wrapper">
+			<ul id="items" class="featured__items unstyled-list">
+				<li product-thumb product="hit" basket="false" ng-repeat="hit in hits track by hit.objectID"></li>
+			</ul>
+		</div>
+	</div>
 </div>
