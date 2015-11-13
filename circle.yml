@@ -14,7 +14,7 @@ dependencies:
   cache_directories:
     - ~/google-cloud-sdk
   override:
-    - scripts/ensure_glcoud_installed.sh
+    - deploy_scripts/ensure_glcoud_installed.sh
     - npm install -g gulp
     - npm install
     - gulp build
