@@ -16,6 +16,7 @@ dependencies:
   override:
     - scripts/ensure_glcoud_installed.sh
     - npm install -g gulp
+    - npm install
     - gulp build
 
 deployment:
