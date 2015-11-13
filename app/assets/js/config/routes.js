@@ -2,61 +2,39 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 	$stateProvider
 		.state('home', {
 			url: '/',
-			view: {
-				'@': {
-					templateUrl: 'views/index.html'
-				}
-			}
+			controller: 'HomepageController as vm',
+			resolve: HomepageController.resolve,
+			templateUrl: 'views/index.html'
 		})
 		.state('search', {
 			url: '/search/?query',
-			views: {
-				body: {
-					controller: 'SearchController as vm',
-					resolve: SearchController.resolve,
-					templateUrl: 'views/search.html'
-				}
-			}
+			controller: 'SearchController as vm',
+			resolve: SearchController.resolve,
+			templateUrl: 'views/search.html'
 		})
 		.state('product-details', {
 			url: '/product/:id',
-			views: {
-				body: {
-					controller: 'ProductDetailsController as vm',
-					resolve: ProductDetailsController.resolve,
-					templateUrl: 'views/product-details.html'
-				}
-			}
+			controller: 'ProductDetailsController as vm',
+			resolve: ProductDetailsController.resolve,
+			templateUrl: 'views/product-details.html'
 		})
 		.state('basket', {
 			url: '/basket/',
-			views: {
-				body: {
-					controller: 'BasketController as vm',
-					resolve: BasketController.resolve,
-					templateUrl: 'views/basket.html'
-				}
-			}
+			controller: 'BasketController as vm',
+			resolve: BasketController.resolve,
+			templateUrl: 'views/basket.html'
 		})
 		.state('checkout', {
 			url: '/checkout/',
-			views: {
-				body: {
-					controller: 'CheckoutController as vm',
-					resolve: CheckoutController.resolve,
-					templateUrl: 'views/checkout.html'
-				}
-			}
+			controller: 'CheckoutController as vm',
+			resolve: CheckoutController.resolve,
+			templateUrl: 'views/checkout.html'
 		})
 		.state('order-confirmation', {
 			url: '/order-confirmation/:id/',
-			views: {
-				body: {
-					controller: 'OrderConfirmationController as vm',
-					resolve: OrderConfirmationController.resolve,
-					templateUrl: 'views/order-confirmation.html'
-				}
-			}
+			controller: 'OrderConfirmationController as vm',
+			resolve: OrderConfirmationController.resolve,
+			templateUrl: 'views/order-confirmation.html'
 		});
 
 	$urlRouterProvider.otherwise("/");

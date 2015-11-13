@@ -121,10 +121,7 @@
 				<loading-indicator></loading-indicator>
 			</md-toolbar>
 
-			<md-content class="content-body flex">
-				<div ui-view="pre-body"></div>
-				<div ui-view="body" class="flex"></div>
-			</md-content>
+			<md-content class="content-body flex" ui-view></md-content>
 
 			<md-sidenav class="md-sidenav-left md-whiteframe-z2 hide-gt-md" md-component-id="menu" ng-cloak>
 				<div ng-controller="MenuController as vm" ng-if="!$mdMedia('gt-md')">
