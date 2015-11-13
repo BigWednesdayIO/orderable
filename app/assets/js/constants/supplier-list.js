@@ -3,6 +3,6 @@ angular
 	.constant('supplierList', [
 		'Pub Taverns',
 		'Beer & Wine Co',
-		'Wallmart',
+		'Walmart',
 		'Best Buy'
 	]);
