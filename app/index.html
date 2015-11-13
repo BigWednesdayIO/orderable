@@ -163,10 +163,12 @@
 						<hr />
 						<md-button class="menu-link" ng-href="#">Account</md-button>
 						<md-button class="menu-link" ng-href="#">Help</md-button>
-						<md-button aria-label="Change location">
-							<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
-							<span ng-bind="vm.postcode"></span>
-						</md-button>
+						<div ng-controller="PostcodeController as vm">
+							<md-button aria-label="Change location" ng-click="vm.togglePostcodeForm($event)">
+								<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
+								<span ng-bind="vm.postcode"></span>
+							</md-button>
+						</div>
 					</md-content>
 				</div>
 			</md-sidenav>

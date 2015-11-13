@@ -18,7 +18,7 @@
 	text-align: center;
 
 	&__image {
-		display: none;
+		display: block;
 		margin: 0 auto;
 	}
 
@@ -37,14 +37,11 @@
 		}
 	}
 
-	@media (min-width: $bp-large) {
-		&__image {
-			display: block;
-		}
-
+	@media (min-width: $bp-medium) {
 		&__title {
 			font-size: 32px;
 			margin: 20px 0 40px;
+			line-height: 46px;
 		}
 
 		.md-subhead,

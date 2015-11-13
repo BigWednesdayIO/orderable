@@ -33,15 +33,17 @@ function PostcodeController ($rootScope, $timeout, $mdDialog, postcodeService, s
 				postcodeService
 					.updatePostcode(vm.newPostcode);
 				vm.available = true;
-
-				$timeout(function() {
-					vm.showPostcodeForm = false;
-					vm.resetForm();
-
-					$mdDialog
-						.hide(vm.newPostcode);
-				}, 2000)
 			});
+	};
+
+	vm.startShopping = function() {
+		$timeout(function() {
+			vm.showPostcodeForm = false;
+			vm.resetForm();
+
+			$mdDialog
+				.hide(vm.newPostcode);
+		}, 2000)
 	};
 
 	vm.resetForm = function() {
