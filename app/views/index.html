@@ -14,7 +14,7 @@
 <div class="supplier-logo-box">
 	<div class="content-wrap">
 		<div class="layout-row layout-align-center-center">
-			<a ng-href="search/?supplier={{ ::encodeURIComponent(supplier.name) }}" class="supplier-logo" ng-repeat="supplier in ::vm.suppliers">
+			<a ng-href="{{ ::supplier.href }}" class="supplier-logo" ng-repeat="supplier in ::vm.suppliers">
 				<img ng-src="{{ ::supplier.logo }}" height="80" width="80" alt="{{ ::supplier.name }}" />
 			</a>
 		</div>
@@ -26,3 +26,5 @@
 		<supplier-featured-items ng-repeat="featured in ::vm.featuredSupplierProducts" supplier="::featured.supplier" hits="::featured.hits" button-text="Shop store"></supplier-featured-items>
 	</main>
 </div>
+
+<div ng-include="'views/partials/footer.html'"></div>

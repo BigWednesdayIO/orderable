@@ -4,7 +4,8 @@ function HomepageController (suppliersService, supplierList, featuredSupplierPro
 	vm.suppliers = supplierList.map(function(supplier) {
 		return {
 			name: supplier,
-			logo: suppliersService.getLogoForSupplier(supplier)
+			logo: suppliersService.getLogoForSupplier(supplier),
+			href: 'search/?supplier=' + encodeURIComponent(supplier)
 		};
 	});
 

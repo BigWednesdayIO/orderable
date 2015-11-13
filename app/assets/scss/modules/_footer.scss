@@ -1,0 +1,37 @@
+.site-footer {
+	background: white;
+
+	&__inner {
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 16px 0;
+	}
+
+	&__links {
+		.md-subhead-2 {
+			margin: 0 0 4px; 
+		}
+	}
+
+	&__app-links {
+		min-height: 64px;
+		padding-left: 44px;
+		background: url('../images/download-the-app.png') 0 0 no-repeat;
+	}
+
+	&__social {
+
+	}
+
+	&__legal {
+		font-size: 12px;
+
+		a {
+			color: rgba(0, 0, 0, .54);
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}

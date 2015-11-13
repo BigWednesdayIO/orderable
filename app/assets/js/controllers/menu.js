@@ -22,7 +22,7 @@ function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, 
 
 	vm.getUrlForSupplier = function(supplier) {
 		return 'search/?supplier=' + encodeURIComponent(supplier);
-	}
+	};
 
 	vm.getBrandImageForSupplier = suppliersService.getBrandImageForSupplier;
 
