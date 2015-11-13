@@ -1,19 +1,24 @@
 .logo {
 	display: flex;
 	flex-grow: 0;
+	align-items: center;
 	text-decoration: none;
 
 	&:hover {
 		text-decoration: none;
 	}
 
+	&__icon {
+		margin-right: 6px;
+	}
+
 	&__text {
-		font-size: 24px;
+		font-size: 21px;
 		line-height: 30px;
 		font-weight: 400;
 		color: #606060;
-		text-transform: lowercase;
 		word-spacing: -6px;
+		margin-bottom: 4px;
 
 		&--highlight {
 			color: #888;
