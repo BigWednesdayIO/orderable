@@ -1,0 +1,41 @@
+.basket-toast-wrapper {
+	position: absolute;
+	top: 100%;
+	right: 16px;
+}
+
+.basket-toast {
+	position: relative;
+	width: 290px;
+	margin-top: 10px;
+	padding-top: 20px;
+	color: initial;
+
+	&::before {
+		content: '';
+		position: absolute;
+		bottom: 100%;
+		right: 12px;
+		height: 0;
+		width: 0;
+		border: 10px solid transparent;
+		border-bottom-color: white;
+	}
+
+	&__message {
+		margin: 20px auto 10px;
+
+		&::before {
+			content: '\2713';
+			display: inline-block;
+			vertical-align: middle;
+			padding-right: 2px;
+			font-size: 20px;
+			color: rgba(0, 0, 0, .54);
+		}
+	}
+
+	&__action {
+		padding: 10px;
+	}
+}
