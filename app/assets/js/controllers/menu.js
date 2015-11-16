@@ -26,6 +26,8 @@ function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, 
 
 	vm.getBrandImageForSupplier = suppliersService.getBrandImageForSupplier;
 
+	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
+
 	vm.toggleShowSuppliers = function() {
 		vm.suppliersAreShown ? vm.hideSuppliers(0) : vm.showSuppliers();
 	};
