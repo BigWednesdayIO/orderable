@@ -1,0 +1,60 @@
+<main class="content-wrap" style="max-width: 600px;">
+	<div class="md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 40px; margin-top: 30px">
+		<form class="registration-form" name="vm.registrationForm">
+			<ol class="form-rows unstyled-list">
+				<li>
+					<md-input-container>
+						<label>Name</label>
+						<input ng-model="vm.userDetails.name" required />
+					</md-input-container>
+				</li>
+				<li>
+					<md-input-container>
+						<label>Email</label>
+						<input type="email" ng-model="vm.userDetails.email" required />
+					</md-input-container>
+				</li>
+				<li>
+					<md-input-container>
+						<label>Password</label>
+						<input type="password" ng-model="vm.userDetails.password" required />
+					</md-input-container>
+				</li>
+				<li>
+					<md-input-container>
+						<label>Confirm password</label>
+						<input type="password" ng-model="vm.confirmPassword" required />
+					</md-input-container>
+				</li>
+				<li>
+					<md-input-container>
+						<label>Company name</label>
+						<input ng-model="vm.userDetails.company" required />
+					</md-input-container>
+				</li>
+				<li>
+					<md-input-container>
+						<label>VAT number</label>
+						<input ng-model="vm.userDetails.vat_number" pattern="^(GB)?(([1-9]\d{8})|([1-9]\d{11})|(GD[1-9]\d{2})|(HA[1-9]\d{2}))$" required />
+					</md-input-container>
+				</li>
+				<li>
+					<md-input-container>
+						<label>Line of business</label>
+						<md-select ng-model="vm.userDetails.line_of_business" required>
+							<md-option ng-repeat="lineOfBusiness in ::vm.linesOfBusiness" ng-value="::lineOfBusiness">
+								<span ng-bind="::lineOfBusiness"></span>
+							</md-option>
+						</md-select>
+					</md-input-container>
+				</li>
+				<li class="layout-row layout-align-space-between-center">
+					<span>Already a member? <a href="sign-in/" class="md-primary" style="text-decoration: underline">Sign in</a>.</span>
+					<md-button class="md-primary md-raised" type="submit">Register</md-button>
+				</li>
+			</ol>
+		</form>
+	</div>
+</main>
+
+<div ng-include="'views/partials/footer.html'"></div>

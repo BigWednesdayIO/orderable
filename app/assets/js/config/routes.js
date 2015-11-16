@@ -6,6 +6,8 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			resolve: HomepageController.resolve,
 			templateUrl: 'views/index.html'
 		})
+
+		// Shop
 		.state('search', {
 			url: '/search/?query',
 			controller: 'SearchController as vm',
@@ -35,6 +37,13 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			controller: 'OrderController as vm',
 			resolve: OrderController.resolve,
 			templateUrl: 'views/order.html'
+		})
+
+		// Account
+		.state('registration', {
+			url: '/registration/',
+			controller: 'RegistrationController as vm',
+			templateUrl: 'views/registration.html'
 		})
 		.state('account-settings', {
 			url: '/account/settings/',
