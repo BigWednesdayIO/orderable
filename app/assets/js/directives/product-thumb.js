@@ -8,23 +8,33 @@ function ProductThumbDirective () {
 		link: function(scope, element) {
 			element.addClass('product-thumb');
 		},
-		controller: function(basketService) {
-			var vm = this;
+		controller: function($timeout, basketService) {
+			var vm = this,
+				debounce;
 
-			vm.product.id = vm.product.objectID;
-
-			vm.addToBasket = function($event, quantity) {
-				$event.preventDefault();
+			function addToBasket (quantity) {
 				basketService
 					.addToBasket(vm.product, quantity)
 					.then(function(line_item) {
 						vm.quantity = line_item.quantity;
 					});
+			}
+
+			vm.product.id = vm.product.objectID;
+
+			vm.addToBasket = function($event, quantity) {
+				$event.preventDefault();
+				addToBasket(quantity);
 			};
 
 			vm.changeQuantity = function($event, quantity) {
+				$event.preventDefault();
 				vm.quantity += quantity;
-				vm.addToBasket($event, vm.quantity);
+
+				$timeout.cancel(debounce);
+				debounce = $timeout(function() {
+					addToBasket(vm.quantity);
+				}, 300);
 			};
 
 			basketService
