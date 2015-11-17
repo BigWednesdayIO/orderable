@@ -35,6 +35,11 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			controller: 'OrderConfirmationController as vm',
 			resolve: OrderConfirmationController.resolve,
 			templateUrl: 'views/order-confirmation.html'
+		})
+		.state('account-settings', {
+			url: '/account/settings/',
+			controller: 'AccountSettingsController as vm',
+			templateUrl: 'views/account-settings.html'
 		});
 
 	$urlRouterProvider.otherwise("/");

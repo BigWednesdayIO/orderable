@@ -5,6 +5,11 @@
 	background-size: cover;
 	background-position: 50% 50%;
 
+	@media (min-width: $bp-medium) {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
 	@media (min-width: $bp-large) {
 		min-height: 500px;
 	}
