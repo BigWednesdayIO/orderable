@@ -1,4 +1,4 @@
-function SupplierFeaturedItemsDirective ($window) {
+function SupplierFeaturedItemsDirective ($window, $location) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -7,7 +7,7 @@ function SupplierFeaturedItemsDirective ($window) {
 			buttonText: '@'
 		},
 		controller: function($scope, searchService, suppliersService) {
-			$scope.href = 'search/' + searchService.applyRefinementToUrl('supplier', $scope.supplier);
+			$scope.href = ($location.path().match('search/') ? '' : 'search/') + searchService.applyRefinementToUrl('supplier', $scope.supplier);
 
 			$scope.logo = suppliersService.getLogoForSupplier($scope.supplier);
 		},

@@ -1,6 +1,6 @@
 function SuppliersService ($q, browserStorage) {
 	var service = {},
-		currentSuppliers = browserStorage.getItem('suppliers');
+		currentSuppliers = browserStorage.getItem('suppliers') || [];
 
 	service.saveSuppliers = function(suppliers) {
 		currentSuppliers = suppliers;

@@ -104,13 +104,14 @@
 							<md-icon md-svg-src="assets/images/icons/location.svg"></md-icon>
 							<span ng-bind="vm.postcode"></span>
 						</md-button>
-						<div class="action-window md-whiteframe-11dp" ng-show="vm.showPostcodeForm" ng-include="'views/partials/postcode-form.html'" ng-cloak></div>
+						<div class="action-window md-whiteframe md-whiteframe-11dp" ng-show="vm.showPostcodeForm" ng-include="'views/partials/postcode-form.html'" ng-cloak></div>
 					</div>
 					<span class="toolbar-divider"></span>
 					<md-button class="md-icon-button basket-button" ng-href="basket/" aria-label="View basket" basket-button>
 						<span class="basket-button__count" basket-count ng-cloak></span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
 					</md-button>
+					<div class="layout-margin basket-toast-wrapper" id="basket-toast-area"></div>
 				</div>
 				<loading-indicator></loading-indicator>
 			</md-toolbar>
