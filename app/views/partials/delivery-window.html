@@ -3,7 +3,7 @@
 	<span class="checkout__delivery-option__current"><span ng-bind="vm.orderForm.delivery_window.date_display_name"></span>, <span ng-bind="vm.orderForm.delivery_window.display_name"></span> (<span ng-bind="vm.orderForm.delivery_window.price | currency: '£'"></span>)</span>
 	<md-button class="md-primary" ng-click="vm.changeWindow()">Change window</md-button>
 
-	<div class="delivery-calendar md-whiteframe-z2" ng-show="vm.showOptions">
+	<div class="delivery-calendar md-whiteframe md-whiteframe-z2" ng-show="vm.showOptions">
 		<div class="delivery-calendar__header layout-row layout-align-center">
 			<md-button class="calendar-date" ng-repeat="delivery in ::vm.deliveryDates track by delivery.date" ng-click="vm.showDay = delivery.date" ng-class="{'md-primary': vm.showDay === delivery.date}" aria-label="{{ ::delivery.display_name }}">
 				<span class="calendar-date__day" ng-bind="::delivery.display_name.split(',')[0]"></span>

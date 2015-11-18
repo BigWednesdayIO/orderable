@@ -104,13 +104,14 @@
 							<md-icon md-svg-src="assets/images/icons/location.svg"></md-icon>
 							<span ng-bind="vm.postcode"></span>
 						</md-button>
-						<div class="action-window md-whiteframe-11dp" ng-show="vm.showPostcodeForm" ng-include="'views/partials/postcode-form.html'" ng-cloak></div>
+						<div class="action-window md-whiteframe md-whiteframe-11dp" ng-show="vm.showPostcodeForm" ng-include="'views/partials/postcode-form.html'" ng-cloak></div>
 					</div>
 					<span class="toolbar-divider"></span>
 					<md-button class="md-icon-button basket-button" ng-href="basket/" aria-label="View basket" basket-button>
 						<span class="basket-button__count" basket-count ng-cloak></span>
 						<md-icon class="basket-button__icon" md-svg-src="assets/images/icons/cart.svg"></md-icon>
 					</md-button>
+					<div class="layout-margin basket-toast-wrapper" id="basket-toast-area"></div>
 				</div>
 				<loading-indicator></loading-indicator>
 			</md-toolbar>
@@ -145,7 +146,21 @@
 						</div>
 					</md-toolbar>
 					<md-content>
-						<md-button class="menu-button">Suppliers</md-button>
+						<div class="menu-button-wrapper">
+							<md-button class="menu-button" ng-click="vm.openMenu = (vm.openMenu === 'suppliers') ? '' : 'suppliers'" ng-class="{'is-open': vm.openMenu === 'suppliers'}">
+								<span>Suppliers</span>
+								<span class="flex"></span>
+								<md-icon class="open-indicator" md-svg-src="/assets/images/icons/chevron-down.svg"></md-icon>
+							</md-button>
+							<md-list ng-show="vm.openMenu === 'suppliers'" class="animate-slide">
+								<md-list-item  ng-repeat="supplier in vm.suppliers">
+									<md-button class="menu-link" ng-href="{{ ::vm.getUrlForSupplier(supplier) }}" aria-label="{{ ::supplier }}">
+										<md-icon style="margin: auto 12px auto 0; border-radius: 50%; overflow: hidden;"><img ng-src="{{ ::vm.getLogoForSupplier(supplier) }}" height="24" alt="{{}}" /></md-icon>
+										<span ng-bind="::supplier"></span>
+									</md-button>
+								</md-list-item>
+							</md-list>
+						</div>
 						<hr />
 						<div ng-repeat="category in ::vm.categories track by category.name" class="menu-button-wrapper">
 							<md-button class="menu-button md-default-theme" ng-click="vm.openMenu = (vm.openMenu === category.name) ? '' : category.name" ng-class="{'is-open': vm.openMenu === category.name}" aria-label="{{ ::category.name }}">

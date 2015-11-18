@@ -1,4 +1,4 @@
-function BasketService ($rootScope, $q, browserStorage, _) {
+function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserStorage, _) {
 	var service = {};
 
 	function emptyBakset () {
@@ -59,6 +59,25 @@ function BasketService ($rootScope, $q, browserStorage, _) {
 		$rootScope.$emit('basketUpdated', service.basket.line_item_count);
 	}
 
+	function showUpdate (lineItem) {
+		if (!$mdMedia('gt-md')) {
+			return;
+		}
+		return $mdToast.show({
+			locals: {
+				product: lineItem.product,
+				quantity: lineItem.quantity
+			},
+			controller: 'BasketToastController',
+			controllerAs: 'vm',
+			bindToController: true,
+			templateUrl: 'views/partials/basket-toast.html',
+			parent : $document[0].querySelector('#basket-toast-area'),
+			hideDelay: 9000,
+			position: 'top right'
+		});
+	}
+
 	service.basket = browserStorage.getItem('basket') || emptyBakset();
 
 	calculateTotals();
@@ -97,7 +116,11 @@ function BasketService ($rootScope, $q, browserStorage, _) {
 
 		calculateTotals();
 
-		return $q.when(service.basket.order_forms[supplierIndex].line_items[productIndex]);
+		return $q.when(service.basket.order_forms[supplierIndex].line_items[productIndex])
+			.then(function(lineItem) {
+				showUpdate(lineItem);
+				return lineItem;
+			});
 	};
 
 	service.removeFromBasket = function(product) {
