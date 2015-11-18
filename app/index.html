@@ -56,12 +56,12 @@
 				<div class="md-toolbar-tools layout-margin">
 					<nav class="layout-row">
 						<h2 class="layout-column layout-align-center-center" style="margin-right: 8px;">Eating &amp; Drinking Out</h2>
-						<div class="suppliers-dropdown" ng-class="{'is-open': vm.suppliersAreShown}" ng-mouseleave="vm.hideSuppliers(250)">
-							<a href="#" class="suppliers-dropdown__button" ng-click="vm.toggleShowSuppliers()">
+						<div class="suppliers-dropdown" dropdown-menu>
+							<a href="#" class="suppliers-dropdown__button" dropdown-button>
 								<span>Suppliers</span>
 								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</a>
-							<md-content class="sub-nav" ng-mouseenter="vm.showSuppliers()">
+							<md-content class="sub-nav" dropdown-items>
 								<ul class="sub-nav__suppliers unstyled-list">
 									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers">
 										<a ng-href="{{ ::vm.getUrlForSupplier(supplier) }}" class="sub-nav__supplier__link">
@@ -95,8 +95,15 @@
 						</ul>
 					</nav>
 					<span class="flex"></span>
-					<nav class="account-nav">
-						<a href="#">Account</a>
+					<nav class="account-nav" dropdown-menu>
+						<a href="#" dropdown-button>
+							<span>Account</span>
+							<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
+						</a>
+						<div class="account-nav__items md-whiteframe-z1" dropdown-items>
+							<a href="account/orders/">Orders</a>
+							<a href="account/settings/">Settings</a>
+						</div>
 					</nav>
 					<div class="postcode-wrapper" ng-controller="PostcodeController as vm">
 						<md-button class="postcode-button" ng-click="vm.togglePostcodeForm($event)" aria-label="Show postcode form">
@@ -129,7 +136,7 @@
 				<loading-indicator></loading-indicator>
 			</md-toolbar>
 
-			<md-content class="content-body flex" ui-view></md-content>
+			<md-content class="content-body flex layout-column" ui-view></md-content>
 
 			<md-sidenav class="md-sidenav-left md-whiteframe-z2 hide-gt-md" md-component-id="menu" ng-cloak>
 				<div ng-controller="MenuController as vm" ng-if="!$mdMedia('gt-md')">

@@ -1,0 +1,17 @@
+.account-nav {
+	&__items {
+		min-width: 125%;
+		padding: 2px 0;
+		background: white;
+		color: rgba(0, 0, 0, 0.87);
+
+		> a {
+			display: block;
+			padding: 4px 16px;
+
+			&:hover {
+				background: $md-accent;
+			}
+		}
+	}
+}
