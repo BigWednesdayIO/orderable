@@ -44,7 +44,7 @@ gulp.task('build:config', function () {
 	return ngConstant({
 		name: 'app',
 		deps: false,
-		constants: environmentConfig[process.env.NODE_ENV || 'development'],
+		constants: environmentConfig[process.env.NODE_ENV] || environmentConfig.development,
 		stream: true
 	})
 	.pipe(rename('environment-config.js'))
