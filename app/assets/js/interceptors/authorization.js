@@ -1,7 +1,7 @@
-function AuthorizationInterceptor (API) {
+function AuthorizationInterceptor (baseAPI) {
 	return {
 		request: function(config) {
-			if (config.url.match(API.base)) {
+			if (config.url.match(baseAPI)) {
 				config.headers['Authorization'] = 'Bearer NG0TuV~u2ni#BP|';
 			}
 			return config;
