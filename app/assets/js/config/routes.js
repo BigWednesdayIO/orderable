@@ -40,6 +40,12 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			url: '/account/settings/',
 			controller: 'AccountSettingsController as vm',
 			templateUrl: 'views/account-settings.html'
+		})
+		.state('order-history', {
+			url: '/account/orders/',
+			controller: 'OrderHistoryController as vm',
+			resolve: OrderHistoryController.resolve,
+			templateUrl: 'views/order-history.html'
 		});
 
 	$urlRouterProvider.otherwise("/");

@@ -1,0 +1,30 @@
+<main class="content-wrap content-wrap--940 flex">
+	<div class="order-history md-whiteframe md-whiteframe-z1 layout-margin">
+		<h1 class="md-headline">Order History</h1>
+		
+		<p ng-hide="::vm.orders.length">You haven't placed any orders yet</p>
+		<ul class="unstyled-list" ng-show="::vm.orders.length">
+			<li ng-repeat="order in ::vm.orders">
+				<div class="md-list-item-text">
+					<h3 class="md-subhead">
+						<span ng-bind="::order.created_dt | date: 'EEE, MMM d'"></span>
+						<span style="color: rgba(0,0,0,.54)">for</span>
+						<span ng-bind="::order.basket.total | currency: '£'"></span>
+					</h3>
+					
+					<ul class="unstyled-list">
+						<li class="layout-row layout-align-start-center" ng-repeat="orderForm in ::order.basket.order_forms">
+							<img class="supplier-logo" ng-src="{{ ::vm.getLogoForSupplier(orderForm.supplier) }}" alt="{{ ::orderForm.supplier }}" height="40" width="40" / style="margin: 8px;">
+							<h4 class="md-subhead">
+								<span ng-bind="::orderForm.supplier"></span> - <span ng-bind="::orderForm.subtotal | currency: '£'"></span>
+							</h4>
+							
+						</li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>
+</main>
+
+<div ng-include="'views/partials/footer.html'"></div>
