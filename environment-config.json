@@ -1,0 +1,8 @@
+{
+	"development": {
+		"baseAPI": "https://nzgrud6b.bigwednesday.io/1/"
+	},
+	"production": {
+		"baseAPI": "https://api.bigwednesday.io/1/"
+	}
+}
