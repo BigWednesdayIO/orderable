@@ -39,7 +39,7 @@ gulp.task('build:css', function() {
 		.pipe(connect.reload());
 });
 
-gulp.task('build:config', function () {
+gulp.task('build:config', function() {
 	var environmentConfig = require('./environment-config.json');
 	return ngConstant({
 		name: 'app',
