@@ -11,7 +11,9 @@ var gulp = require('gulp'),
 	minifyCss = require('gulp-minify-css'),
 	uglify = require('gulp-uglify'),
 	usemin = require('gulp-usemin'),
-	del = require('del');
+	del = require('del'),
+	ngConstant = require('gulp-ng-constant'),
+	rename = require('gulp-rename');
 
 function handleError (err) {
 	console.log(err.toString());
@@ -37,7 +39,19 @@ gulp.task('build:css', function() {
 		.pipe(connect.reload());
 });
 
-gulp.task('build:js', function() {
+gulp.task('build:config', function () {
+	var environmentConfig = require('./environment-config.json');
+	return ngConstant({
+		name: 'app',
+		deps: false,
+		constants: environmentConfig[process.env.NODE_ENV || 'development'],
+		stream: true
+	})
+	.pipe(rename('environment-config.js'))
+	.pipe(gulp.dest('app/assets/js/constants'));
+});
+
+gulp.task('build:js', ['build:config'], function() {
 	return gulp
 		.src([
 			'app/assets/js/main.js',

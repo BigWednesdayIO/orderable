@@ -2,6 +2,7 @@ node_modules
 app/assets/vendor
 app/assets/css
 app/assets/js/app.js
+app/assets/js/constants/environment-config.js
 app.zip
 build.zip
 build
