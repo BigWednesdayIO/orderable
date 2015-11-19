@@ -17,14 +17,15 @@ dependencies:
     - deploy_scripts/install_deployment_tools.sh
     - npm install -g gulp
     - npm install
-    - gulp build
 
 deployment:
   dev:
     branch: master
     commands:
+      - NODE_ENV=development gulp build
       - deploy_scripts/rolling_deploy.sh orderable app=orderable development ${PWD} ${PWD}/kubernetes/rc.json ${PWD}/kubernetes/service.json
   prod:
     branch: production
     commands:
+      - NODE_ENV=production gulp build
       - deploy_scripts/rolling_deploy.sh orderable app=orderable production ${PWD} ${PWD}/kubernetes/rc.json ${PWD}/kubernetes/service.json
