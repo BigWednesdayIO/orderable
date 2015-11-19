@@ -156,7 +156,7 @@
 							<md-button class="menu-button" ng-click="vm.openMenu = (vm.openMenu === 'suppliers') ? '' : 'suppliers'" ng-class="{'is-open': vm.openMenu === 'suppliers'}">
 								<span>Suppliers</span>
 								<span class="flex"></span>
-								<md-icon class="open-indicator" md-svg-src="/assets/images/icons/chevron-down.svg"></md-icon>
+								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</md-button>
 							<md-list ng-show="vm.openMenu === 'suppliers'" class="animate-slide">
 								<md-list-item  ng-repeat="supplier in vm.suppliers">
@@ -172,7 +172,7 @@
 							<md-button class="menu-button md-default-theme" ng-click="vm.openMenu = (vm.openMenu === category.name) ? '' : category.name" ng-class="{'is-open': vm.openMenu === category.name}" aria-label="{{ ::category.name }}">
 								<span ng-bind="::category.name"></span>
 								<span class="flex"></span>
-								<md-icon class="open-indicator" md-svg-src="/assets/images/icons/chevron-down.svg"></md-icon>
+								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</md-button>
 
 							<md-list ng-show="vm.openMenu === category.name" class="animate-slide">
@@ -187,9 +187,24 @@
 							</md-list>
 						</div>
 						<hr />
-						<md-button class="menu-link" ng-href="#">Account</md-button>
+						<div class="menu-button-wrapper">
+							<md-button class="menu-button md-default-theme" ng-click="vm.openMenu = (vm.openMenu === 'account') ? '' : 'account'" ng-class="{'is-open': vm.openMenu === 'account'}">
+								<span>Account</span>
+								<span class="flex"></span>
+								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
+							</md-button>
+
+							<md-list ng-show="vm.openMenu === 'account'" class="animate-slide">
+								<md-list-item>
+									<md-button class="menu-link" ng-href="account/orders/">Orders</md-button>
+								</md-list-item>
+								<md-list-item>
+									<md-button class="menu-link" ng-href="account/settings/">Settings</md-button>
+								</md-list-item>
+							</md-list>
+						</div>
 						<div ng-controller="PostcodeController as vm">
-							<md-button aria-label="Change location" ng-click="vm.togglePostcodeForm($event)">
+							<md-button ng-click="vm.togglePostcodeForm($event)" aria-label="Change location">
 								<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
 								<span ng-bind="vm.postcode"></span>
 							</md-button>

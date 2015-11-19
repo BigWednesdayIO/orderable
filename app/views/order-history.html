@@ -6,19 +6,42 @@
 		<ul class="unstyled-list" ng-show="::vm.orders.length">
 			<li ng-repeat="order in ::vm.orders">
 				<div class="md-list-item-text">
-					<h3 class="md-subhead">
-						<span ng-bind="::order.created_dt | date: 'EEE, MMM d'"></span>
-						<span style="color: rgba(0,0,0,.54)">for</span>
-						<span ng-bind="::order.basket.total | currency: '£'"></span>
-					</h3>
+					<div class="layout-row layout-align-start-center md-accent-panel" style="padding: 8px 16px">
+						<h2 class="md-subhead">
+							<a ng-href="account/orders/{{ ::order.id }}/" ng-bind="::order.created_dt | date: 'EEE, MMM d'"></a>
+						</h2>
+						<span class="flex"></span>
+						<span class="order__total" ng-bind="::order.basket.total | currency: '£'"></span>
+						<md-button class="md-icon-button md-accent md-hue-3" ng-href="account/orders/{{ ::order.id }}/" aria-label="View order summary" title="View order summary">
+							<md-icon md-svg-src="assets/images/icons/assignment.svg"></md-icon>
+						</md-button>
+						<!-- <md-button class="md-icon-button md-accent md-hue-3" aria-label="Mark order fulfilled" title="View order summary">
+							<md-icon md-svg-src="assets/images/icons/done-all.svg"></md-icon>
+						</md-button> -->
+					</div>
 					
-					<ul class="unstyled-list">
-						<li class="layout-row layout-align-start-center" ng-repeat="orderForm in ::order.basket.order_forms">
-							<img class="supplier-logo" ng-src="{{ ::vm.getLogoForSupplier(orderForm.supplier) }}" alt="{{ ::orderForm.supplier }}" height="40" width="40" / style="margin: 8px;">
-							<h4 class="md-subhead">
-								<span ng-bind="::orderForm.supplier"></span> - <span ng-bind="::orderForm.subtotal | currency: '£'"></span>
-							</h4>
-							
+					<md-list style="padding: 0;">
+						<md-list-item class="md-2-line md-no-proxy md-with-secondary" ng-class="{'md-3-line': $mdMedia('sm'), 'md-2-line': $mdMedia('gt-sm')}" ng-repeat="orderForm in ::order.basket.order_forms">
+							<img class="md-avatar" ng-src="{{ ::vm.getLogoForSupplier(orderForm.supplier) }}" alt="{{ ::orderForm.supplier }}" />
+							<div class="md-list-item-text layout-column">
+								<h3 ng-bind="::orderForm.supplier"></h3>
+								<div class="layout-gt-sm-row">
+									<h4 ng-bind="::orderForm.subtotal | currency: '£'"></h4>
+									<p style="font-weight: normal;">
+										<span class="hide-sm">&nbsp;&ndash;&nbsp;</span><span ng-bind="::orderForm.line_item_count"></span> item<span ng-hide="::orderForm.line_item_count === 1">s</span>
+									</p>
+								</div>
+							</div>
+							<span class="flex"></span>
+							<div class="md-secondary layout-row">
+								<md-button class="md-icon-button" ng-click="vm.downloadOrder(orderForm)" aria-label="Download invoice" title="Download invoice">
+									<md-icon md-svg-src="assets/images/icons/download.svg"></md-icon>
+								</md-button>
+								<!-- <md-button class="md-icon-button" ng-click="vm.markOrderFulfilled(orderForm)" aria-label="Mark supplier fulfilled" title="Mark supplier fulfilled">
+									<md-icon md-svg-src="assets/images/icons/done.svg"></md-icon>
+								</md-button> -->
+							</div>
+							<md-divider ng-if="::!$last"></md-divider>
 						</li>
 					</ul>
 				</div>
