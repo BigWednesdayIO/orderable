@@ -16,6 +16,11 @@ body {
 	font-size: 14px;
 }
 
+body,
+.event-wrapper {
+	max-height: 100%;
+}
+
 [ui-view]:empty {
 	display: none;
 }
