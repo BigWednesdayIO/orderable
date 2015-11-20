@@ -1,4 +1,4 @@
-function CheckoutService ($http, $q, $mdDialog, basketService, API) {
+function CheckoutService ($http, $q, $mdDialog, basketService, ordersService, API) {
 	var service = {},
 		checkout;
 
@@ -71,8 +71,12 @@ function CheckoutService ($http, $q, $mdDialog, basketService, API) {
 			data: data
 		})
 			.then(function(checkoutResponse) {
-				return basketService
-					.createBasket()
+				return $q.all([
+					basketService
+						.createBasket(),
+					ordersService
+						.createOrder(checkoutResponse)
+				])
 					.then(function() {
 						return checkoutResponse;
 					});

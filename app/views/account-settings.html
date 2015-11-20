@@ -1,0 +1,19 @@
+<main class="content-wrap flex">
+	<div class="layout-row layout-align-space-between-center layout-margin">
+		<h1 class="md-headline">Setting</h1>
+		<md-button class="md-primary md-raised" style="margin: 0;">Save</md-button>
+	</div>
+
+	<div class="md-whiteframe md-whiteframe-z1 layout-padding layout-margin">
+		<h2 class="md-subhead">Loyalty programs</h2>
+		<p>We support these suppliers' loyalty programs. Enter your membership info to earn benefits as you shop. Your membership info allows these suppliers to associate you with your past and future purchases from them, just like when you place an order directly with them. Review the terms of the suppliers' loyalty programs to understand how they can use your information, such as names, email and billing addresses and orders.</p>
+
+		<loyalty-list suppliers="vm.suppliers"></loyalty-list>
+	</div>
+
+	<div class="layout-row layout-align-end">
+		<md-button class="md-primary md-raised">Save</md-button>
+	</div>
+</main>
+
+<div ng-include="'views/partials/footer.html'"></div>

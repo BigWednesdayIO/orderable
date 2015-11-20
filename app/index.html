@@ -55,13 +55,13 @@
 			<md-toolbar class="md-toolbar-secondary layout-row md-whiteframe-z1 hide-sm hide-md" ng-if="$mdMedia('gt-md')" ng-controller="MenuController as vm">
 				<div class="md-toolbar-tools layout-margin">
 					<nav class="layout-row">
-						<h2 class="layout-column layout-align-center-center" style="margin-right: 8px;">Eating &amp; Drinking Out</h2>
-						<div class="suppliers-dropdown" ng-class="{'is-open': vm.suppliersAreShown}" ng-mouseleave="vm.hideSuppliers(250)">
-							<a href="#" class="suppliers-dropdown__button" ng-click="vm.toggleShowSuppliers()">
+						<h2 class="layout-column layout-align-center-center" style="width: 148px; margin-right: 8px;">Eating &amp; Drinking Out</h2>
+						<div class="suppliers-dropdown" dropdown-menu>
+							<a href="#" class="suppliers-dropdown__button" dropdown-button>
 								<span>Suppliers</span>
 								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</a>
-							<md-content class="sub-nav" ng-mouseenter="vm.showSuppliers()">
+							<md-content class="sub-nav" dropdown-items>
 								<ul class="sub-nav__suppliers unstyled-list">
 									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers">
 										<a ng-href="{{ ::vm.getUrlForSupplier(supplier) }}" class="sub-nav__supplier__link">
@@ -95,8 +95,15 @@
 						</ul>
 					</nav>
 					<span class="flex"></span>
-					<nav class="account-nav">
-						<a href="#">Account</a>
+					<nav class="account-nav" dropdown-menu>
+						<a href="#" dropdown-button>
+							<span>Account</span>
+							<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
+						</a>
+						<div class="account-nav__items md-whiteframe-z1" dropdown-items>
+							<a href="account/orders/">Orders</a>
+							<a href="account/settings/">Settings</a>
+						</div>
 					</nav>
 					<div class="postcode-wrapper" ng-controller="PostcodeController as vm">
 						<md-button class="postcode-button" ng-click="vm.togglePostcodeForm($event)" aria-label="Show postcode form">
@@ -129,7 +136,7 @@
 				<loading-indicator></loading-indicator>
 			</md-toolbar>
 
-			<md-content class="content-body flex" ui-view></md-content>
+			<md-content class="content-body flex" ui-view scroll-on-state-change></md-content>
 
 			<md-sidenav class="md-sidenav-left md-whiteframe-z2 hide-gt-md" md-component-id="menu" ng-cloak>
 				<div ng-controller="MenuController as vm" ng-if="!$mdMedia('gt-md')">
@@ -139,8 +146,7 @@
 								<md-icon md-svg-src="assets/images/icons/menu.svg"></md-icon>
 							</md-button>
 							<h2 class="layout-row">
-								<md-icon md-svg-src="assets/images/orderable-logo.svg"></md-icon>
-								<span style="margin-left: 6px;" ng-bind="::vm.brand"></span>
+								<img src="assets/images/orderable-logo-white.png" alt="Orderable" height="22" />
 							</h2>
 						</div>
 					</md-toolbar>
@@ -149,7 +155,7 @@
 							<md-button class="menu-button" ng-click="vm.openMenu = (vm.openMenu === 'suppliers') ? '' : 'suppliers'" ng-class="{'is-open': vm.openMenu === 'suppliers'}">
 								<span>Suppliers</span>
 								<span class="flex"></span>
-								<md-icon class="open-indicator" md-svg-src="/assets/images/icons/chevron-down.svg"></md-icon>
+								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</md-button>
 							<md-list ng-show="vm.openMenu === 'suppliers'" class="animate-slide">
 								<md-list-item  ng-repeat="supplier in vm.suppliers">
@@ -165,7 +171,7 @@
 							<md-button class="menu-button md-default-theme" ng-click="vm.openMenu = (vm.openMenu === category.name) ? '' : category.name" ng-class="{'is-open': vm.openMenu === category.name}" aria-label="{{ ::category.name }}">
 								<span ng-bind="::category.name"></span>
 								<span class="flex"></span>
-								<md-icon class="open-indicator" md-svg-src="/assets/images/icons/chevron-down.svg"></md-icon>
+								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</md-button>
 
 							<md-list ng-show="vm.openMenu === category.name" class="animate-slide">
@@ -180,9 +186,24 @@
 							</md-list>
 						</div>
 						<hr />
-						<md-button class="menu-link" ng-href="#">Account</md-button>
+						<div class="menu-button-wrapper">
+							<md-button class="menu-button md-default-theme" ng-click="vm.openMenu = (vm.openMenu === 'account') ? '' : 'account'" ng-class="{'is-open': vm.openMenu === 'account'}">
+								<span>Account</span>
+								<span class="flex"></span>
+								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
+							</md-button>
+
+							<md-list ng-show="vm.openMenu === 'account'" class="animate-slide">
+								<md-list-item>
+									<md-button class="menu-link" ng-href="account/orders/">Orders</md-button>
+								</md-list-item>
+								<md-list-item>
+									<md-button class="menu-link" ng-href="account/settings/">Settings</md-button>
+								</md-list-item>
+							</md-list>
+						</div>
 						<div ng-controller="PostcodeController as vm">
-							<md-button aria-label="Change location" ng-click="vm.togglePostcodeForm($event)">
+							<md-button ng-click="vm.togglePostcodeForm($event)" aria-label="Change location">
 								<md-icon md-svg-src="assets/images/icons/location.svg" style="height: 18px; width: 18px"></md-icon>
 								<span ng-bind="vm.postcode"></span>
 							</md-button>
@@ -204,6 +225,7 @@
 		<script src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
 		<script src="assets/vendor/lodash/lodash.js"></script>
 		<script src="assets/vendor/fastclick/lib/fastclick.js"></script>
+		<script src="assets/vendor/Element.closest/closest.js"></script>
 		<!-- endbower -->
 		<script src="assets/js/app.js"></script>
 		<!-- endbuild -->
