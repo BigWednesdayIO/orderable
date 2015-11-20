@@ -1,0 +1,55 @@
+[dropdown-menu] {
+	position: relative;
+	align-self: stretch;
+}
+
+[dropdown-button] {
+	display: block;
+	height: 48px;
+	padding: 0 4px 0 8px;
+	outline: none;
+	line-height: 48px;
+	background: transparent;
+	color: inherit;
+	text-transform: none;
+	transition: $transition;
+
+	&:hover {
+		background: rgba(158,158,158,0.2);
+	}
+
+	md-icon {
+		height: 16px;
+		width: 16px;
+		color: inherit !important;
+		transform: translateY(0) translateZ(0);
+		transition: $transition;
+	}
+
+	.is-open & {
+		height: 49px;
+		margin-bottom: -1px;
+		color: $md-primary;
+		background: $md-primary-text;
+		box-shadow: 0 4px 4px 0 rgba(255, 255, 255,.3);
+
+		md-icon {
+			transform: translateY(1px) translateZ(0);
+		}
+	}
+}
+
+[dropdown-items] {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	opacity: 0;
+	visibility: collapse;
+	z-index: 9;
+	transition: .1s ease-in-out;
+
+	.is-open & {
+		opacity: 1;
+		visibility: visible;
+	}
+}

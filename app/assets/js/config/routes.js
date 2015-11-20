@@ -32,9 +32,26 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 		})
 		.state('order-confirmation', {
 			url: '/order-confirmation/:id/',
-			controller: 'OrderConfirmationController as vm',
-			resolve: OrderConfirmationController.resolve,
-			templateUrl: 'views/order-confirmation.html'
+			controller: 'OrderController as vm',
+			resolve: OrderController.resolve,
+			templateUrl: 'views/order.html'
+		})
+		.state('account-settings', {
+			url: '/account/settings/',
+			controller: 'AccountSettingsController as vm',
+			templateUrl: 'views/account-settings.html'
+		})
+		.state('order-history', {
+			url: '/account/orders/',
+			controller: 'OrderHistoryController as vm',
+			resolve: OrderHistoryController.resolve,
+			templateUrl: 'views/order-history.html'
+		})
+		.state('order', {
+			url: '/account/orders/:id/',
+			controller: 'OrderController as vm',
+			resolve: OrderController.resolve,
+			templateUrl: 'views/order.html'
 		});
 
 	$urlRouterProvider.otherwise("/");

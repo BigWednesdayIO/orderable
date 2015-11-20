@@ -3,6 +3,7 @@
 
 @import 'layouts/main.scss';
 
+@import 'modules/account-nav';
 @import 'modules/action-bar';
 @import 'modules/address-summary';
 @import 'modules/basket';
@@ -11,6 +12,7 @@
 @import 'modules/checkout';
 @import 'modules/content-box';
 @import 'modules/delivery-calendar';
+@import 'modules/dropdown-menu';
 @import 'modules/facets';
 @import 'modules/featured';
 @import 'modules/footer';
@@ -20,6 +22,7 @@
 @import 'modules/loyalty-list';
 @import 'modules/menu-button';
 @import 'modules/order-form';
+@import 'modules/order-history';
 @import 'modules/postcode';
 @import 'modules/price';
 @import 'modules/primary-nav';

@@ -1,4 +1,4 @@
-function OrderConfirmationController (suppliersService, orderDetails) {
+function OrderController (suppliersService, orderDetails) {
 	var vm = this;
 
 	vm.order = orderDetails;
@@ -6,7 +6,7 @@ function OrderConfirmationController (suppliersService, orderDetails) {
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
 }
 
-OrderConfirmationController.resolve = /* @ngInject */ {
+OrderController.resolve = /* @ngInject */ {
 	orderDetails: function($stateParams, checkoutService) {
 		return checkoutService
 			.getCheckout($stateParams.id);
@@ -15,4 +15,4 @@ OrderConfirmationController.resolve = /* @ngInject */ {
 
 angular
 	.module('app')
-	.controller('OrderConfirmationController', OrderConfirmationController);
+	.controller('OrderController', OrderController);

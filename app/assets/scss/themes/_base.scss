@@ -6,6 +6,10 @@
 	}
 }
 
+main {
+	display: block;
+}
+
 html {
 	box-sizing: border-box;
 }
@@ -14,6 +18,11 @@ body {
 	margin: 0;
 	background: $md-accent;
 	font-size: 14px;
+}
+
+body,
+.event-wrapper {
+	max-height: 100%;
 }
 
 [ui-view]:empty {

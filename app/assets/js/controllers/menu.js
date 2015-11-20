@@ -1,13 +1,5 @@
 function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, suppliersService, menuColours, brand) {
-	var vm = this,
-		closeTimer;
-
-	function closeListener (event) {
-		if (event.target.closest('.suppliers-dropdown')) {
-			return;
-		}
-		vm.hideSuppliers(0);
-	}
+	var vm = this;
 
 	vm.brand = brand;
 
@@ -27,23 +19,6 @@ function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, 
 	vm.getBrandImageForSupplier = suppliersService.getBrandImageForSupplier;
 
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
-
-	vm.toggleShowSuppliers = function() {
-		vm.suppliersAreShown ? vm.hideSuppliers(0) : vm.showSuppliers();
-	};
-
-	vm.hideSuppliers = function(delay) {
-		closeTimer = $timeout(function() {
-			vm.suppliersAreShown = false;
-			eventWrapper.removeEventListener('click', closeListener);
-		}, delay);
-	};
-
-	vm.showSuppliers = function() {
-		$timeout.cancel(closeTimer);
-		vm.suppliersAreShown = true;
-		eventWrapper.addEventListener('click', closeListener, false);
-	};
 
 	navigationService
 		.getNavigation()

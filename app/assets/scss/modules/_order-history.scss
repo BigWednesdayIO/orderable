@@ -1,0 +1,18 @@
+.order-history {
+	padding: 20px;
+	margin-top: 30px;
+
+	> .md-headline:first-child {
+		margin-top: 0;
+	}
+
+	.md-subhead {
+		margin: 0;
+	}
+}
+
+.order {
+	&__total {
+		font-size: 16px;
+	}
+}
