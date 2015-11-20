@@ -136,7 +136,7 @@
 				<loading-indicator></loading-indicator>
 			</md-toolbar>
 
-			<md-content class="content-body flex layout-column" ui-view scroll-on-state-change></md-content>
+			<md-content class="content-body flex" ui-view scroll-on-state-change></md-content>
 
 			<md-sidenav class="md-sidenav-left md-whiteframe-z2 hide-gt-md" md-component-id="menu" ng-cloak>
 				<div ng-controller="MenuController as vm" ng-if="!$mdMedia('gt-md')">
@@ -225,6 +225,7 @@
 		<script src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
 		<script src="assets/vendor/lodash/lodash.js"></script>
 		<script src="assets/vendor/fastclick/lib/fastclick.js"></script>
+		<script src="assets/vendor/Element.closest/closest.js"></script>
 		<!-- endbower -->
 		<script src="assets/js/app.js"></script>
 		<!-- endbuild -->

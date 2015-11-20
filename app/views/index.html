@@ -1,12 +1,14 @@
 <div class="hero" style="background-image: url(assets/images/orderable-hero.jpg)">
 	<div class="content-wrap">
-		<div class="hero__banner">
-			<p style="margin-top: 0;">Great suppliers delivering to you</p>
-			<h1>Order the products you need from the suppliers you love</h1>
-			<md-button class="align-text">
-				Sign up now
-				<md-icon md-svg-src="assets/images/icons/arrow-right-circle.svg"></md-icon>
-			</md-button>
+		<div class="layout-row">
+			<div class="hero__banner">
+				<p style="margin-top: 0;">Great suppliers delivering to you</p>
+				<h1>Order the products you need from the suppliers you love</h1>
+				<md-button class="align-text">
+					Sign up now
+					<md-icon md-svg-src="assets/images/icons/arrow-right-circle.svg"></md-icon>
+				</md-button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -21,7 +23,7 @@
 	</div>
 </div>
 
-<div class="content-wrap flex">
+<div class="content-wrap">
 	<main class="layout-margin">
 		<supplier-featured-items ng-repeat="featured in ::vm.featuredSupplierProducts" supplier="::featured.supplier" hits="::featured.hits" button-text="Shop store"></supplier-featured-items>
 	</main>
