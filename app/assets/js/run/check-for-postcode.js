@@ -2,7 +2,7 @@ function checkForPostcode ($state, postcodeService, suppliersService) {
 	postcodeService
 		.getPostcode()
 		.then(function(postcode) {
-			if (postcode && postcode !== '' || !suppliersService.getCurrentSuppliers().length) {
+			if (postcode && postcode !== '' && suppliersService.getCurrentSuppliers().length) {
 				return;
 			}
 
