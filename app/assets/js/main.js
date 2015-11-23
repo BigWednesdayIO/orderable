@@ -1,2 +1,2 @@
 angular
-	.module('app', ['ngMaterial', 'ui.router']);
+	.module('app', ['ngMaterial', 'ui.router', 'digestHud']);
