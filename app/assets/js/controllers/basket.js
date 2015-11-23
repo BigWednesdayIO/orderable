@@ -28,7 +28,7 @@ function BasketController ($rootScope, $state, $timeout, basketService, checkout
 			vm.quantity[line_item.product.id] = line_item.quantity;
 			vm.quantityFocus[line_item.product.id] = false;
 		}, 150);
-	}
+	};
 
 	vm.basketSuppliers = vm.basket.order_forms.map(function(order_form) {
 		return order_form.supplier;
@@ -41,6 +41,14 @@ function BasketController ($rootScope, $state, $timeout, basketService, checkout
 				$state.go('checkout');
 			});
 	};
+
+	$rootScope.$on('basketUpdated', function() {
+		basketService.basket.order_forms.forEach(function(order_form) {
+			order_form.line_items.forEach(function(line_item) {
+				vm.quantity[line_item.product.id] = line_item.quantity;
+			});
+		});
+	});
 }
 
 BasketController.resolve = /* @ngInject */ {

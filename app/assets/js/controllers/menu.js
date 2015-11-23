@@ -1,4 +1,4 @@
-function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, suppliersService, menuColours, brand) {
+function MenuController ($rootScope, $mdSidenav, navigationService, suppliersService, menuColours, brand) {
 	var vm = this;
 
 	vm.brand = brand;
@@ -25,6 +25,10 @@ function MenuController ($mdSidenav, $timeout, eventWrapper, navigationService, 
 		.then(function(navigation) {
 			vm.categories = navigation;
 		});
+
+	$rootScope.$on('suppliersUpdated', function(e, suppliers) {
+		vm.suppliers = suppliers;
+	});
 }
 
 angular

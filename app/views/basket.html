@@ -29,13 +29,14 @@
 							<h3 class="line-item__name md-subhead">
 								<a ng-href="product/{{ ::line_item.product.id }}" ng-bind="::line_item.product.name"></a>
 							</h3>
-							<div class="line-item__price" price product="::line_item.product"></div>
+							<div class="line-item__price" price product="line_item.product"></div>
 							<div class="line-item__actions">
 								<md-button class="md-primary" ng-click="vm.removeFromBasket(line_item.product)">Remove</md-button>
 								<!-- <md-button class="md-primary">Save for later</md-button> -->
 							</div>
 						</td>
 						<td>
+							<input type="hidden" ng-model="line_item.quantity" ng-change="vm.syncQuantity(line_item)" />
 							<md-input-container md-no-float class="line-item__quantity md-block">
 								<input type="number" min="1" ng-model="vm.quantity[line_item.product.id]" placeholder="Qty" ng-focus="vm.quantityFocus[line_item.product.id] = true" ng-blur="vm.handleBlur(line_item)">
 							</md-input-container>
