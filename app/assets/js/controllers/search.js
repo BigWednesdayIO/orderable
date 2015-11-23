@@ -55,6 +55,12 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		}
 	}
 
+	function updateSearchResults () {
+		searchPage = 1;
+		getSearchResults()
+			.then(bindSearchResponse);
+	}
+
 	bindSearchResponse(searchResponse);
 
 	vm.applyRefinementToUrl = searchService.applyRefinementToUrl;
@@ -71,11 +77,8 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		$location.url(searchService.applyRefinementToUrl('sort', vm.sortBy));
 	};
 
-	$rootScope.$on('$locationChangeSuccess', function() {
-		searchPage = 1;
-		getSearchResults()
-			.then(bindSearchResponse);
-	});
+	$rootScope.$on('$locationChangeSuccess', updateSearchResults);
+	$rootScope.$on('suppliersUpdated', updateSearchResults);
 
 	$scope.$on('$destroy', function() {
 		$element.off('scroll', checkScrollPosition);

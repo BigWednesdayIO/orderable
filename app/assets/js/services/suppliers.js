@@ -1,10 +1,11 @@
-function SuppliersService ($q, browserStorage) {
+function SuppliersService ($rootScope, $q, browserStorage) {
 	var service = {},
 		currentSuppliers = browserStorage.getItem('suppliers') || [];
 
 	service.saveSuppliers = function(suppliers) {
 		currentSuppliers = suppliers;
 		browserStorage.setItem('suppliers', currentSuppliers);
+		$rootScope.$emit('suppliersUpdated', currentSuppliers);
 	}
 
 	service.getSuppliersForPostcode = function(postcode) {

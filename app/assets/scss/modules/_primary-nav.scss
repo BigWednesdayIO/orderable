@@ -69,7 +69,7 @@
 
 	&__links {
 		padding: 24px 24px 8px;
-		columns: 3 220px;
+		columns: 3 170px;
 		column-gap: 16px;
 		font-weight: 400;
 	}
@@ -82,6 +82,29 @@
 		&__heading {
 			margin: 0;
 			text-transform: uppercase;
+		}
+	}
+
+	&__featured {
+		padding: 2px 20px;
+		width: 180px;
+		flex-shrink: 0;
+
+		&__supplier {
+			display: block;
+			padding: 4px 0;
+			border: $divider;
+			background: white;
+			margin-bottom: 10px;
+			transition: box-shadow $transition;
+
+			&:hover {
+				box-shadow: 0 2px 5px 0 rgba(0,0,0,.16);
+			}
+
+			> img {
+				margin: 0 auto;
+			}
 		}
 	}
 }

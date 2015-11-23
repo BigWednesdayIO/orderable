@@ -25,11 +25,11 @@
 		</div>
 	</div>
 
-	<div layout="row" flex>
-		<aside class="hide-sm" layout-margin>
+	<div class="layout-row flex">
+		<aside class="hide-sm layout-margin">
 			<md-content class="md-whiteframe-z1 facets">
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
-					<div layout="row" layout-align="space-between start">
+					<div class="layout-row layout-align-space-between-start">
 						<h3 class="facets__heading md-body-2" ng-bind="::(facet.display_name || facet.field)"></h3>
 						<a ng-href="{{ vm.removeRefinementFromUrl(facet.field) }}" class="facets__clear" ng-show="vm.search[facet.field]">Clear</a>
 					</div>
@@ -42,7 +42,7 @@
 			</md-content>
 		</aside>
 
-		<main flex layout-margin style="overflow: auto;">
+		<main class="search-results-wrapper flex layout-margin">
 			<div ng-if="!vm.hits.length">No search results</div>
 
 			<div ng-if="!vm.search.supplier">

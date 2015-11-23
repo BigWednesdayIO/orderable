@@ -127,3 +127,8 @@ md-autocomplete {
 		}
 	}
 }
+
+.search-results-wrapper {
+	// Width of facets + 4 lots of 8px margin
+	max-width: calc(100% - 252px);
+}

@@ -26,6 +26,10 @@ function PostcodeService ($rootScope, $q, $mdDialog, browserStorage) {
 				return postcode;
 			});
 	};
+
+	browserStorage.watch('postcode', function(e, newPostcode) {
+		$rootScope.$emit('postcodeUpdated', newPostcode);
+	});
 }
 
 angular

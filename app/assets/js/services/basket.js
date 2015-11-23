@@ -169,6 +169,13 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 		return $q.when(service.basket);
 	};
 
+	browserStorage.watch('basket', function(e, newBasket) {
+		Object.keys(newBasket).forEach(function(key) {
+			service.basket[key] = newBasket[key];
+		});
+		$rootScope.$emit('basketUpdated', service.basket.line_item_count);
+	});
+
 	return service;
 }
 

@@ -1,0 +1,10 @@
+<div class="sub-nav__featured md-accent-panel" ng-show="vm.featuredSuppliers.length">
+	<h4>Featured suppliers</h4>
+	<ul class="unstyled-list">
+		<li ng-repeat="supplier in vm.featuredSuppliers track by supplier.name">
+			<a class="sub-nav__featured__supplier" ng-href="{{ ::supplier.href }}">
+				<img ng-src="{{ ::supplier.image }}" height="50" alt="{{ ::supplier.name }}" />
+			</a>
+		</li>
+	</ul>
+</div>
