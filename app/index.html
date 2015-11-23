@@ -65,7 +65,7 @@
 								<ul class="sub-nav__suppliers unstyled-list">
 									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers">
 										<a ng-href="{{ ::vm.getUrlForSupplier(supplier) }}" class="sub-nav__supplier__link">
-											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier) }}" class="sub-nav__supplier__image" height="60" alt="{{}}" />
+											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier) }}" class="sub-nav__supplier__image" height="60" alt="{{ ::supplier }}" />
 										</a>
 									</li>
 								</ul>
@@ -80,15 +80,18 @@
 										<h3 ng-bind="::category.name" ng-class="{'with-view-all': category.href}"></h3>
 										<a ng-href="{{ ::category.href }}" ng-if="::category.href">View all&nbsp;›</a>
 									</div>
-									<div class="sub-nav__links">
-										<ul class="sub-nav__section" ng-repeat="subcat in ::category.links track by subcat.href">
-											<li>
-												<h4 class="sub-nav__section__heading"><a ng-href="{{ ::subcat.href }}" ng-bind="::subcat.name + '&nbsp;›'"></a></h4>
-											</li>
-											<li ng-repeat="link in ::subcat.links track by link.href">
-												<a ng-href="{{ ::link.href }}" ng-bind="::link.name"></a>
-											</li>
-										</ul>
+									<div class="layout-row">
+										<div class="sub-nav__links flex">
+											<ul class="sub-nav__section" ng-repeat="subcat in ::category.links track by subcat.href">
+												<li>
+													<h4 class="sub-nav__section__heading"><a ng-href="{{ ::subcat.href }}" ng-bind="::subcat.name + '&nbsp;›'"></a></h4>
+												</li>
+												<li ng-repeat="link in ::subcat.links track by link.href">
+													<a ng-href="{{ ::link.href }}" ng-bind="::link.name"></a>
+												</li>
+											</ul>
+										</div>
+										<featured-suppliers category="category"></featured-suppliers>
 									</div>
 								</md-content>
 							</li>

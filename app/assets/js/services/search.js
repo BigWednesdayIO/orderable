@@ -137,6 +137,38 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 					});
 			});
 	};
+
+	service.getSuppliersForCategory = function(category) {
+		var params = {
+			filters: [
+				{
+					field: 'category_hierarchy',
+					term: category
+				}, {
+					field: 'supplier',
+					terms: suppliersService.getCurrentSuppliers()
+				}
+			],
+			hitsPerPage: 0
+		};
+
+		return $http({
+			url: API.search,
+			method: 'POST',
+			data: params
+		})
+			.then(function(response) {
+				var suppliers = (_.find(response.facets, {field: 'supplier'}) || {}).values;
+
+				return suppliers.map(function(supplier) {
+					return {
+						name: supplier.value,
+						image: suppliersService.getBrandImageForSupplier(supplier.value),
+						href: 'search/?supplier=' + encodeURIComponent(supplier.value) + '&category_hierarchy=' + category
+					};
+				});
+			});
+	}
 }
 
 angular
