@@ -147,6 +147,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 
 		service.basket.order_forms[supplierIndex].line_items.splice(productIndex, 1);
 
+		if (service.basket.order_forms[supplierIndex].line_items.length === 0) {
+			service.basket.order_forms.splice(supplierIndex, 1);
+		}
+
 		calculateTotals();
 
 		return $q.when();
