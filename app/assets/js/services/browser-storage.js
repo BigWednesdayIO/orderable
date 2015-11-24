@@ -38,6 +38,9 @@ function BrowserStorageService ($rootScope, $window) {
 	};
 
 	$window.addEventListener('storage', function(e) {
+		if (!e) {
+			e = $window.event;
+		}
 		listeners.forEach(function(listener) {
 			if (listener.key === e.key) {
 				// Can't rely on e.newValue in IE
@@ -45,7 +48,7 @@ function BrowserStorageService ($rootScope, $window) {
 				$rootScope.$digest();
 			};
 		});
-	});
+	}, false);
 
 	return service;
 }
