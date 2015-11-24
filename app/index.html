@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB" ng-app="app">
+<html lang="en-GB" ng-app="app" ng-strict-di>
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -63,7 +63,7 @@
 							</a>
 							<md-content class="sub-nav" dropdown-items>
 								<ul class="sub-nav__suppliers unstyled-list">
-									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers">
+									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers track by supplier">
 										<a ng-href="{{ ::vm.getUrlForSupplier(supplier) }}" class="sub-nav__supplier__link">
 											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier) }}" class="sub-nav__supplier__image" height="60" alt="{{ ::supplier }}" />
 										</a>
@@ -161,7 +161,7 @@
 								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</md-button>
 							<md-list ng-show="vm.openMenu === 'suppliers'" class="animate-slide">
-								<md-list-item  ng-repeat="supplier in vm.suppliers">
+								<md-list-item  ng-repeat="supplier in vm.suppliers track by supplier">
 									<md-button class="menu-link" ng-href="{{ ::vm.getUrlForSupplier(supplier) }}" aria-label="{{ ::supplier }}">
 										<md-icon style="margin: auto 12px auto 0; border-radius: 50%; overflow: hidden;"><img ng-src="{{ ::vm.getLogoForSupplier(supplier) }}" height="24" alt="{{}}" /></md-icon>
 										<span ng-bind="::supplier"></span>
@@ -229,6 +229,7 @@
 		<script src="assets/vendor/lodash/lodash.js"></script>
 		<script src="assets/vendor/fastclick/lib/fastclick.js"></script>
 		<script src="assets/vendor/Element.closest/closest.js"></script>
+		<script src="assets/vendor/angular-digest-hud/digest-hud.js"></script>
 		<!-- endbower -->
 		<script src="assets/js/app.js"></script>
 		<!-- endbuild -->
