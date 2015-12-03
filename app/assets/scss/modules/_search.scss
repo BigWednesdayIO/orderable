@@ -130,5 +130,7 @@ md-autocomplete {
 
 .search-results-wrapper {
 	// Width of facets + 4 lots of 8px margin
-	max-width: calc(100% - 252px);
+	@media (min-width: $bp-medium) {
+		max-width: calc(100% - 252px);
+	}
 }
