@@ -1,13 +1,14 @@
 <main class="content-wrap" style="max-width: 600px;">
 	<div class="md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 40px; margin-top: 30px">
-		<form class="registration-form" name="vm.registrationForm">
+		<h1 class="md-headline" style="margin: 0 0 10px">Sign up with Orderable</h1>
+		<form class="registration-form" name="vm.registrationForm" ng-submit="vm.register($event)">
 			<ol class="form-rows unstyled-list">
-				<li>
+				<!-- <li>
 					<md-input-container>
 						<label>Name</label>
 						<input ng-model="vm.userDetails.name" required />
 					</md-input-container>
-				</li>
+				</li> -->
 				<li>
 					<md-input-container>
 						<label>Email</label>
@@ -26,12 +27,12 @@
 						<input type="password" ng-model="vm.confirmPassword" required />
 					</md-input-container>
 				</li>
-				<li>
+				<!-- <li>
 					<md-input-container>
 						<label>Company name</label>
 						<input ng-model="vm.userDetails.company" required />
 					</md-input-container>
-				</li>
+				</li> -->
 				<li>
 					<md-input-container>
 						<label>VAT number</label>
