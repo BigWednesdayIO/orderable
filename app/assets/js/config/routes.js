@@ -45,6 +45,11 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			controller: 'RegistrationController as vm',
 			templateUrl: 'views/registration.html'
 		})
+		.state('sign-in', {
+			url: '/sign-in/',
+			controller: 'SignInController as vm',
+			templateUrl: 'views/sign-in.html'
+		})
 		.state('account-settings', {
 			url: '/account/settings/',
 			controller: 'AccountSettingsController as vm',
