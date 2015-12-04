@@ -1,4 +1,4 @@
-function CustomerService ($http, API, browserStorage) {
+function CustomerService ($rootScope, $http, API, browserStorage) {
 	var service = this;
 	var customerInfo;
 
@@ -33,8 +33,8 @@ function CustomerService ($http, API, browserStorage) {
 
 	service.getSessionInfo = function() {
 		return {
-			id: customerInfo.id || browserStorage.getItem('customer_id'),
-			token: customerInfo.token || browserStorage.getItem('token')
+			id: (customerInfo || {}).id || browserStorage.getItem('customer_id'),
+			token: (customerInfo || {}).token || browserStorage.getItem('token')
 		};
 	};
 
@@ -64,7 +64,11 @@ function CustomerService ($http, API, browserStorage) {
 			url: API.customers + '/authenticate',
 			data: credentials
 		})
-			.then(storeCustomerInfo);
+			.then(storeCustomerInfo)
+			.then(function(response) {
+				$rootScope.$emit('userSignIn', response);
+				return response;
+			});
 	};
 }
 
