@@ -10,7 +10,7 @@ function DeliveryDatesService ($q, $filter) {
 				new Date()
 			],
 			now = dates[0],
-			dayOfMonth = now.getDay();
+			dayOfMonth = now.getDate();
 
 		dates = dates.map(function(date, i) {
 			// Now days in a row, starting today
