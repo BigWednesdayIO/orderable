@@ -1,4 +1,4 @@
-function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserStorage, authorizationService, _) {
+function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, authorizationService, _) {
 	var service = {};
 
 	function emptyBakset () {
@@ -60,7 +60,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 	}
 
 	function showUpdate (lineItem) {
-		if (!$mdMedia('gt-md')) {
+		if (!$mdMedia('gt-md') || $state.is('basket') || $state.is('checkout')) {
 			return;
 		}
 		return $mdToast.show({
@@ -146,6 +146,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 		}
 
 		service.basket.order_forms[supplierIndex].line_items.splice(productIndex, 1);
+
+		if (service.basket.order_forms[supplierIndex].line_items.length === 0) {
+			service.basket.order_forms.splice(supplierIndex, 1);
+		}
 
 		calculateTotals();
 

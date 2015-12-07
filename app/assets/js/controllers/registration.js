@@ -5,10 +5,7 @@ function RegistrationController (customerService, linesOfBusiness) {
 
 	vm.register = function($event) {
 		customerService
-			.register(vm.userDetails)
-			.then(function(response) {
-				console.log(response);
-			});
+			.register(vm.userDetails);
 	};
 }
 

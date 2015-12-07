@@ -4,7 +4,7 @@ function LoyaltyListDirective () {
 		scope: {
 			suppliers: '='
 		},
-		controller: function(suppliersService) {
+		controller: function($scope, suppliersService) {
 			var vm = this;
 
 			function getLoyaltySchemes () {
@@ -16,7 +16,11 @@ function LoyaltyListDirective () {
 				});
 			}
 
-			vm.loyaltySchemes = getLoyaltySchemes();
+			$scope.$watch(function() {
+				return vm.suppliers;
+			}, function() {
+				vm.loyaltySchemes = getLoyaltySchemes();
+			});
 		},
 		controllerAs: 'vm',
 		bindToController: true,
