@@ -1,4 +1,4 @@
-function MenuController ($rootScope, $mdSidenav, navigationService, suppliersService, menuColours, brand) {
+function MenuController ($rootScope, $state, $mdSidenav, navigationService, suppliersService, customerService, menuColours, brand) {
 	var vm = this;
 
 	vm.brand = brand;
@@ -8,7 +8,7 @@ function MenuController ($rootScope, $mdSidenav, navigationService, suppliersSer
 	vm.toggleMenu = function() {
 		$mdSidenav('menu')
 			.toggle();
-	}
+	};
 
 	vm.suppliers = suppliersService.getCurrentSuppliers();
 
@@ -19,6 +19,21 @@ function MenuController ($rootScope, $mdSidenav, navigationService, suppliersSer
 	vm.getBrandImageForSupplier = suppliersService.getBrandImageForSupplier;
 
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
+
+	vm.isSignedIn = customerService.isSignedIn();
+
+	vm.signOut = function() {
+		customerService
+			.signOut()
+			.then(function() {
+				vm.isSignedIn = false;
+				$state.go('home');
+			});
+	};
+
+	$rootScope.$on('userSignIn', function() {
+		vm.isSignedIn = true;
+	});
 
 	navigationService
 		.getNavigation()

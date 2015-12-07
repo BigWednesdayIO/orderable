@@ -56,10 +56,9 @@ BasketController.resolve = /* @ngInject */ {
 		return basketService
 			.getServerBasket();
 	},
-	redirectEmptyBasket: function($state, basketService) {
-		if (!basketService.basket.order_forms.length) {
-			$state.go('home');
-		}
+	requiresSignIn: function(authorizationService) {
+		return authorizationService
+			.requireSignIn();
 	}
 };
 

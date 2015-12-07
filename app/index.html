@@ -106,6 +106,7 @@
 						<div class="account-nav__items md-whiteframe-z1" dropdown-items>
 							<a href="account/orders/">Orders</a>
 							<a href="account/settings/">Settings</a>
+							<a href="#" ng-show="vm.isSignedIn" ng-click="vm.signOut()">Sign out</a>
 						</div>
 					</nav>
 					<div class="postcode-wrapper" ng-controller="PostcodeController as vm">

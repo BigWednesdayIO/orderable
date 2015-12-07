@@ -1,14 +1,17 @@
 <main class="content-wrap content-wrap--960">
 	<section class="basket md-whiteframe md-whiteframe-z1 layout-padding">
 		<div class="layout-row layout-align-space-between-center">
-			<h1 class="md-headline" style="padding-left: 25px;">Basket</h1>
-			<div class="basket__actions">
+			<h1 class="md-headline" style="padding-left: 25px;">
+				<span ng-show="vm.basket.order_forms.length">Basket</span>
+				<span ng-hide="vm.basket.order_forms.length">Your basket is empty</span>
+			</h1>
+			<div class="basket__actions" ng-show="vm.basket.order_forms.length">
 				<md-button class="md-primary md-raised" ng-click="vm.beginCheckout()">Go to checkout</md-button>
 				<div class="basket__actions__subtotal">Subtotal: <strong ng-bind="vm.basket.subtotal | currency: '£'"></strong></div>
 			</div>
 		</div>
 
-		<ul class="order-forms unstyled-list">
+		<ul class="order-forms unstyled-list" ng-show="vm.basket.order_forms.length">
 			<li class="order-form" ng-repeat="order_form in vm.basket.order_forms track by order_form.supplier">
 				<div class="layout-row layout-align-start-center md-accent-panel">
 					<div class="supplier-logo" style="margin: 20px">
@@ -50,7 +53,7 @@
 			</li>
 		</ul>
 
-		<div class="basket__actions">
+		<div class="basket__actions" ng-show="vm.basket.order_forms.length">
 			<div class="basket__actions__subtotal">Subtotal: <strong ng-bind="vm.basket.subtotal | currency: '£'"></strong></div>
 			<md-button class="md-primary md-raised" ng-click="vm.beginCheckout()">Go to checkout</md-button>
 		</div>
@@ -63,7 +66,7 @@
 				<md-button class="md-primary md-small" ng-href="account/loyalty-cards/">Manage loyalty cards</md-button>
 			</div>
 		</div>
-		<div class="content-box__body">
+		<div class="content-box__body" ng-show="vm.basketSuppliers.length">
 			<loyalty-list suppliers="vm.basketSuppliers"></loyalty-list>
 		</div>
 	</section>
