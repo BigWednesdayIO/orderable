@@ -180,6 +180,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 		$rootScope.$emit('basketUpdated', service.basket.line_item_count);
 	});
 
+	$rootScope.$on('userSignOut', function(e, info) {
+		service.createBasket();
+	});
+
 	return service;
 }
 

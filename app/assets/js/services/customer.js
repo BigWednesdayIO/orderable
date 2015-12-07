@@ -1,4 +1,4 @@
-function CustomerService ($rootScope, $http, API, browserStorage) {
+function CustomerService ($rootScope, $http, $q, API, browserStorage) {
 	var service = this;
 	var customerInfo;
 
@@ -69,6 +69,14 @@ function CustomerService ($rootScope, $http, API, browserStorage) {
 				$rootScope.$emit('userSignIn', response);
 				return response;
 			});
+	};
+
+	service.signOut = function() {
+		customerInfo = null;
+		browserStorage.removeItem('customer_id');
+		browserStorage.removeItem('token');
+		$rootScope.$emit('userSignOut');
+		return $q.when(customerInfo);
 	};
 }
 
