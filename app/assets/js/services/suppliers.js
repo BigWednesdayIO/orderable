@@ -30,7 +30,7 @@ function SuppliersService ($rootScope, $q, browserStorage) {
 
 	service.getLogoForSupplier = function(supplier) {
 		var logos = {
-			'Pub Taverns': 'assets/images/pub-buying-club-logo.jpg',
+			'Pub Taverns': 'assets/images/pub-buying-club-logo.svg',
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
 			'Best Buy': 'assets/images/best-buy-logo.png',
 			'Walmart': 'assets/images/walmart-logo.png',
@@ -42,7 +42,7 @@ function SuppliersService ($rootScope, $q, browserStorage) {
 
 	service.getBrandImageForSupplier = function(supplier) {
 		var brandImage = {
-			'Pub Taverns': 'assets/images/pub-buying-club-logo.jpg',
+			'Pub Taverns': 'assets/images/pub-buying-club-logo.svg',
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
 			'Best Buy': 'assets/images/best-buy-tile.png',
 			'Walmart': 'assets/images/walmart-tile.jpg',

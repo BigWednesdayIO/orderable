@@ -13,7 +13,10 @@ var gulp = require('gulp'),
 	usemin = require('gulp-usemin'),
 	del = require('del'),
 	ngConstant = require('gulp-ng-constant'),
-	rename = require('gulp-rename');
+	rename = require('gulp-rename'),
+	minifyHTML = require('gulp-minify-html'),
+	templateCache = require('gulp-angular-templatecache'),
+	prettify = require('gulp-jsbeautifier');
 
 function handleError (err) {
 	console.log(err.toString());
@@ -51,11 +54,31 @@ gulp.task('build:config', function() {
 	.pipe(gulp.dest('app/assets/js/constants'));
 });
 
-gulp.task('build:js', ['build:config'], function() {
+gulp.task('build:templates', function() {
+	return gulp
+		.src('app/views/{,*/}*.html')
+		.pipe(minifyHTML({
+			quotes: true
+		}))
+		.pipe(templateCache({
+			root: 'views',
+			module: 'app'
+		}))
+		.pipe(prettify({
+			mode: 'VERIFY_AND_WRITE',
+			js: {
+				indentWithTabs: true
+			}
+		}))
+		.pipe(gulp.dest('app/assets/js/environment/production'));
+});
+
+gulp.task('build:js', ['build:templates', 'build:config'], function() {
 	return gulp
 		.src([
 			'app/assets/js/main.js',
-			'app/assets/js/{config,constants,run,controllers,directives,filters,interceptors,services}/*.js'
+			'app/assets/js/{config,constants,run,controllers,directives,filters,interceptors,services}/*.js',
+			'app/assets/js/environment/' + (process.env.NODE_ENV || 'development') + '/*.js'
 		])
 		.pipe(eslint())
 		.pipe(eslint.format())

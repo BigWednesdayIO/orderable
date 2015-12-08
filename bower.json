@@ -21,7 +21,8 @@
     "angular-ui-router": "ui-router#~0.2.15",
     "lodash": "~3.10.1",
     "fastclick": "~1.0.6",
-    "Element.closest": "closest#~1.0.3"
+    "Element.closest": "closest#~1.0.3",
+    "angular-digest-hud": "mstrutt/digest-hud#feature/no-jquery"
   },
   "resolutions": {
     "angular": "1.4.5-build.4188+sha.7e67e52"

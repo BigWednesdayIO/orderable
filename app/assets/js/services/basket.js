@@ -1,4 +1,4 @@
-function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserStorage, _) {
+function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, authorizationService, _) {
 	var service = {};
 
 	function emptyBakset () {
@@ -60,7 +60,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 	}
 
 	function showUpdate (lineItem) {
-		if (!$mdMedia('gt-md')) {
+		if (!$mdMedia('gt-md') || $state.is('basket') || $state.is('checkout')) {
 			return;
 		}
 		return $mdToast.show({
@@ -91,32 +91,36 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 	}
 
 	service.addToBasket = function(product, quantity) {
-		var supplierIndex = _.findIndex(service.basket.order_forms, {supplier: product.supplier}),
-			productIndex;
+		return authorizationService
+			.requireSignIn()
+			.then(function() {
+				var supplierIndex = _.findIndex(service.basket.order_forms, {supplier: product.supplier}),
+					productIndex;
 
-		if (supplierIndex === -1) {
-			service.basket.order_forms.push({
-				supplier: product.supplier,
-				line_items: []
-			});
-			supplierIndex = service.basket.order_forms.length - 1;
-		}
+				if (supplierIndex === -1) {
+					service.basket.order_forms.push({
+						supplier: product.supplier,
+						line_items: []
+					});
+					supplierIndex = service.basket.order_forms.length - 1;
+				}
 
-		productIndex = _.findIndex(service.basket.order_forms[supplierIndex].line_items, {product: {id: product.id}});
+				productIndex = _.findIndex(service.basket.order_forms[supplierIndex].line_items, {product: {id: product.id}});
 
-		if (productIndex === -1) {
-			service.basket.order_forms[supplierIndex].line_items.push({
-				product: product,
-				quantity: quantity
-			});
-			productIndex = service.basket.order_forms[supplierIndex].line_items.length - 1;
-		} else {
-			service.basket.order_forms[supplierIndex].line_items[productIndex].quantity = quantity;
-		}
+				if (productIndex === -1) {
+					service.basket.order_forms[supplierIndex].line_items.push({
+						product: product,
+						quantity: quantity
+					});
+					productIndex = service.basket.order_forms[supplierIndex].line_items.length - 1;
+				} else {
+					service.basket.order_forms[supplierIndex].line_items[productIndex].quantity = quantity;
+				}
 
-		calculateTotals();
+				calculateTotals();
 
-		return $q.when(service.basket.order_forms[supplierIndex].line_items[productIndex])
+				return service.basket.order_forms[supplierIndex].line_items[productIndex];
+			})
 			.then(function(lineItem) {
 				showUpdate(lineItem);
 				return lineItem;
@@ -142,6 +146,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 		}
 
 		service.basket.order_forms[supplierIndex].line_items.splice(productIndex, 1);
+
+		if (service.basket.order_forms[supplierIndex].line_items.length === 0) {
+			service.basket.order_forms.splice(supplierIndex, 1);
+		}
 
 		calculateTotals();
 
@@ -174,6 +182,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, browserSt
 			service.basket[key] = newBasket[key];
 		});
 		$rootScope.$emit('basketUpdated', service.basket.line_item_count);
+	});
+
+	$rootScope.$on('userSignOut', function(e, info) {
+		service.createBasket();
 	});
 
 	return service;

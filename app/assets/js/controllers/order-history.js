@@ -10,6 +10,10 @@ OrderHistoryController.resolve = /* @ngInject */ {
 	orderHistory: function(ordersService) {
 		return ordersService
 			.getOrders();
+	},
+	requiresSignIn: function(authorizationService) {
+		return authorizationService
+			.requireSignIn();
 	}
 }
 
