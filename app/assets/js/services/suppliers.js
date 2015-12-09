@@ -1,4 +1,4 @@
-function SuppliersService ($rootScope, $q, browserStorage) {
+function SuppliersService ($rootScope, $http, $q, API, browserStorage) {
 	var service = {},
 		currentSuppliers = browserStorage.getItem('suppliers') || [];
 
@@ -9,19 +9,22 @@ function SuppliersService ($rootScope, $q, browserStorage) {
 	}
 
 	service.getSuppliersForPostcode = function(postcode) {
-		var suppliers = [],
-			londonPostcodes = /^(w(1[0-4]?|[2-9])|sw(1[0-9]?|20?|[3-9])|se(1[0-9]?|2[0-8]?|[3-9])|nw(1[01]?|[2-9])|n(1[0-9]?|2[0-2]?|[3-9])|e(1[0-9]?|20?|[3-9]?)|ec[124][amnprvy]|ec3[amnprv]|wc1[abehnr]|wc2[abehnrvx])/i;
-
-		if (postcode.match(londonPostcodes)) {
-			suppliers = [
-				'Pub Taverns',
-				'Beer & Wine Co',
-				'Walmart',
-				'Best Buy'
-			];
-		}
-
-		return $q.when(suppliers);
+		return $http({
+			method: 'GET',
+			url: API.suppliers,
+			params: {
+				deliver_to: postcode.replace(/\s/g, '')
+			}
+		})
+			.catch(function() {
+				// Just until the API's working
+				return [
+					'Pub Taverns',
+					'Beer & Wine Co',
+					'Walmart',
+					'Best Buy'
+				]
+			});
 	};
 
 	service.getCurrentSuppliers = function() {
