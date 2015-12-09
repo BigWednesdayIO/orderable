@@ -44,6 +44,7 @@
 
 	&__price {
 		display: flex;
+		flex-flow: row wrap;
 		align-items: baseline;
 		font-weight: 600;
 	}

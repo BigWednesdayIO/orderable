@@ -1,11 +1,11 @@
 .price {
 	&--now {
 		color: $md-primary;
+		margin-right: 8px;
 	}
 
 	&--was {
 		text-decoration: line-through;
-		margin-left: 8px;
 		font-weight: 400;
 	}
 }
