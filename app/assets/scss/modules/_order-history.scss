@@ -16,3 +16,47 @@
 		font-size: 16px;
 	}
 }
+
+.order-confirmation {
+	main {
+		padding: 10px 20px;
+	}
+
+	&__id {
+		margin-top: -5px;
+	}
+
+	&__heading {
+		margin: 24px 0 12px -4px;
+		font-size: 16px;
+		font-weight: 500;
+
+		> md-icon {
+			margin-right: 6px;
+		}
+	}
+
+	&__id,
+	&__heading {
+		color: rgba(0, 0, 0, .54);
+	}
+
+	md-list,
+	md-list-item {
+		padding: 0;
+	}
+
+	@media (min-width: $bp-medium) {
+		main {
+			padding-left: 60px;
+		}
+
+		&__heading {
+			margin-left: -36px;
+
+			> md-icon {
+				margin-right: 10px;
+			}
+		}
+	}
+}

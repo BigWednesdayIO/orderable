@@ -36,7 +36,7 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			url: '/order-confirmation/:id/',
 			controller: 'OrderController as vm',
 			resolve: OrderController.resolve,
-			templateUrl: 'views/order.html'
+			templateUrl: 'views/order-confirmation.html'
 		})
 
 		// Account
