@@ -134,3 +134,19 @@ md-autocomplete {
 		max-width: calc(100% - 252px);
 	}
 }
+
+.mobile-options {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	opacity: .87;
+
+	.md-menu {
+		padding: 0;
+	}
+
+	.md-button {
+		margin: 0;
+	}
+}
