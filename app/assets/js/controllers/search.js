@@ -59,6 +59,7 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		searchPage = 1;
 		getSearchResults()
 			.then(bindSearchResponse);
+		vm.showMobileRefinement = false;
 	}
 
 	bindSearchResponse(searchResponse);
@@ -73,7 +74,11 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 
 	vm.sortBy = vm.search.sort || sortOptions[0].value;
 
-	vm.applySort = function() {
+	vm.applySort = function(value) {
+		if (value) {
+			vm.sortBy = value;
+		}
+
 		$location.url(searchService.applyRefinementToUrl('sort', vm.sortBy));
 	};
 
