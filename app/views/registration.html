@@ -50,7 +50,7 @@
 					</md-input-container>
 				</li>
 				<li class="layout-row layout-align-space-between-center">
-					<span>Already a member? <a href="sign-in/" class="md-primary" style="text-decoration: underline">Sign in</a>.</span>
+					<span>Already a member? <a ng-href="sign-in/{{ vm.returnUrl ? '?return_url=' + vm.returnUrl : '' }}" class="md-primary" style="text-decoration: underline">Sign in</a>.</span>
 					<md-button class="md-primary md-raised" type="submit">Register</md-button>
 				</li>
 			</ol>

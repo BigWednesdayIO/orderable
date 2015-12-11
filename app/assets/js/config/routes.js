@@ -41,12 +41,12 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 
 		// Account
 		.state('registration', {
-			url: '/registration/',
+			url: '/registration/?return_url',
 			controller: 'RegistrationController as vm',
 			templateUrl: 'views/registration.html'
 		})
 		.state('sign-in', {
-			url: '/sign-in/',
+			url: '/sign-in/?return_url',
 			controller: 'SignInController as vm',
 			templateUrl: 'views/sign-in.html'
 		})

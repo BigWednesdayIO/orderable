@@ -27,13 +27,15 @@ function AuthorizationService ($rootScope, $q, $state, $location, $mdDialog, cus
 		if (service.stateChange) {
 			caputredState = service.stateChange;
 			caputredState.event.preventDefault();
-		} else {
-			returnUrl = $location.url();
 		}
+
+		returnUrl = $location.url();
 
 		askUserToSignIn()
 			.then(function() {
-				$state.go('sign-in');
+				$state.go('sign-in', {
+					return_url: returnUrl
+				});
 				$rootScope.$on('userSignIn', function(e, info) {
 					deferred.resolve(info);
 					if (caputredState) {
