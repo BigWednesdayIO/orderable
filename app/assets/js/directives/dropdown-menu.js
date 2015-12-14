@@ -1,4 +1,4 @@
-function DropdownMenuDirective ($timeout, eventWrapper) {
+function DropdownMenuDirective ($rootScope, $timeout, eventWrapper) {
 	return {
 		restrict: 'A',
 		link: function(scope, element) {
@@ -38,7 +38,11 @@ function DropdownMenuDirective ($timeout, eventWrapper) {
 
 			scope.$on('$destroy', function() {
 				eventWrapper.removeEventListener('click', tappedAway, false);
-			})
+			});
+
+			$rootScope.$on('$stateChangeSuccess', function() {
+				closeDropdown(0);
+			});
 		}
 	}	
 }
