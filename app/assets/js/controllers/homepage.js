@@ -1,5 +1,7 @@
-function HomepageController (suppliersService, supplierList, featuredSupplierProducts) {
+function HomepageController (customerService, suppliersService, supplierList, featuredSupplierProducts) {
 	var vm = this;
+
+	vm.isSignedIn = customerService.isSignedIn();
 
 	vm.suppliers = supplierList.map(function(supplier) {
 		return {

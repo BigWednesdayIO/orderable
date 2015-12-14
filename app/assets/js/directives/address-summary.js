@@ -9,7 +9,7 @@ function AddressSummaryDirective () {
 
 			vm.addressLines = [
 				'name',
-				'email',
+				// 'email',
 				'company',
 				'line_1',
 				'line_2',
