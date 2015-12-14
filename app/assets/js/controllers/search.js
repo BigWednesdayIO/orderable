@@ -2,7 +2,8 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 	var vm = this,
 		searchPage = 1,
 		raw = $element[0],
-		threshold = 400;
+		threshold = 400,
+		supplierList;
 
 	function getSearchResults () {
 		return searchService
@@ -29,8 +30,20 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 			});
 	}
 
+	function getSupplierListHeight () {
+		// Can't rely on element existing in MVC
+		if (!supplierList) {
+			supplierList = raw.getElementsByClassName('supplier-listing')[0];
+		}
+
+		return supplierList.offsetHeight;
+	}
+
 	function checkScrollPosition () {
-		if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight - threshold) {
+		var scrolled = raw.scrollTop + raw.offsetHeight;
+		var minimumScrollNeeded = raw.scrollHeight - threshold;
+
+		if (scrolled >= minimumScrollNeeded || scrolled >= getSupplierListHeight()) {
 			loadNextPage();
 		}
 	}
