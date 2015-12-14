@@ -1,6 +1,15 @@
 function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, authorizationService, _) {
 	var service = {};
 
+	function notifyError (error) {
+		$mdToast.show(
+			$mdToast.simple()
+				.content(error.message)
+				.hideDelay(3000)
+		);
+		return $q.reject(error);
+	}
+
 	function emptyBakset () {
 		return {
 			id: 'WEB123456',
@@ -132,7 +141,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 			productIndex;
 
 		if (supplierIndex === -1) {
-			return $q.reject({
+			return notifyError({
 				message: 'No matching supplier in basket'
 			});
 		}
@@ -140,7 +149,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 		productIndex = _.findIndex(service.basket.order_forms[supplierIndex].line_items, {product: {id: product.id}});
 
 		if (productIndex === -1) {
-			return $q.reject({
+			return notifyError({
 				message: 'Product not in basket'
 			});
 		}
