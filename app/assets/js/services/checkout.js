@@ -66,14 +66,10 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersS
 	};
 
 	service.completeCheckout = function(data) {
-		var error;
-
 		if (!data.delivery_address.name || !data.billing_address.name || !data.payment.card_number) {
-			error = {
+			return notifyError({
 				message: 'Please fill out all parts of the checkout form'
-			};
-			notifyError(error)
-			return $q.reject(error);
+			});
 		}
 
 		data.payment.expiry_year += 2000;
