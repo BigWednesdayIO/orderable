@@ -17,8 +17,8 @@
 	</div>
 	<div class="layout-gt-sm-row layout-align-space-between-start">
 		<main class="md-whiteframe md-whiteframe-z1 layout-margin layout-padding flex">
-			<header class="layout-gt-sm-row layout-align-space-between-center">
-				<h1 class="md-headline">Order confirmation</h1>
+			<header class="layout-gt-sm-row layout-align-space-between-center" style="padding: 0 10px">
+				<h1 class="md-headline">Order details</h1>
 				<p class="md-subhead">Placed on <span ng-bind="::vm.order.created_dt | date: 'EEE, MMM d'"></span> at <span ng-bind="::vm.order.created_dt | date: 'h a'"></span></p>
 			</header>
 
@@ -81,7 +81,7 @@
 			</div>
 		</main>
 
-		<aside class="md-whiteframe md-whiteframe-z1 layout-margin layout-padding" style="min-width: 300px">
+		<aside class="delivery-summary md-whiteframe md-whiteframe-z1 layout-margin layout-padding" style="min-width: 300px">
 			<h2 class="md-subhead">Delivery address</h2>
 			<address-summary address="::vm.order.delivery_address"></address-summary>
 
