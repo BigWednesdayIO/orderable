@@ -1,8 +1,17 @@
-function SearchService ($rootScope, $location, $http, $q, API, suppliersService, categoriesService, _) {
+function SearchService ($rootScope, $location, $mdToast, $http, $q, API, suppliersService, categoriesService, _) {
 	var service = this;
 
 	var path = $location.path().slice(1),
 		search = $location.search();
+
+	function notifyError (error) {
+		$mdToast.show(
+			$mdToast.simple()
+				.content(error.message)
+				.hideDelay(3000)
+		);
+		return $q.reject(error);
+	}
 
 	$rootScope.$on('$locationChangeStart', function() {
 		path = $location.path().slice(1);
@@ -74,7 +83,8 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 		})
 			.then(function(response) {
 				return response.hits;
-			});
+			})
+			.catch(notifyError);
 	};
 
 	service.getResults = function(params) {
@@ -135,7 +145,8 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 						});
 						return response;
 					});
-			});
+			})
+			.catch(notifyError);
 	};
 
 	service.getSuppliersForCategory = function(category) {
@@ -167,7 +178,8 @@ function SearchService ($rootScope, $location, $http, $q, API, suppliersService,
 						href: 'search/?supplier=' + encodeURIComponent(supplier.value) + '&category_hierarchy=' + category
 					};
 				});
-			});
+			})
+			.catch(notifyError);
 	}
 }
 
