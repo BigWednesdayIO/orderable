@@ -1,4 +1,4 @@
-function CheckoutController ($rootScope, $state, checkoutService, addressService, suppliersService, checkoutData, deliveryDates) {
+function CheckoutController ($rootScope, $state, checkoutService, addressService, suppliersService, checkoutData, customerInfo, deliveryDates) {
 	var vm = this;
 
 	vm.checkout = checkoutData;
@@ -7,21 +7,12 @@ function CheckoutController ($rootScope, $state, checkoutService, addressService
 
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
 
+	vm.checkout.billing_address.email = customerInfo.email;
+
 	vm.editAddress = function($event, addressName) {
-		var extraFields = [];
-
-		if (addressName === 'billing') {
-			extraFields.push({
-				label: 'Email address',
-				type: 'email',
-				field: 'email',
-				required: true
-			});
-		}
-
 		addressName += '_address';
 		addressService
-			.editAddress($event, vm.checkout[addressName], extraFields)
+			.editAddress($event, vm.checkout[addressName])
 			.then(function(newAddress) {
 				vm.checkout[addressName] = newAddress;
 			});
@@ -67,6 +58,10 @@ CheckoutController.resolve = /* @ngInject */ {
 				.getDatesForOrderForm(order_form);
 			return promises;
 		}, {}));
+	},
+	customerInfo: function(customerService) {
+		return customerService
+			.getInfo();
 	},
 	requiresSignIn: function(authorizationService) {
 		return authorizationService

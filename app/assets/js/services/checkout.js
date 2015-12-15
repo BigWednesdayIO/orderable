@@ -1,6 +1,15 @@
-function CheckoutService ($http, $q, $mdDialog, basketService, ordersService, API) {
+function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersService, API) {
 	var service = {},
 		checkout;
+
+	function notifyError (error) {
+		$mdToast.show(
+			$mdToast.simple()
+				.content(error.message)
+				.hideDelay(3000)
+		);
+		return $q.reject(error);
+	}
 
 	service.beginCheckout = function(basket) {
 		// Post basket to API to kick things off
@@ -58,7 +67,7 @@ function CheckoutService ($http, $q, $mdDialog, basketService, ordersService, AP
 
 	service.completeCheckout = function(data) {
 		if (!data.delivery_address.name || !data.billing_address.name || !data.payment.card_number) {
-			return $q.reject({
+			return notifyError({
 				message: 'Please fill out all parts of the checkout form'
 			});
 		}
@@ -80,7 +89,8 @@ function CheckoutService ($http, $q, $mdDialog, basketService, ordersService, AP
 					.then(function() {
 						return checkoutResponse;
 					});
-			});
+			})
+			.catch(notifyError);
 	}
 
 	return service;

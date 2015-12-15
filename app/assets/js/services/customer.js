@@ -1,4 +1,4 @@
-function CustomerService ($rootScope, $http, $q, API, browserStorage) {
+function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) {
 	var service = this;
 	var customerInfo;
 
@@ -7,6 +7,15 @@ function CustomerService ($rootScope, $http, $q, API, browserStorage) {
 		browserStorage.setItem('customer_id', info.id);
 		browserStorage.setItem('token', info.token);
 		return info;
+	}
+
+	function notifyError (error) {
+		$mdToast.show(
+			$mdToast.simple()
+				.content(error.message)
+				.hideDelay(3000)
+		);
+		return $q.reject(error);
 	}
 
 	service.getInfo = function() {
@@ -44,11 +53,12 @@ function CustomerService ($rootScope, $http, $q, API, browserStorage) {
 	};
 
 	service.register = function(details) {
-		$http({
+		return $http({
 			method: 'POST',
 			url: API.customers,
 			data: details
 		})
+			.catch(notifyError)
 			.then(function() {
 				return service
 					.signIn({
@@ -59,7 +69,7 @@ function CustomerService ($rootScope, $http, $q, API, browserStorage) {
 	};
 
 	service.signIn = function(credentials) {
-		$http({
+		return $http({
 			method: 'POST',
 			url: API.customers + '/authenticate',
 			data: credentials
@@ -68,7 +78,8 @@ function CustomerService ($rootScope, $http, $q, API, browserStorage) {
 			.then(function(response) {
 				$rootScope.$emit('userSignIn', response);
 				return response;
-			});
+			})
+			.catch(notifyError);
 	};
 
 	service.signOut = function() {

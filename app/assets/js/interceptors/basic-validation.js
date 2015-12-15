@@ -11,7 +11,7 @@ function BasicValidationInterceptor ($q, $log) {
 		}
 
 		if (error.status === 401) {
-			$state.go('login');
+			$state.go('sign-in');
 		} else {
 			$log.error('API Call failed:', (response.config || {}).url, error.status, '-', error.message);
 		}
