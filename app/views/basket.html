@@ -34,9 +34,9 @@
 									<a ng-href="product/{{ ::line_item.product.id }}" ng-bind="::line_item.product.name"></a>
 								</h3>
 								<div class="line-item__price" price product="::line_item.product"></div>
-								<div class="line-item__actions layout-row layout-align-start-center">
+								<div class="line-item__actions layout-gt-sm-row layout-align-start-center">
 									<md-button class="md-primary align-text" ng-click="vm.removeFromBasket(line_item.product)">Remove</md-button>
-									<span class="line-item__actions__spacer"></span>
+									<span class="line-item__actions__spacer hide-sm"></span>
 									<md-button class="md-primary align-text" ng-click="vm.saveForLater(line_item.product)">Save for later</md-button>
 								</div>
 							</td>

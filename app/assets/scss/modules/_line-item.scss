@@ -57,10 +57,17 @@
 	}
 
 	&__actions {
-		margin: -10px 0;
+		@media (min-width: $bp-medium) {
+			margin: -10px 0;
+		}
 
 		> .md-button {
 			min-width: 0;
+			font-size: 12px;
+
+			@media (min-width: $bp-medium) {
+				font-size: 14px;
+			}
 		}
 
 		&__spacer {
