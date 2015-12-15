@@ -19,6 +19,7 @@ function AuthorizationService ($rootScope, $q, $state, $location, $mdDialog, cus
 		var deferred, caputredState, returnUrl;
 
 		if (customerService.isSignedIn()) {
+			// TODO check how recently it was validated
 			return $q.when(customerService.getSessionInfo());
 		}
 
