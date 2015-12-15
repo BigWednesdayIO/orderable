@@ -180,7 +180,34 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 				});
 			})
 			.catch(notifyError);
-	}
+	};
+
+	service.getSearchScope = function() {
+		var query = $location.search();
+		var searchScope = [];
+
+		if (query.supplier) {
+			searchScope.push({
+				field: 'supplier',
+				term: query.supplier
+			})
+		}
+
+		if (!query.category_hierarchy) {
+			return $q.when(searchScope);
+		}
+
+		return categoriesService
+			.getNameForCategory(query.category_hierarchy)
+			.then(function(name) {
+				searchScope.push({
+					field: 'category_hierarchy',
+					display_name: name,
+					term: query.category_hierarchy
+				});
+				return searchScope;
+			});
+	};
 }
 
 angular

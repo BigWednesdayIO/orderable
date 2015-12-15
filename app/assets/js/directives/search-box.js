@@ -2,9 +2,18 @@ function SearchBoxDirective () {
 	return {
 		restrict: 'EA',
 		scope: {},
-		controller: function($element, $state, searchService) {
+		controller: function($element, $rootScope, $state, searchService) {
 			var vm = this,
 				$input;
+
+			function updateSearchScope () {
+				searchService
+					.getSearchScope()
+					.then(function(searchScope) {
+						console.log(searchScope);
+						vm.searchScope = searchScope;
+					})
+			}
 
 			vm.getSearchSuggestions = searchService.getSearchSuggestions;
 
@@ -39,6 +48,15 @@ function SearchBoxDirective () {
 
 				vm.performSearch(vm.query);
 			};
+
+			$rootScope.$on('$stateChangeSuccess', function(event, toState) {
+				if (toState.name === 'search') {
+					$rootScope.$on('$locationChangeSuccess', updateSearchScope);
+					updateSearchScope();
+				} else {
+					$rootScope.$off('$locationChangeSuccess', updateSearchScope);
+				}
+			});
 		},
 		controllerAs: 'vm',
 		bindToController: true,
