@@ -45,10 +45,10 @@ function SuppliersService ($rootScope, $http, $q, API, browserStorage) {
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
 			'Best Buy': 'assets/images/best-buy-logo.png',
 			'Walmart': 'assets/images/walmart-logo.png',
-			'placeholder': 'http://placehold.it/80x80'
+			'placeholder': 'http://placehold.it/80x80?text='
 		};
 
-		return logos[supplier] || logos.placeholder;
+		return logos[supplier] || logos.placeholder + supplier;
 	};
 
 	service.getBrandImageForSupplier = function(supplier) {
