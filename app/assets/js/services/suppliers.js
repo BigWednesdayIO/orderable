@@ -1,6 +1,15 @@
-function SuppliersService ($rootScope, $http, $q, API, browserStorage) {
+function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage) {
 	var service = {},
 		currentSuppliers = browserStorage.getItem('suppliers') || [];
+
+	function notifyError (error) {
+		$mdToast.show(
+			$mdToast.simple()
+				.content(error.message)
+				.hideDelay(3000)
+		);
+		return $q.reject(error);
+	}
 
 	service.saveSuppliers = function(suppliers) {
 		currentSuppliers = suppliers;
@@ -13,7 +22,8 @@ function SuppliersService ($rootScope, $http, $q, API, browserStorage) {
 			method: 'GET',
 			url: API.suppliers,
 			cache: true
-		});
+		})
+			.catch(notifyError);
 	};
 
 	service.getSuppliersForPostcode = function(postcode) {
@@ -24,7 +34,9 @@ function SuppliersService ($rootScope, $http, $q, API, browserStorage) {
 				deliver_to: postcode.replace(/\s/g, '')
 			}
 		})
-			.catch(function() {
+			.catch(function(error) {
+				notifyError(error);
+
 				// Just until the API's working
 				return [
 					'Pub Taverns',
