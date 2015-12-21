@@ -40,7 +40,7 @@ function DropdownMenuDirective ($rootScope, $timeout, eventWrapper) {
 				eventWrapper.removeEventListener('click', tappedAway, false);
 			});
 
-			$rootScope.$on('$stateChangeSuccess', function() {
+			$rootScope.$on('$locationChangeSuccess', function() {
 				closeDropdown(0);
 			});
 		}
