@@ -1,4 +1,4 @@
-function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersService, API) {
+function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersService, browserStorage, API) {
 	var service = {},
 		checkout;
 
@@ -17,7 +17,8 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersS
 			delivery_address: {},
 			billing_address: {},
 			payment: {},
-			basket: basket
+			basket: basket,
+			customer_id: browserStorage.getItem('customer_id')
 		};
 
 		checkout.basket.order_forms = checkout.basket.order_forms.map(function(order_form) {
