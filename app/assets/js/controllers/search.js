@@ -3,7 +3,8 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		searchPage = 1,
 		raw = $element[0],
 		threshold = 400,
-		supplierList;
+		supplierList,
+		$listeners = [];
 
 	function getSearchResults () {
 		return searchService
@@ -100,11 +101,14 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		$location.url(searchService.applyRefinementToUrl('sort', vm.sortBy));
 	};
 
-	$rootScope.$on('$locationChangeSuccess', updateSearchResults);
-	$rootScope.$on('suppliersUpdated', updateSearchResults);
+	$listeners.push($rootScope.$on('$locationChangeSuccess', updateSearchResults));
+	$listeners.push($rootScope.$on('suppliersUpdated', updateSearchResults));
 
 	$scope.$on('$destroy', function() {
 		$element.off('scroll', checkScrollPosition);
+		$listeners.forEach(function(listener) {
+			listener();
+		});
 	});
 }
 
