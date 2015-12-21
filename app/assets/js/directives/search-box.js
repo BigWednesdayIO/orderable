@@ -4,7 +4,8 @@ function SearchBoxDirective () {
 		scope: {},
 		controller: function($element, $rootScope, $state, searchService) {
 			var vm = this,
-				$input;
+				$input,
+				$listener;
 
 			function updateSearchScope () {
 				searchService
@@ -51,10 +52,10 @@ function SearchBoxDirective () {
 
 			$rootScope.$on('$stateChangeSuccess', function(event, toState) {
 				if (toState.name === 'search') {
-					$rootScope.$on('$locationChangeSuccess', updateSearchScope);
+					$listener = $rootScope.$on('$locationChangeSuccess', updateSearchScope);
 					updateSearchScope();
-				} else {
-					$rootScope.$off('$locationChangeSuccess', updateSearchScope);
+				} else if (typeof $listener === 'function') {
+					$listener();
 				}
 			});
 		},

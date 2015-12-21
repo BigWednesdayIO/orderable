@@ -1,8 +1,6 @@
 <form class="search-form" name="vm.searchForm" method="GET" action="/search/" ng-submit="vm.searchSubmit($event)">
-	<ul class="unstyled-list">
-		<li ng-repeat="facet in vm.searchScope track by facet.field">
-			<md-chip>{{ facet.display_name || facet.term }}</md-chip>
-		</li>
+	<ul class="unstyled-list md-chips md-default-theme">
+		<li ng-repeat="facet in vm.searchScope track by facet.field" class="md-chip">{{ facet.display_name || facet.term }}</li>
 	</ul>
 	<md-button type="button" class="md-icon-button search-icon hide-gt-md" ng-click="vm.searchIconClick()" aria-label="search">
 		<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
