@@ -8,6 +8,14 @@ function SuppliersService ($rootScope, $http, $q, API, browserStorage) {
 		$rootScope.$emit('suppliersUpdated', currentSuppliers);
 	}
 
+	service.getAllSuppliers = function() {
+		return $http({
+			method: 'GET',
+			url: API.suppliers,
+			cache: true
+		});
+	};
+
 	service.getSuppliersForPostcode = function(postcode) {
 		return $http({
 			method: 'GET',

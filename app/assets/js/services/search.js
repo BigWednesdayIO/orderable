@@ -13,6 +13,10 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 		return $q.reject(error);
 	}
 
+	function supplierName (supplier) {
+		return supplier.name;
+	}
+
 	$rootScope.$on('$locationChangeStart', function() {
 		path = $location.path().slice(1);
 		search = $location.search();
@@ -94,7 +98,7 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 		if (index === -1) {
 			filters.push({
 				field: 'supplier',
-				terms: suppliersService.getCurrentSuppliers()
+				terms: suppliersService.getCurrentSuppliers().map(supplierName)
 			});
 			params.filters = filters;
 		}
@@ -157,7 +161,7 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 					term: category
 				}, {
 					field: 'supplier',
-					terms: suppliersService.getCurrentSuppliers()
+					terms: suppliersService.getCurrentSuppliers().map(supplierName)
 				}
 			],
 			hitsPerPage: 0
