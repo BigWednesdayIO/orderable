@@ -5,7 +5,7 @@ function HomepageController (customerService, suppliersService, availableSupplie
 
 	vm.suppliers = availableSuppliers.map(function(supplier) {
 		supplier.logo = suppliersService.getLogoForSupplier(supplier.name);
-		supplier.href = 'search/?supplier_id=' + encodeURIComponent(supplier.name);
+		supplier.href = 'search/?supplier_id=' + encodeURIComponent(supplier.id);
 		return supplier;
 	});
 

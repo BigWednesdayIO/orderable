@@ -64,7 +64,7 @@
 							<md-content class="sub-nav" dropdown-items>
 								<ul class="sub-nav__suppliers unstyled-list">
 									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers track by supplier.id">
-										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.name) }}" class="sub-nav__supplier__link">
+										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="sub-nav__supplier__link">
 											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier.name) }}" class="sub-nav__supplier__image" height="60" alt="{{ ::supplier.name }}" />
 										</a>
 									</li>
@@ -163,7 +163,7 @@
 							</md-button>
 							<md-list ng-show="vm.openMenu === 'suppliers'" class="animate-slide">
 								<md-list-item  ng-repeat="supplier in vm.suppliers track by supplier.name">
-									<md-button class="menu-link" ng-href="{{ ::vm.getUrlForSupplier(supplier.name) }}" aria-label="{{ ::supplier.name }}">
+									<md-button class="menu-link" ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" aria-label="{{ ::supplier.name }}">
 										<md-icon style="margin: auto 12px auto 0; border-radius: 50%; overflow: hidden;"><img ng-src="{{ ::vm.getLogoForSupplier(supplier.name) }}" height="24" alt="{{ ::supplier.name }}" /></md-icon>
 										<span ng-bind="::supplier.name"></span>
 									</md-button>
