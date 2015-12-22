@@ -1,4 +1,4 @@
-function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage) {
+function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage, _) {
 	var service = {},
 		currentSuppliers = browserStorage.getItem('suppliers') || [];
 
@@ -34,21 +34,19 @@ function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage)
 				deliver_to: postcode.replace(/\s/g, '')
 			}
 		})
-			.catch(function(error) {
-				notifyError(error);
-
-				// Just until the API's working
-				return [
-					'Pub Taverns',
-					'Beer & Wine Co',
-					'Walmart',
-					'Best Buy'
-				]
-			});
+			.catch(notifyError);
 	};
 
 	service.getCurrentSuppliers = function() {
 		return currentSuppliers;
+	};
+
+	service.getNameForSupplier = function(id) {
+		return service
+			.getAllSuppliers()
+			.then(function(suppliers) {
+				return (_.find(suppliers, {id: id}) || {}).name;
+			});
 	};
 
 	service.getLogoForSupplier = function(supplier) {

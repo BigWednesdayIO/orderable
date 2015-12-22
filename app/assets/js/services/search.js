@@ -91,14 +91,56 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 			.catch(notifyError);
 	};
 
+	function mapCategories (categories, params) {
+		var chosenCategory = _.find(params.filters, {field: 'category_hierarchy'});
+		if (chosenCategory) {
+			categories.unshift({
+				value: chosenCategory.term
+			});
+			categories = _.uniq(categories, 'value');
+		}
+
+		return $q.all(categories.map(function(category) {
+			return categoriesService
+				.getNameForCategory(category.value);
+		}))
+			.then(function(names) {
+				return {
+					field: 'category_hierarchy',
+					display_name: 'Category',
+					values: categories.map(function(category, i) {
+						category.display_name = names[i];
+						return category;
+					})
+				};
+			});
+	}
+
+	function mapSuppliers (suppliers) {
+		return $q.all(suppliers.map(function(supplier) {
+			return suppliersService
+				.getNameForSupplier(supplier.value);
+		}))
+			.then(function(names) {
+				return {
+					field: 'supplier_id',
+					display_name: 'Supplier',
+					values: suppliers.map(function(supplier, i) {
+						supplier.display_name = names[i];
+						return supplier;
+					})
+				}
+			});
+	}
+
 	service.getResults = function(params) {
 		var filters = params.filters || [],
-			index = _.findIndex(filters, {field: 'supplier'});
+			index = _.findIndex(filters, {field: 'supplier_id'});
 
 		if (index === -1) {
 			filters.push({
-				field: 'supplier',
-				terms: suppliersService.getCurrentSuppliers().map(supplierName)
+				field: 'supplier_id',
+				terms: suppliersService.getCurrentSuppliers().map(supplierId)
 			});
 			params.filters = filters;
 		}
@@ -111,42 +153,21 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 			data: params
 		})
 			.then(function(response) {
-				var hitsBySupplier = _.groupBy(response.hits, 'supplier'),
-					suppliers = _.keys(hitsBySupplier),
-					index,
-					categories,
-					chosenCategory;
+				var hitsBySupplier = _.groupBy(response.hits, 'supplier_id');
+				var suppliers = _.keys(hitsBySupplier);
+				var categoryIndex = _.findIndex(response.facets, {field: 'category_path'});
+				var supplierIndex = _.findIndex(response.facets, {field: 'supplier_id'});
 
 				response.hitsBySupplier = hitsBySupplier;
 				response.suppliers = suppliers;
 
-				index = _.findIndex(response.facets, {field: 'category_code'});
-
-				if (index === -1) {
-					return response;
-				}
-
-				categories = response.facets[index].values;
-
-				chosenCategory = _.find(params.filters, {field: 'category_hierarchy'});
-				if (chosenCategory) {
-					categories.unshift({
-						value: chosenCategory.term
-					});
-					categories = _.uniq(categories, 'value');
-				}
-
-				return $q.all(categories.map(function(category) {
-					return categoriesService
-						.getNameForCategory(category.value);
-				}))
-					.then(function(names) {
-						response.facets[index].field = 'category_hierarchy';
-						response.facets[index].display_name = 'Category';
-						response.facets[index].values = categories.map(function(category, i) {
-							category.display_name = names[i];
-							return category;
-						});
+				return $q.all({
+					categories: mapCategories(response.facets[categoryIndex].values, params),
+					suppliers: mapSuppliers(response.facets[supplierIndex].values)
+				})
+					.then(function(mapping) {
+						response.facets[categoryIndex] = mapping.categories;
+						response.facets[supplierIndex] = mapping.suppliers;
 						return response;
 					});
 			})
