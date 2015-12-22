@@ -74,13 +74,17 @@ function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage,
 	};
 
 	service.getLoyaltySchemeForSupplier = function(supplier) {
-		return {
-			supplier: supplier,
-			logo: service.getLogoForSupplier(supplier),
-			brandImage: service.getBrandImageForSupplier(supplier),
-			name: supplier + ' Rewards',
-			label: supplier + ' Rewards number'
-		};
+		return service
+			.getNameForSupplier(supplier)
+			.then(function(name) {
+				return {
+					supplier: supplier,
+					logo: service.getLogoForSupplier(supplier),
+					brandImage: service.getBrandImageForSupplier(supplier),
+					name: name + ' Rewards',
+					label: name + ' Rewards number'
+				};
+			});
 	};
 
 	return service;
