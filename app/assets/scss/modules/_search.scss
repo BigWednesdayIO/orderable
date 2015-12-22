@@ -14,6 +14,7 @@ md-autocomplete {
 }
 
 .search-form {
+	position: relative;
 	display: flex;
 	align-items: center;
 	flex: 1;
@@ -148,5 +149,40 @@ md-autocomplete {
 
 	.md-button {
 		margin: 0;
+	}
+}
+
+.search-scopes {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	display: flex;
+	z-index: 1;
+	font-size: 14px;
+	font-weight: 500;
+
+	&__scope {
+		height: 24px;
+		line-height: 24px;
+		padding: 0 4px 0 12px;
+		border-radius: 12px;
+		background-color: #e0e0e0;
+
+		button {
+			height: 24px;
+			width: 24px;
+			text-align: center;
+			border-radius: 12px;
+		}
+
+		md-icon {
+			height: 18px;
+			width: 18px;
+			color: rgba(0, 0, 0, .54) !important;
+		}
+
+		& + & {
+			margin-left: 4px;
+		}
 	}
 }

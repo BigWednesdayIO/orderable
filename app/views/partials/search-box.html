@@ -1,6 +1,11 @@
 <form class="search-form" name="vm.searchForm" method="GET" action="/search/" ng-submit="vm.searchSubmit($event)">
-	<ul class="unstyled-list md-chips md-default-theme">
-		<li ng-repeat="facet in vm.searchScope track by facet.field" class="md-chip">{{ facet.display_name || facet.term }}</li>
+	<ul class="unstyled-list search-scopes">
+		<li ng-repeat="facet in vm.searchScope track by facet.field" class="search-scopes__scope">
+			<span ng-bind="facet.display_name || facet.term"></span>
+			<button type="button" class="md-no-style" ng-click="vm.removeScope(facet)" aria-label="remove {{ facet.display_name }} filter">
+				<md-icon md-svg-src="assets/images/icons/close.svg"></md-icon>
+			</button>
+		</li>
 	</ul>
 	<md-button type="button" class="md-icon-button search-icon hide-gt-md" ng-click="vm.searchIconClick()" aria-label="search">
 		<md-icon md-svg-src="assets/images/icons/search.svg"></md-icon>
