@@ -41,11 +41,28 @@ function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage,
 		return currentSuppliers;
 	};
 
-	service.getNameForSupplier = function(id) {
+	service.getSupplierInfo = function(id) {
 		return service
 			.getAllSuppliers()
 			.then(function(suppliers) {
-				return (_.find(suppliers, {id: id}) || {}).name;
+				var supplier = _.find(suppliers, {id: id});
+				if (!supplier) {
+					return $q.reject(supplier);
+				}
+				supplier.logo = service.getLogoForSupplier(supplier.name);
+				supplier.brand_image = service.getBrandImageForSupplier(supplier.name);
+				return supplier;
+			});
+	};
+
+	service.getNameForSupplier = function(id) {
+		return service
+			.getSupplierInfo(id)
+			.then(function(supplier) {
+				return supplier.name;
+			})
+			.catch(function() {
+				return;
 			});
 	};
 

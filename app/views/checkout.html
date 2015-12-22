@@ -18,9 +18,9 @@
 							<li class="checkout__delivery-window" ng-repeat="order_form in vm.checkout.basket.order_forms track by order_form.supplier_id">
 								<div class="layout-row layout-align-start-center md-accent-panel">
 									<div class="supplier-logo" style="margin: 10px 20px;">
-										<img ng-src="{{ ::vm.getLogoForSupplier(order_form.supplier_id) }}" height="40" width="40" alt />
+										<img ng-src="{{ ::vm.supplierInfo[order_form.supplier_id].logo }}" height="40" width="40" alt />
 									</div>
-									<h3 class="md-subhead" ng-bind="::order_form.supplier_id"></h3>
+									<h3 class="md-subhead" ng-bind="::vm.supplierInfo[order_form.supplier_id].name"></h3>
 								</div>
 
 								<delivery-window order-form="order_form" delivery-dates="::vm.deliveryDates[order_form.supplier_id]"></delivery-window>

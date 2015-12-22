@@ -1,11 +1,11 @@
-function CheckoutController ($rootScope, $state, checkoutService, addressService, suppliersService, checkoutData, customerInfo, deliveryDates) {
+function CheckoutController ($rootScope, $state, checkoutService, addressService, checkoutData, customerInfo, supplierInfo, deliveryDates) {
 	var vm = this;
 
 	vm.checkout = checkoutData;
 
 	vm.deliveryDates = deliveryDates;
 
-	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
+	vm.supplierInfo = supplierInfo;
 
 	vm.checkout.billing_address.email = customerInfo.email;
 
@@ -50,6 +50,18 @@ CheckoutController.resolve = /* @ngInject */ {
 			.catch(function() {
 				return checkoutService
 					.beginCheckout(basketService.basket);
+			});
+	},
+	supplierInfo: function($q, checkoutData, suppliersService) {
+		return $q.all(checkoutData.basket.order_forms.map(function(order_form) {
+			return suppliersService
+				.getSupplierInfo(order_form.supplier_id);
+		}))
+			.then(function(suppliers) {
+				return suppliers.reduce(function(map, supplier) {
+					map[supplier.id] = supplier;
+					return map;
+				}, {});
 			});
 	},
 	deliveryDates: function($q, deliveryDatesService, checkoutData) {
