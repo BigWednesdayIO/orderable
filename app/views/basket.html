@@ -19,7 +19,7 @@
 							<img ng-src="{{ ::vm.getLogoForSupplier(order_form.supplier_id) }}" height="56" width="56" alt />
 						</div>
 						<h2 class="md-headline flex">
-							<a ng-href="search/?supplier_id={{ ::order_form.supplier_id }}" ng-bind="::order_form.supplier_id"></a>
+							<a ng-href="search/?supplier_id={{ ::order_form.supplier_id }}" ng-bind="::vm.supplierNames[order_form.supplier_id]"></a>
 						</h2>
 						<strong class="order-form__subtotal" ng-bind="order_form.subtotal | currency: '£'"></strong>
 					</div>
