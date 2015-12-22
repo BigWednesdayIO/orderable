@@ -11,8 +11,6 @@ function SupplierFeaturedItemsDirective ($window, $location) {
 				return ($location.path().match('search/') ? '' : 'search/') + searchService.applyRefinementToUrl('supplier_id', $scope.supplier);
 			}
 
-			$scope.logo = suppliersService.getLogoForSupplier($scope.supplier);
-
 			$scope.href = buildHref();
 
 			$rootScope.$on('$locationChangeStart', function() {
@@ -20,9 +18,9 @@ function SupplierFeaturedItemsDirective ($window, $location) {
 			});
 
 			suppliersService
-				.getNameForSupplier($scope.supplier)
-				.then(function(name) {
-					$scope.supplierName = name;
+				.getSupplierInfo($scope.supplier)
+				.then(function(info) {
+					$scope.supplierInfo = info;
 				});
 		},
 		templateUrl: 'views/partials/supplier-featured-items.html',
