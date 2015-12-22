@@ -52,7 +52,7 @@
 			<div class="supplier-listing md-whiteframe md-whiteframe-z1" ng-if="vm.search.supplier_id">
 				<div class="supplier-listing__header" style="background-image: url('http://lorempixel.com/1000/200/food/3/');">
 					<img class="supplier-listing__logo" ng-src="{{ ::vm.getLogoForSupplier(vm.search.supplier_id) }}" height="80" width="80" alt />
-					<h2 class="supplier-listing__name md-title" ng-bind="::vm.search.supplier_id"></h2>
+					<h2 class="supplier-listing__name md-title" ng-bind="vm.supplierName"></h2>
 				</div>
 				<ul class="supplier-listing__products unstyled-list">
 					<li product-thumb product="hit" basket="true" ng-repeat="hit in vm.hits track by hit.objectID"></li>
