@@ -18,6 +18,12 @@ function SupplierFeaturedItemsDirective ($window, $location) {
 			$rootScope.$on('$locationChangeStart', function() {
 				$scope.href = buildHref();
 			});
+
+			suppliersService
+				.getNameForSupplier($scope.supplier)
+				.then(function(name) {
+					$scope.supplierName = name;
+				});
 		},
 		templateUrl: 'views/partials/supplier-featured-items.html',
 		replace: true,
