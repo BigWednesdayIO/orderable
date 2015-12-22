@@ -22,9 +22,9 @@
 					
 					<md-list style="padding: 0;">
 						<md-list-item class="md-2-line md-no-proxy md-with-secondary" ng-class="{'md-3-line': $mdMedia('sm'), 'md-2-line': $mdMedia('gt-sm')}" ng-repeat="orderForm in ::order.basket.order_forms">
-							<img class="md-avatar" ng-src="{{ ::vm.getLogoForSupplier(orderForm.supplier_id) }}" alt="{{ ::orderForm.supplier_id }}" />
+							<img class="md-avatar" ng-src="{{ ::vm.supplierInfo[orderForm.supplier_id].logo }}" alt="{{ ::vm.supplierInfo[orderForm.supplier_id].name }}" />
 							<div class="md-list-item-text layout-column">
-								<h3 ng-bind="::orderForm.supplier_id"></h3>
+								<h3 ng-bind="::vm.supplierInfo[orderForm.supplier_id].name"></h3>
 								<div class="layout-gt-sm-row">
 									<h4 ng-bind="::orderForm.subtotal | currency: '£'"></h4>
 									<p style="font-weight: normal;">
