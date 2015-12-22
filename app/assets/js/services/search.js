@@ -13,8 +13,8 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 		return $q.reject(error);
 	}
 
-	function supplierName (supplier) {
-		return supplier.name;
+	function supplierId (supplier) {
+		return supplier.id;
 	}
 
 	$rootScope.$on('$locationChangeStart', function() {
@@ -160,8 +160,8 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 					field: 'category_hierarchy',
 					term: category
 				}, {
-					field: 'supplier',
-					terms: suppliersService.getCurrentSuppliers().map(supplierName)
+					field: 'supplier_id',
+					terms: suppliersService.getCurrentSuppliers().map(supplierId)
 				}
 			],
 			hitsPerPage: 0
@@ -173,13 +173,16 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 			data: params
 		})
 			.then(function(response) {
-				var suppliers = (_.find(response.facets, {field: 'supplier'}) || {}).values;
+				var suppliers = (_.find(response.facets, {field: 'supplier_id'}) || {}).values;
 
 				return suppliers.map(function(supplier) {
 					return {
 						name: supplier.value,
 						image: suppliersService.getBrandImageForSupplier(supplier.value),
-						href: 'search/?supplier=' + encodeURIComponent(supplier.value) + '&category_hierarchy=' + category
+						href: 'search/' + service.buildQueryString({
+							supplier_id: supplier.value,
+							category_hierarchy: category
+						})
 					};
 				});
 			})

@@ -15,7 +15,7 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			templateUrl: 'views/search.html'
 		})
 		.state('product-details', {
-			url: '/product/:id',
+			url: '/product/:id/',
 			controller: 'ProductDetailsController as vm',
 			resolve: ProductDetailsController.resolve,
 			templateUrl: 'views/product-details.html'

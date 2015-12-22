@@ -5,7 +5,7 @@ function HomepageController (customerService, suppliersService, availableSupplie
 
 	vm.suppliers = availableSuppliers.map(function(supplier) {
 		supplier.logo = suppliersService.getLogoForSupplier(supplier.name);
-		supplier.href = 'search/?supplier=' + encodeURIComponent(supplier.name);
+		supplier.href = 'search/?supplier_id=' + encodeURIComponent(supplier.name);
 		return supplier;
 	});
 
@@ -22,8 +22,8 @@ HomepageController.resolve = /* @ngInject */ {
 			return searchService
 				.getResults({
 					filters: [{
-						field: 'supplier',
-						term: supplier.name
+						field: 'supplier_id',
+						term: supplier.id
 					}]
 				})
 				.then(function(response) {
@@ -33,7 +33,7 @@ HomepageController.resolve = /* @ngInject */ {
 			.then(function(response) {
 				return response.map(function(hits, index) {
 					return {
-						supplier: availableSuppliers[index].name,
+						supplier: availableSuppliers[index].id,
 						hits: hits
 					};
 				});

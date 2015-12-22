@@ -8,7 +8,7 @@ function SupplierFeaturedItemsDirective ($window, $location) {
 		},
 		controller: function($rootScope, $scope, searchService, suppliersService) {
 			function buildHref () {
-				return ($location.path().match('search/') ? '' : 'search/') + searchService.applyRefinementToUrl('supplier', $scope.supplier);
+				return ($location.path().match('search/') ? '' : 'search/') + searchService.applyRefinementToUrl('supplier_id', $scope.supplier);
 			}
 
 			$scope.logo = suppliersService.getLogoForSupplier($scope.supplier);

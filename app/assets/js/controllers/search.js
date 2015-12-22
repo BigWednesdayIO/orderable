@@ -61,7 +61,7 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 
 		vm.search = $location.search();
 
-		if (vm.search.supplier) {
+		if (vm.search.supplier_id) {
 			$element.on('scroll', checkScrollPosition);
 		} else {
 			$element.off('scroll', checkScrollPosition);

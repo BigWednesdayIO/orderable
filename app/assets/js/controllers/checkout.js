@@ -54,7 +54,7 @@ CheckoutController.resolve = /* @ngInject */ {
 	},
 	deliveryDates: function($q, deliveryDatesService, checkoutData) {
 		return $q.all(checkoutData.basket.order_forms.reduce(function(promises, order_form) {
-			promises[order_form.supplier] = deliveryDatesService
+			promises[order_form.supplier_id] = deliveryDatesService
 				.getDatesForOrderForm(order_form);
 			return promises;
 		}, {}));

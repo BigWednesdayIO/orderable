@@ -12,7 +12,7 @@ function ProductDetailsController (basketService, suppliersService, productData,
 
 	vm.product = productData;
 
-	vm.supplierLogo = suppliersService.getLogoForSupplier(productData.supplier);
+	vm.supplierLogo = suppliersService.getLogoForSupplier(productData.supplier_id);
 
 	vm.addToBasket = function() {
 		basketService

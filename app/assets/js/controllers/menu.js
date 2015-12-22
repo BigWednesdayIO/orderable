@@ -13,7 +13,7 @@ function MenuController ($rootScope, $state, $mdSidenav, navigationService, supp
 	vm.suppliers = suppliersService.getCurrentSuppliers();
 
 	vm.getUrlForSupplier = function(supplier) {
-		return 'search/?supplier=' + encodeURIComponent(supplier);
+		return 'search/?supplier_id=' + encodeURIComponent(supplier);
 	};
 
 	vm.getBrandImageForSupplier = suppliersService.getBrandImageForSupplier;

@@ -4,7 +4,7 @@ function BasketController ($rootScope, $state, $timeout, basketService, checkout
 
 	function getBasketSuppliers () {
 		vm.basketSuppliers = vm.basket.order_forms.map(function(order_form) {
-			return order_form.supplier;
+			return order_form.supplier_id;
 		})
 	}
 

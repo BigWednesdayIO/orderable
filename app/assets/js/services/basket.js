@@ -103,12 +103,12 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 		return authorizationService
 			.requireSignIn()
 			.then(function() {
-				var supplierIndex = _.findIndex(service.basket.order_forms, {supplier: product.supplier}),
+				var supplierIndex = _.findIndex(service.basket.order_forms, {supplier_id: product.supplier_id}),
 					productIndex;
 
 				if (supplierIndex === -1) {
 					service.basket.order_forms.push({
-						supplier: product.supplier,
+						supplier_id: product.supplier_id,
 						line_items: []
 					});
 					supplierIndex = service.basket.order_forms.length - 1;
@@ -137,7 +137,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 	};
 
 	service.removeFromBasket = function(product) {
-		var supplierIndex = _.findIndex(service.basket.order_forms, {supplier: product.supplier}),
+		var supplierIndex = _.findIndex(service.basket.order_forms, {supplier_id: product.supplier_id}),
 			productIndex;
 
 		if (supplierIndex === -1) {
@@ -166,7 +166,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 	};
 
 	service.getProductQuantity = function(product) {
-		var supplierIndex = _.findIndex(service.basket.order_forms, {supplier: product.supplier}),
+		var supplierIndex = _.findIndex(service.basket.order_forms, {supplier_id: product.supplier_id}),
 			productIndex;
 
 		if (supplierIndex === -1) {
