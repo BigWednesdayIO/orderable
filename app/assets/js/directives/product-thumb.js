@@ -22,6 +22,8 @@ function ProductThumbDirective () {
 
 			vm.product.id = vm.product.objectID;
 
+			vm.product.thumbnail_image_url = vm.product.thumbnail_image_url || 'assets/images/placeholder.jpg';
+
 			vm.addToBasket = function($event, quantity) {
 				$event.preventDefault();
 				addToBasket(quantity);
