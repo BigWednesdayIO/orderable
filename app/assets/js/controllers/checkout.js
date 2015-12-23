@@ -40,6 +40,7 @@ function CheckoutController ($rootScope, $state, checkoutService, addressService
 		vm.checkout.basket.shipping_total = vm.checkout.basket.order_forms.reduce(function(total, order_form) {
 			return total + (((order_form.delivery_window || {}).price || 0) * 100);
 		}, 0) / 100;
+		vm.checkout.basket.total = vm.checkout.basket.subtotal + vm.checkout.basket.tax + vm.checkout.basket.shipping_total;
 	});
 }
 

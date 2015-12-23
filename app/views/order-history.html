@@ -8,7 +8,7 @@
 				<div class="md-list-item-text">
 					<div class="layout-row layout-align-start-center md-accent-panel" style="padding: 8px 16px">
 						<h2 class="md-subhead">
-							<a ng-href="account/orders/{{ ::order.id }}/" ng-bind="::order.created_dt | date: 'EEE, MMM d'"></a>
+							<a ng-href="account/orders/{{ ::order.id }}/" ng-bind="::order._metadata.created | date: 'EEE, MMM d'"></a>
 						</h2>
 						<span class="flex"></span>
 						<span class="order__total" ng-bind="::order.basket.total | currency: '£'"></span>
@@ -34,9 +34,12 @@
 							</div>
 							<span class="flex"></span>
 							<div class="md-secondary layout-row">
-								<md-button class="md-icon-button" ng-click="vm.downloadOrder(orderForm)" aria-label="Download invoice" title="Download invoice">
-									<md-icon md-svg-src="assets/images/icons/download.svg"></md-icon>
+								<md-button class="md-icon-button" ng-click="" aria-label="Print order" title="Print order">
+									<md-icon md-svg-src="assets/images/icons/print.svg"></md-icon>
 								</md-button>
+								<!-- <md-button class="md-icon-button" ng-click="vm.downloadOrder(orderForm)" aria-label="Download invoice" title="Download invoice">
+									<md-icon md-svg-src="assets/images/icons/download.svg"></md-icon>
+								</md-button> -->
 								<!-- <md-button class="md-icon-button" ng-click="vm.markOrderFulfilled(orderForm)" aria-label="Mark supplier fulfilled" title="Mark supplier fulfilled">
 									<md-icon md-svg-src="assets/images/icons/done.svg"></md-icon>
 								</md-button> -->

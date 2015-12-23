@@ -19,7 +19,7 @@
 		<main class="md-whiteframe md-whiteframe-z1 layout-margin layout-padding flex">
 			<header class="layout-gt-sm-row layout-align-space-between-center" style="padding: 0 10px">
 				<h1 class="md-headline">Order details</h1>
-				<p class="md-subhead">Placed on <span ng-bind="::vm.order.created_dt | date: 'EEE, MMM d'"></span> at <span ng-bind="::vm.order.created_dt | date: 'h a'"></span></p>
+				<p class="md-subhead">Placed on <span ng-bind="::vm.order._metadata.created | date: 'EEE, MMM d'"></span> at <span ng-bind="::vm.order._metadata.created | date: 'h a'"></span></p>
 			</header>
 
 			<ul class="order-forms unstyled-list">

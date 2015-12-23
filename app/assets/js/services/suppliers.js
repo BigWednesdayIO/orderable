@@ -23,6 +23,13 @@ function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage,
 			url: API.suppliers,
 			cache: true
 		})
+			.then(function(suppliers) {
+				return suppliers.map(function(supplier) {
+					supplier.logo = service.getLogoForSupplier(supplier.name);
+					supplier.brand_image = service.getBrandImageForSupplier(supplier.name);
+					return supplier;
+				});
+			})
 			.catch(notifyError);
 	};
 

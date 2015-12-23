@@ -1,4 +1,4 @@
-function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersService, browserStorage, API) {
+function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, customerService, browserStorage, API) {
 	var service = {},
 		checkout;
 
@@ -16,7 +16,6 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersS
 		checkout = {
 			delivery_address: {},
 			billing_address: {},
-			payment: {},
 			basket: basket,
 			customer_id: browserStorage.getItem('customer_id')
 		};
@@ -37,7 +36,10 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersS
 		if (id) {
 			return $http({
 				method: 'GET',
-				url: API.checkouts + '/' + id
+				url: API.checkouts + '/' + id,
+				headers: {
+					Authorization: customerService.getSessionInfo().token
+				}
 			});
 		}
 
@@ -73,20 +75,17 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersS
 			});
 		}
 
-		data.payment.expiry_year += 2000;
-
 		return $http({
 			method: 'POST',
 			url: API.checkouts,
-			data: data
+			data: data,
+			headers: {
+				Authorization: customerService.getSessionInfo().token
+			}
 		})
 			.then(function(checkoutResponse) {
-				return $q.all([
-					basketService
-						.createBasket(),
-					ordersService
-						.createOrder(checkoutResponse)
-				])
+				return basketService
+					.createBasket()
 					.then(function() {
 						return checkoutResponse;
 					});
