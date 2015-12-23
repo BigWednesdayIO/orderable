@@ -13,13 +13,13 @@
 
 		<div ng-show="vm.basket.order_forms.length">
 			<ul class="order-forms unstyled-list">
-				<li class="order-form" ng-repeat="order_form in vm.basket.order_forms track by order_form.supplier">
+				<li class="order-form" ng-repeat="order_form in vm.basket.order_forms track by order_form.supplier_id">
 					<div class="layout-row layout-align-start-center md-accent-panel">
 						<div class="supplier-logo" style="margin: 20px">
-							<img ng-src="{{ ::vm.getLogoForSupplier(order_form.supplier) }}" height="56" width="56" alt />
+							<img ng-src="{{ ::vm.getLogoForSupplier(order_form.supplier_id) }}" height="56" width="56" alt />
 						</div>
 						<h2 class="md-headline flex">
-							<a ng-href="search/?supplier={{ ::order_form.supplier }}" ng-bind="::order_form.supplier"></a>
+							<a ng-href="search/?supplier_id={{ ::order_form.supplier_id }}" ng-bind="::vm.supplierNames[order_form.supplier_id]"></a>
 						</h2>
 						<strong class="order-form__subtotal" ng-bind="order_form.subtotal | currency: '£'"></strong>
 					</div>

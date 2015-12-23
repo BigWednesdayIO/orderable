@@ -61,8 +61,13 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 
 		vm.search = $location.search();
 
-		if (vm.search.supplier) {
+		if (vm.search.supplier_id) {
 			$element.on('scroll', checkScrollPosition);
+			suppliersService
+				.getNameForSupplier(vm.search.supplier_id)
+				.then(function(name) {
+					vm.supplierName = name;
+				});
 		} else {
 			$element.off('scroll', checkScrollPosition);
 		}

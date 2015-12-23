@@ -8,16 +8,20 @@ function SupplierFeaturedItemsDirective ($window, $location) {
 		},
 		controller: function($rootScope, $scope, searchService, suppliersService) {
 			function buildHref () {
-				return ($location.path().match('search/') ? '' : 'search/') + searchService.applyRefinementToUrl('supplier', $scope.supplier);
+				return ($location.path().match('search/') ? '' : 'search/') + searchService.applyRefinementToUrl('supplier_id', $scope.supplier);
 			}
-
-			$scope.logo = suppliersService.getLogoForSupplier($scope.supplier);
 
 			$scope.href = buildHref();
 
 			$rootScope.$on('$locationChangeStart', function() {
 				$scope.href = buildHref();
 			});
+
+			suppliersService
+				.getSupplierInfo($scope.supplier)
+				.then(function(info) {
+					$scope.supplierInfo = info;
+				});
 		},
 		templateUrl: 'views/partials/supplier-featured-items.html',
 		replace: true,

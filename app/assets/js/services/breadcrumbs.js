@@ -1,5 +1,29 @@
-function BreadcrumbsService ($location, $q, searchService, categoriesService, _) {
+function BreadcrumbsService ($location, $q, searchService, categoriesService, suppliersService, _) {
 	var service = this;
+
+	function getSupplier (search) {
+		if (!search.supplier_id) {
+			return $q.when([]);
+		}
+
+		return suppliersService
+			.getNameForSupplier(search.supplier_id)
+			.then(function(name) {
+				var params = {
+					supplier_id: search.supplier_id
+				};
+
+				if (search.query) {
+					params.query = search.query;
+				}
+
+				return {
+					name: name,
+					href: '/search/',
+					params: params
+				}
+			});
+	}
 
 	function getCategories (search) {
 		if (!search.category_hierarchy) {
@@ -20,7 +44,7 @@ function BreadcrumbsService ($location, $q, searchService, categoriesService, _)
 
 	service.getBreadcrumbs = function() {
 		var search = $location.search(),
-			breadcrumbs, params, query, supplier, categories;
+			breadcrumbs, params, query;
 
 		breadcrumbs = [
 			{
@@ -41,25 +65,14 @@ function BreadcrumbsService ($location, $q, searchService, categoriesService, _)
 			});
 		}
 
-		supplier = search.supplier;
-
-		if (supplier) {
-			params = angular.copy(breadcrumbs[breadcrumbs.length - 1].params || {});
-			params.supplier = supplier;
-
-			breadcrumbs.push({
-				name: supplier,
-				href: '/search/',
-				params: params
-			})
-		}
-
-		breadcrumbs = breadcrumbs.concat();
-
-		return getCategories(search)
-			.then(function(categories) {
+		return $q.all({
+			supplier: getSupplier(search),
+			categories: getCategories(search)
+		})
+			.then(function(response) {
 				return breadcrumbs
-					.concat(categories)
+					.concat(response.supplier)
+					.concat(response.categories)
 					.map(function(crumb) {
 						if (crumb.params) {
 							crumb.href += searchService.buildQueryString(crumb.params);

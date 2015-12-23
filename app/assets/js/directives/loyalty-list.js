@@ -4,23 +4,24 @@ function LoyaltyListDirective () {
 		scope: {
 			suppliers: '='
 		},
-		controller: function($scope, suppliersService) {
+		controller: function($scope, $q, suppliersService) {
 			var vm = this;
 
 			function getLoyaltySchemes () {
-				return vm.suppliers.map(function(supplier) {
+				$q.all(vm.suppliers.map(function(supplier) {
 					return suppliersService
 						.getLoyaltySchemeForSupplier(supplier);
-				}).filter(function(loyaltyScheme) {
-					return !!loyaltyScheme;
-				});
+				}))
+					.then(function(loyaltySchemes) {
+						vm.loyaltySchemes = loyaltySchemes.filter(function(loyaltyScheme) {
+							return !!loyaltyScheme;
+						});
+					});
 			}
 
 			$scope.$watch(function() {
 				return vm.suppliers;
-			}, function() {
-				vm.loyaltySchemes = getLoyaltySchemes();
-			});
+			}, getLoyaltySchemes);
 		},
 		controllerAs: 'vm',
 		bindToController: true,

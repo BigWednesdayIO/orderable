@@ -24,10 +24,10 @@
 							<span class="flex">Delivery time<span ng-if="::vm.order.basket.order_forms.length !== 1">s</span>:</span>
 						</h2>
 						<md-list>
-							<md-list-item class="md-2-line" ng-repeat="order_form in ::vm.order.basket.order_forms track by order_form.supplier">
-								<img ng-src="{{ ::vm.getLogoForSupplier(order_form.supplier) }}" class="md-avatar" alt="{{ ::order_form.supplier }}" />
+							<md-list-item class="md-2-line" ng-repeat="order_form in ::vm.order.basket.order_forms track by order_form.supplier_id">
+								<img ng-src="{{ ::vm.supplierInfo[order_form.supplier_id].logo }}" class="md-avatar" alt="{{ ::vm.supplierInfo[order_form.supplier_id].name }}" />
 								<div class="md-list-item-text layout-column">
-									<p ng-bind="::order_form.supplier"></p>
+									<p ng-bind="::vm.supplierInfo[order_form.supplier_id].name"></p>
 									<h3>
 										<span ng-bind="::order_form.delivery_window.date_display_name"></span>,
 										<span ng-bind="::order_form.delivery_window.display_name"></span>

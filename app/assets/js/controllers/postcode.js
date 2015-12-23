@@ -1,4 +1,4 @@
-function PostcodeController ($rootScope, $timeout, $mdDialog, postcodeService, suppliersService, brand) {
+function PostcodeController ($rootScope, $state, $stateParams, $timeout, $location, $mdDialog, postcodeService, suppliersService, brand) {
 	var vm = this;
 
 	vm.brand = brand;
@@ -43,6 +43,10 @@ function PostcodeController ($rootScope, $timeout, $mdDialog, postcodeService, s
 
 			$mdDialog
 				.hide(vm.newPostcode);
+
+			$state.go($state.current.name, $stateParams, {
+				reload: true
+			});
 		}, 200)
 	};
 

@@ -1,6 +1,15 @@
-function SuppliersService ($rootScope, $q, browserStorage) {
+function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage, _) {
 	var service = {},
 		currentSuppliers = browserStorage.getItem('suppliers') || [];
+
+	function notifyError (error) {
+		$mdToast.show(
+			$mdToast.simple()
+				.content(error.message)
+				.hideDelay(3000)
+		);
+		return $q.reject(error);
+	}
 
 	service.saveSuppliers = function(suppliers) {
 		currentSuppliers = suppliers;
@@ -8,24 +17,53 @@ function SuppliersService ($rootScope, $q, browserStorage) {
 		$rootScope.$emit('suppliersUpdated', currentSuppliers);
 	}
 
+	service.getAllSuppliers = function() {
+		return $http({
+			method: 'GET',
+			url: API.suppliers,
+			cache: true
+		})
+			.catch(notifyError);
+	};
+
 	service.getSuppliersForPostcode = function(postcode) {
-		var suppliers = [],
-			londonPostcodes = /^(w(1[0-4]?|[2-9])|sw(1[0-9]?|20?|[3-9])|se(1[0-9]?|2[0-8]?|[3-9])|nw(1[01]?|[2-9])|n(1[0-9]?|2[0-2]?|[3-9])|e(1[0-9]?|20?|[3-9]?)|ec[124][amnprvy]|ec3[amnprv]|wc1[abehnr]|wc2[abehnrvx])/i;
-
-		if (postcode.match(londonPostcodes)) {
-			suppliers = [
-				'Pub Taverns',
-				'Beer & Wine Co',
-				'Walmart',
-				'Best Buy'
-			];
-		}
-
-		return $q.when(suppliers);
+		return $http({
+			method: 'GET',
+			url: API.suppliers,
+			params: {
+				deliver_to: postcode.replace(/\s/g, '')
+			}
+		})
+			.catch(notifyError);
 	};
 
 	service.getCurrentSuppliers = function() {
 		return currentSuppliers;
+	};
+
+	service.getSupplierInfo = function(id) {
+		return service
+			.getAllSuppliers()
+			.then(function(suppliers) {
+				var supplier = _.find(suppliers, {id: id});
+				if (!supplier) {
+					return $q.reject(supplier);
+				}
+				supplier.logo = service.getLogoForSupplier(supplier.name);
+				supplier.brand_image = service.getBrandImageForSupplier(supplier.name);
+				return supplier;
+			});
+	};
+
+	service.getNameForSupplier = function(id) {
+		return service
+			.getSupplierInfo(id)
+			.then(function(supplier) {
+				return supplier.name;
+			})
+			.catch(function() {
+				return;
+			});
 	};
 
 	service.getLogoForSupplier = function(supplier) {
@@ -34,10 +72,10 @@ function SuppliersService ($rootScope, $q, browserStorage) {
 			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
 			'Best Buy': 'assets/images/best-buy-logo.png',
 			'Walmart': 'assets/images/walmart-logo.png',
-			'placeholder': 'http://placehold.it/80x80'
+			'placeholder': 'http://placehold.it/80x80?text='
 		};
 
-		return logos[supplier] || logos.placeholder;
+		return logos[supplier] || logos.placeholder + supplier;
 	};
 
 	service.getBrandImageForSupplier = function(supplier) {
@@ -53,13 +91,17 @@ function SuppliersService ($rootScope, $q, browserStorage) {
 	};
 
 	service.getLoyaltySchemeForSupplier = function(supplier) {
-		return {
-			supplier: supplier,
-			logo: service.getLogoForSupplier(supplier),
-			brandImage: service.getBrandImageForSupplier(supplier),
-			name: supplier + ' Rewards',
-			label: supplier + ' Rewards number'
-		};
+		return service
+			.getNameForSupplier(supplier)
+			.then(function(name) {
+				return {
+					supplier: supplier,
+					logo: service.getLogoForSupplier(supplier),
+					brandImage: service.getBrandImageForSupplier(supplier),
+					name: name + ' Rewards',
+					label: name + ' Rewards number'
+				};
+			});
 	};
 
 	return service;
