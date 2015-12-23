@@ -1,26 +1,29 @@
-function OrdersService ($q, browserStorage, _) {
+function OrdersService ($http, $q, API, customerService) {
 	var service = this;
 
 	service.getOrders = function() {
-		return $q.when(browserStorage.getItem('orders') || []);
-	}
+		var session = customerService.getSessionInfo();
 
-	service.getOrderById = function(id) {
-		return service
-			.getOrders()
-			.then(function(orders) {
-				return _.find(orders, {id: id});
-			})
-	}
+		return $http({
+			method: 'GET',
+			url: API.orders,
+			params: {
+				customer_id: session.id
+			},
+			headers: {
+				Authorization: session.token
+			}
+		});
+	};
 
-	service.createOrder = function(order) {
-		return service
-			.getOrders()
-			.then(function(orders) {
-				orders.unshift(order);
-				browserStorage.setItem('orders', orders);
-				return orders;
-			});
+	service.getOrder = function(id) {
+		return $http({
+			method: 'GET',
+			url: API.orders + '/' + id,
+			headers: {
+				Authorization: customerService.getSessionInfo().token
+			}
+		});
 	};
 }
 

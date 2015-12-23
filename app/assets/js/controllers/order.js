@@ -7,9 +7,9 @@ function OrderController (orderDetails, supplierInfo) {
 }
 
 OrderController.resolve = /* @ngInject */ {
-	orderDetails: function($stateParams, checkoutService) {
-		return checkoutService
-			.getCheckout($stateParams.id);
+	orderDetails: function($stateParams, ordersService) {
+		return ordersService
+			.getOrder($stateParams.id);
 	},
 	supplierInfo: function($q, orderDetails, suppliersService) {
 		return $q.all(orderDetails.basket.order_forms.map(function(order_form) {

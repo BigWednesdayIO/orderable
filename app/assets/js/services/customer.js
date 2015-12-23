@@ -49,7 +49,7 @@ function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) 
 
 	service.isSignedIn = function() {
 		var sessionInfo = service.getSessionInfo();
-		return true && sessionInfo.id && sessionInfo.token;
+		return sessionInfo.id && sessionInfo.token && true;
 	};
 
 	service.register = function(details) {

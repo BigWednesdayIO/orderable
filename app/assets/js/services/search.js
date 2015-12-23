@@ -24,7 +24,7 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 
 	service.buildQueryString = function(params) {
 		return '?' + _.map(params, function(value, key) {
-			return key + '=' + value;
+			return key + '=' + encodeURIComponent(value);
 		})
 			.sort()
 			.join('&');
@@ -32,7 +32,7 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 
 	service.applyRefinementToUrl = function(key, value) {
 		var params = angular.copy(search);
-		params[key] = encodeURIComponent(value);
+		params[key] = value;
 		return path + service.buildQueryString(params);
 	};
 

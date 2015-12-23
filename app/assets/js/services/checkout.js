@@ -1,4 +1,4 @@
-function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersService, API) {
+function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, customerService, API) {
 	var service = {},
 		checkout;
 
@@ -16,8 +16,8 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersS
 		checkout = {
 			delivery_address: {},
 			billing_address: {},
-			payment: {},
-			basket: basket
+			basket: basket,
+			customer_id: customerService.getSessionInfo().id
 		};
 
 		checkout.basket.order_forms = checkout.basket.order_forms.map(function(order_form) {
@@ -36,7 +36,10 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersS
 		if (id) {
 			return $http({
 				method: 'GET',
-				url: API.checkouts + '/' + id
+				url: API.checkouts + '/' + id,
+				headers: {
+					Authorization: customerService.getSessionInfo().token
+				}
 			});
 		}
 
@@ -66,26 +69,23 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, ordersS
 	};
 
 	service.completeCheckout = function(data) {
-		if (!data.delivery_address.name || !data.billing_address.name || !data.payment.card_number) {
+		if (!data.delivery_address.name || !data.billing_address.name || !data.payment_method) {
 			return notifyError({
 				message: 'Please fill out all parts of the checkout form'
 			});
 		}
 
-		data.payment.expiry_year += 2000;
-
 		return $http({
 			method: 'POST',
 			url: API.checkouts,
-			data: data
+			data: data,
+			headers: {
+				Authorization: customerService.getSessionInfo().token
+			}
 		})
 			.then(function(checkoutResponse) {
-				return $q.all([
-					basketService
-						.createBasket(),
-					ordersService
-						.createOrder(checkoutResponse)
-				])
+				return basketService
+					.createBasket()
 					.then(function() {
 						return checkoutResponse;
 					});

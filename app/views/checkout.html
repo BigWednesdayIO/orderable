@@ -39,13 +39,12 @@
 				<li class="checkout__form-section layout-gt-md-row">
 					<h2 class="checkout__form-section__heading md-subhead flex-gt-md-25">Payment</h2>
 					<div class="checkout__form-section__fields flex">
-						<div style="font-size: 16px;">
-							<div ng-show="vm.checkout.payment.card_number">
-								<span ng-bind="vm.checkout.payment.card_type"></span>: <span ng-bind="vm.checkout.payment.card_number | cardMask"></span>, Expires <span ng-bind="vm.checkout.payment.expiry_month"></span>/<span ng-bind="vm.checkout.payment.expiry_year"></span>
-							</div>
-						</div>
-						<md-button class="md-primary align-text" ng-click="vm.editPayment($event)">Edit payment method</md-button>
-						<address-summary address="vm.checkout.billing_address" style="margin-top: 12px;"></address-summary>
+						<h3 class="md-subhead" style="margin-top: 0">How would you like to pay for this order?</h3>
+						<md-radio-group ng-model="vm.checkout.payment_method">
+							<md-radio-button value="cash" class="md-primary">Cash on delivery</md-radio-button>
+							<md-radio-button value="account" class="md-primary">Add to account balance</md-radio-button>
+						</md-radio-group>
+						<address-summary address="vm.checkout.billing_address" style="margin-top: 20px;"></address-summary>
 						<md-button class="md-primary align-text" ng-click="vm.editAddress($event, 'billing')">Edit billing address</md-button>
 					</div>
 				</li>
