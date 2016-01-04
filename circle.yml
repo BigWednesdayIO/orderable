@@ -25,7 +25,7 @@ deployment:
       - NODE_ENV=development gulp build
       - deploy_scripts/rolling_deploy.sh orderable app=orderable development ${PWD} ${PWD}/kubernetes/rc.json ${PWD}/kubernetes/service.json
   prod:
-    branch: production
+    tag: /v.*/
     commands:
       - NODE_ENV=production gulp build
       - deploy_scripts/rolling_deploy.sh orderable app=orderable production ${PWD} ${PWD}/kubernetes/rc.json ${PWD}/kubernetes/service.json
