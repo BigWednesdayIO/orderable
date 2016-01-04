@@ -14,7 +14,7 @@ dependencies:
   cache_directories:
     - ~/google-cloud-sdk
   override:
-    - deploy_scripts/install_deployment_tools.sh
+    - deploy_scripts/install_sdk.sh
     - npm install -g gulp
     - npm install
 
@@ -23,9 +23,9 @@ deployment:
     branch: master
     commands:
       - NODE_ENV=development gulp build
-      - deploy_scripts/rolling_deploy.sh orderable app=orderable development ${PWD} ${PWD}/kubernetes/rc.json ${PWD}/kubernetes/service.json
+      - deploy_scripts/kubernetes_deploy.sh orderable app=orderable development ${PWD} ${PWD}/kubernetes/rc.json ${PWD}/kubernetes/service.json
   prod:
     tag: /v.*/
     commands:
       - NODE_ENV=production gulp build
-      - deploy_scripts/rolling_deploy.sh orderable app=orderable production ${PWD} ${PWD}/kubernetes/rc.json ${PWD}/kubernetes/service.json
+      - deploy_scripts/kubernetes_deploy.sh orderable app=orderable production ${PWD} ${PWD}/kubernetes/rc.json ${PWD}/kubernetes/service.json

@@ -2,7 +2,7 @@
   "apiVersion": "v1",
   "kind": "ReplicationController",
   "metadata": {
-    "name": "orderable-rc-{{TAG}}",
+    "name": "orderable-rc-{{VERSION}}",
     "labels": {
       "app": "orderable",
       "env": "{{NAMESPACE}}"
