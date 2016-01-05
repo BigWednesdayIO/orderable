@@ -12,6 +12,8 @@ function ProductDetailsController (basketService, suppliersService, productData,
 
 	vm.product = productData;
 
+	vm.product.thumbnail_image_url = vm.product.thumbnail_image_url || 'assets/images/placeholder.jpg';
+
 	vm.supplierLogo = suppliersService.getLogoForSupplier(productData.supplier_id);
 
 	vm.addToBasket = function() {
