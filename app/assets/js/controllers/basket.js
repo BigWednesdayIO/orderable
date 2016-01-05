@@ -1,11 +1,15 @@
-function BasketController ($rootScope, $state, $timeout, basketService, checkoutService, wishlistService, suppliersService, wishlist, supplierNames) {
+function BasketController ($rootScope, $state, $timeout, $q, basketService, checkoutService, wishlistService, suppliersService, membershipsService, wishlist, supplierNames) {
 	var vm = this,
 		blurTimer;
 
 	function getBasketSuppliers () {
-		vm.basketSuppliers = vm.basket.order_forms.map(function(order_form) {
-			return order_form.supplier_id;
-		})
+		$q.all(vm.basket.order_forms.map(function(order_form) {
+			return suppliersService
+				.getSupplierInfo(order_form.supplier_id);
+		}))
+			.then(function(basketSuppliers) {
+				vm.basketSuppliers = basketSuppliers;
+			})
 	}
 
 	vm.basket = basketService.basket;
@@ -39,8 +43,23 @@ function BasketController ($rootScope, $state, $timeout, basketService, checkout
 	};
 
 	vm.beginCheckout = function() {
-		checkoutService
-			.beginCheckout(vm.basket)
+		var updateMemberships;
+
+		if (vm.supplierMembershipsForm.$dirty) {
+			updateMemberships = membershipsService
+				.updateMemberships(vm.supplierMemberships.map(function(supplierMembership) {
+					return {
+						supplier_id: supplierMembership.supplier.id,
+						membership_number: supplierMembership.number
+					};
+				}));
+		}
+
+		$q.when(updateMemberships)
+			.then(function() {
+				return checkoutService
+					.beginCheckout(vm.basket)
+			})
 			.then(function() {
 				$state.go('checkout');
 			});
