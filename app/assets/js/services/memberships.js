@@ -1,6 +1,15 @@
 function MembershipsService ($http, $q, API, customerService, _) {
 	var service = this;
 
+	function notifyError (error) {
+		$mdToast.show(
+			$mdToast.simple()
+				.content(error.message)
+				.hideDelay(3000)
+		);
+		return $q.reject(error);
+	}
+
 	service.getMemberships = function() {
 		var info = customerService.getSessionInfo();
 
@@ -10,7 +19,8 @@ function MembershipsService ($http, $q, API, customerService, _) {
 			headers: {
 				Authorization: info.token
 			}
-		});
+		})
+			.catch(notifyError);
 	};
 
 	service.addMembership = function(membership) {
@@ -23,7 +33,8 @@ function MembershipsService ($http, $q, API, customerService, _) {
 			headers: {
 				Authorization: info.token
 			}
-		});
+		})
+			.catch(notifyError);
 	};
 
 	service.updateMembership = function(membership) {
@@ -40,7 +51,8 @@ function MembershipsService ($http, $q, API, customerService, _) {
 			headers: {
 				Authorization: info.token
 			}
-		});
+		})
+			.catch(notifyError);
 	};
 
 	service.removeMembership = function(membership) {
@@ -52,7 +64,8 @@ function MembershipsService ($http, $q, API, customerService, _) {
 			headers: {
 				Authorization: info.token
 			}
-		});	
+		})
+			.catch(notifyError);
 	};
 
 	service.updateMemberships = function(memberships) {
