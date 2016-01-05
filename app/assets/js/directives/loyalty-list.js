@@ -2,9 +2,10 @@ function LoyaltyListDirective () {
 	return {
 		restrict: 'EA',
 		scope: {
-			suppliers: '='
+			suppliers: '=',
+			loyaltySchemes: '='
 		},
-		controller: function($scope, $q, suppliersService) {
+		controller: function($scope, $q, suppliersService, membershipsService) {
 			var vm = this;
 
 			function getLoyaltySchemes () {
@@ -13,9 +14,24 @@ function LoyaltyListDirective () {
 						.getLoyaltySchemeForSupplier(supplier);
 				}))
 					.then(function(loyaltySchemes) {
-						vm.loyaltySchemes = loyaltySchemes.filter(function(loyaltyScheme) {
-							return !!loyaltyScheme;
-						});
+						return membershipsService
+							.getMemberships()
+							.then(function(memberships) {
+								return loyaltySchemes.filter(function(loyaltyScheme) {
+									return !!loyaltyScheme;
+								}).map(function(loyaltyScheme) {
+									var number = _.result(_.findWhere(memberships, {supplier_id: loyaltyScheme.supplier.id}), 'membership_number');
+
+									if (number) {
+										loyaltyScheme.number = number;
+									}
+
+									return loyaltyScheme;
+								});
+							});
+					})
+					.then(function(loyaltySchemes) {
+						vm.loyaltySchemes = loyaltySchemes;
 					});
 			}
 
