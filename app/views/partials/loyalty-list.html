@@ -1,5 +1,5 @@
 <ul class="loyalty-list unstyled-list">
-	<li class="loyalty-list__item layout-row layout-align-start-center" ng-repeat="loyaltyScheme in vm.loyaltySchemes track by loyaltyScheme.supplier">
+	<li class="loyalty-list__item layout-row layout-align-start-center" ng-repeat="loyaltyScheme in vm.loyaltySchemes track by loyaltyScheme.supplier.id">
 		<div class="supplier-logo">
 			<img ng-src="{{ ::loyaltyScheme.logo }}" height="56" width="56" alt />
 		</div>
