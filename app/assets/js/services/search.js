@@ -175,6 +175,10 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 				response.hitsBySupplier = hitsBySupplier;
 				response.suppliers = suppliers;
 
+				if (!response.facets) {
+					return response;
+				}
+
 				return $q.all({
 					categories: mapCategories(response.facets[categoryIndex].values, params),
 					suppliers: mapSuppliers(response.facets[supplierIndex].values)
@@ -209,7 +213,13 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 		})
 			.then(function(response) {
 				var suppliers = (_.find(response.facets, {field: 'supplier_id'}) || {}).values;
-				var promises = suppliers.map(function(supplier) {
+				var promises;
+
+				if (!suppliers) {
+					return [];
+				}
+
+				promises = suppliers.map(function(supplier) {
 					return supplier.value;
 				}).map(function(supplierId) {
 					return suppliersService

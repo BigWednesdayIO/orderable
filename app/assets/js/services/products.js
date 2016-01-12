@@ -4,7 +4,10 @@ function ProductsService ($http, $q, $mdToast, API) {
 	service.getProductById = function(id) {
 		return $http({
 			method: 'GET',
-			url: API.products + '/' + id
+			url: API.products + '/' + id,
+			headers: {
+				Authorization: 'Bearer NG0TuV~u2ni#BP|'
+			}
 		})
 			.catch(function(error) {
 				$mdToast.show(

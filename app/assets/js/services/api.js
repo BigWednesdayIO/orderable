@@ -2,12 +2,12 @@ function APIService (baseAPI) {
 	this.navigation = 'mocks/navigation.json';
 
 	this.products = baseAPI + 'indexes/orderable-products';
-	this.search = this.products + '/query';
-	this.search_suggestions = baseAPI + 'indexes/crateful-suggestions/query'
+	this.search = baseAPI + 'orderable_search';
+	this.search_suggestions = baseAPI + 'indexes/orderable-suggestions/query'
 
 	this.checkouts = baseAPI + 'checkouts'
 
-	this.categories = 'https://raw.githubusercontent.com/BigWednesdayIO/categories-api/master/categories.json';
+	this.categories = 'https://raw.githubusercontent.com/BigWednesdayIO/categories-api/feature/coffee-shop/categories.json';
 
 	this.customers = baseAPI + 'customers';
 
