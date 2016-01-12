@@ -36,9 +36,9 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 		}, 0);
 	}
 
-	function getSubtotal (collection) {
+	function getTotal (collection, attribute) {
 		return toPounds(collection.reduce(function(total, each) {
-			return total + toPence(each.subtotal);
+			return total + toPence(each[attribute]);
 		}, 0));
 	}
 
@@ -51,16 +51,22 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 
 			order_form.line_item_count = countProperty(order_form.line_items, 'quantity');
 
-			order_form.subtotal = getSubtotal(order_form.line_items);
+			order_form.subtotal = getTotal(order_form.line_items, 'subtotal');
+
+			order_form.taxable_subtotal = getTotal(order_form.line_items.filter(function(line_item) {
+				return line_item.product.taxable;
+			}), 'subtotal');
 
 			return order_form;
 		});
 
 		service.basket.line_item_count = countProperty(service.basket.order_forms, 'line_item_count');
 
-		service.basket.subtotal = getSubtotal(service.basket.order_forms);
+		service.basket.subtotal = getTotal(service.basket.order_forms, 'subtotal');
 
-		service.basket.tax = toPounds(Math.round(toPence(service.basket.subtotal) * 0.2));
+		service.basket.taxable_subtotal = getTotal(service.basket.order_forms, 'taxable_subtotal');
+
+		service.basket.tax = toPounds(Math.round(toPence(service.basket.taxable_subtotal) * 0.2));
 
 		service.basket.total = toPounds(toPence(service.basket.subtotal) + toPence(service.basket.tax));
 
