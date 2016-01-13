@@ -5,7 +5,7 @@
 	</div>
 	<div class="product-thumb__actions">
 		<span class="product-thumb__price md-body-2" price product="vm.product"></span>
-		<md-button ng-if="::vm.basket" ng-show="vm.quantity === 0" ng-click="vm.addToBasket($event, 1)" class="md-icon-button" aria-label="Add {{ ::vm.product.name }} to basket">
+		<md-button ng-if="::vm.basket" ng-show="vm.quantity === 0" ng-click="vm.addToBasket($event, 1)" class="md-icon-button product-thumb__add-button" aria-label="Add {{ ::vm.product.name }} to basket">
 			<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
 		</md-button>
 		<div ng-if="::vm.basket" ng-show="vm.quantity > 0" class="product-thumb__quantity-wrapper layout-row layout-align-center-center">

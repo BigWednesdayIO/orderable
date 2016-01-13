@@ -22,6 +22,14 @@
 					<md-option ng-repeat="option in ::vm.sortOptions" ng-value="::option.value" ng-bind="::option.display_name"></md-option>
 				</md-select>
 			</md-input-container>
+			<div class="toggle-buttons" style="margin-left: 16px;">
+				<md-button ng-class="{'md-primary': vm.viewMode === 'list'}" ng-click="vm.setViewMode('list')" aria-label="List view">
+					<md-icon md-svg-src="assets/images/icons/view-list.svg"></md-icon>
+				</md-button>
+				<md-button ng-class="{'md-primary': vm.viewMode === 'grid'}" ng-click="vm.setViewMode('grid')" aria-label="Grid view">
+					<md-icon md-svg-src="assets/images/icons/view-module.svg"></md-icon>
+				</md-button>
+			</div>
 		</div>
 	</div>
 
@@ -54,7 +62,7 @@
 					<img class="supplier-listing__logo" ng-src="{{ ::vm.getLogoForSupplier(vm.search.supplier_id) }}" height="80" width="80" alt />
 					<h2 class="supplier-listing__name md-title" ng-bind="vm.supplierName"></h2>
 				</div>
-				<ul class="supplier-listing__products unstyled-list">
+				<ul class="supplier-listing__products supplier-listing__products--{{ vm.viewMode }}-view unstyled-list">
 					<li product-thumb product="hit" basket="true" ng-repeat="hit in vm.hits track by hit.objectID"></li>
 				</ul>
 			</div>
