@@ -207,9 +207,12 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 		};
 
 		return $http({
-			url: API.search,
+			url: API.products + '/query',
 			method: 'POST',
-			data: params
+			data: params,
+			headers: {
+				Authorization: 'Bearer NG0TuV~u2ni#BP|'
+			}
 		})
 			.then(function(response) {
 				var suppliers = (_.find(response.facets, {field: 'supplier_id'}) || {}).values;
