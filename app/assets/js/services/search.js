@@ -50,7 +50,7 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 	};
 
 	service.getFiltersFromUrl = function() {
-		var reservedWords = ['query', 'sort'];
+		var reservedWords = ['query', 'sort', 'pinned'];
 
 		return _.map(search, function(value, key) {
 			return {
@@ -134,24 +134,38 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 	}
 
 	service.getResults = function(params) {
-		var filters = params.filters || [],
-			index = _.findIndex(filters, {field: 'supplier_id'});
+		var filters = params.filters || [];
+		var suppliers = _.remove(filters, function(filter) {
+			return filter.field === 'supplier_id';
+		})[0];
 
-		if (index === -1) {
-			filters.push({
-				field: 'supplier_id',
-				terms: suppliersService.getCurrentSuppliers().map(supplierId)
-			});
-			params.filters = filters;
-		}
+		return (function() {
+			if (suppliers) {
+				return $q.when(suppliers);
+			}
 
-		params.hitsPerPage = params.hitsPerPage || 20;
+			return (search.pinned ? suppliersService.getPinnedSuppliers() : $q.when(suppliersService.getCurrentSuppliers()))
+				.then(function(supplierList) {
+					if (supplierList.length === 0) {
+						return [];
+					}
 
-		return $http({
-			url: API.search,
-			method: 'POST',
-			data: params
-		})
+					return [{
+						field: 'supplier_id',
+						terms: supplierList.map(supplierId)
+					}];
+				});
+		})()
+			.then(function(suppliersFilter) {
+				params.hitsPerPage = params.hitsPerPage || 20;
+				params.filters = filters.concat(suppliersFilter);
+
+				return $http({
+					url: API.search,
+					method: 'POST',
+					data: params
+				});
+			})
 			.then(function(response) {
 				var hitsBySupplier = _.groupBy(response.hits, 'supplier_id');
 				var suppliers = _.keys(hitsBySupplier);
