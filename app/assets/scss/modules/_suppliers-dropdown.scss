@@ -2,29 +2,68 @@
 	position: static;
 }
 
-.sub-nav {
-	&__suppliers {
-		display: flex;
-		flex-flow: row wrap;
+.supplier {
+	position: relative;
+	width: (100%/6);
+	transition: opacity $transition;
+
+	&__link {
+		display: block;
+		padding: 20px;
+		border: 1px solid transparent;
+		transition: $transition;
+
+		&:hover {
+			border-color: $divider-color;
+			box-shadow: 0 1px 2px 0 $divider-color;
+		}
 	}
 
-	&__supplier {
-		width: (100%/6);
+	&__image {
+		margin: 0 auto;
+	}
+}
 
-		&__link {
-			display: block;
-			padding: 20px;
-			border: 1px solid transparent;
-			transition: $transition;
+.pin-grid {
+	display: flex;
+	flex-flow: row wrap;
+	overflow: hidden;
 
-			&:hover {
-				border-color: $divider-color;
-				box-shadow: 0 1px 2px 0 $divider-color;
-			}
+	.pin {
+		position: absolute;
+		top: -8px;
+		right: -14px;
+		margin: 0;
+		opacity: .5;
+		transform: scale(1) translateY(0);
+		transition: transform .1s linear, opacity $transition;
+
+		&:hover {
+			transform: scale(1) translateY(-2px);
+			opacity: 1;
 		}
 
-		&__image {
-			margin: 0 auto;
+		&:active {
+			transform: scale(.5) translateY(-2px);
+		}
+
+		md-icon {
+			color: rgba(0, 0, 0, .54) !important;
+		}
+	}
+
+	&--active {
+		.supplier {
+			opacity: .6;
+
+			&:hover,
+			&--is-pinned {
+				opacity: 1;
+			}
+
+			&--is-pinned .pin {
+				opacity: 1;
+			}
 		}
 	}
 }

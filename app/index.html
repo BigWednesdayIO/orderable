@@ -56,16 +56,20 @@
 				<div class="md-toolbar-tools layout-margin">
 					<nav class="layout-row">
 						<h2 class="layout-column layout-align-center-center" style="width: 148px; margin-right: 8px;">Eating &amp; Drinking Out</h2>
-						<div class="suppliers-dropdown" dropdown-menu>
+						<div class="suppliers-dropdown is-open" dropdown-menu>
 							<a href="#" class="suppliers-dropdown__button" dropdown-button>
 								<span>Suppliers</span>
 								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</a>
 							<md-content class="sub-nav" dropdown-items>
-								<ul class="sub-nav__suppliers unstyled-list">
-									<li class="sub-nav__supplier" ng-repeat="supplier in vm.suppliers track by supplier.id">
-										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="sub-nav__supplier__link">
-											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier.name) }}" class="sub-nav__supplier__image" height="60" alt="{{ ::supplier.name }}" />
+								<ul class="pin-grid unstyled-list" ng-class="{'pin-grid--active': vm.hasPins}">
+									<li class="supplier" ng-repeat="supplier in vm.suppliers track by supplier.id" ng-class="{'supplier--is-pinned': vm.isPinned[supplier.id]}">
+										<md-button class="md-icon-button pin" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">
+											<md-icon md-svg-src="assets/images/icons/favorite-border.svg" ng-hide="vm.isPinned[supplier.id]"></md-icon>
+											<md-icon md-svg-src="assets/images/icons/favorite.svg" ng-show="vm.isPinned[supplier.id]"></md-icon>
+										</md-button>
+										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="supplier__link">
+											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier.name) }}" class="supplier__image" height="60" alt="{{ ::supplier.name }}" />
 										</a>
 									</li>
 								</ul>
