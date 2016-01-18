@@ -166,10 +166,14 @@
 								<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 							</md-button>
 							<md-list ng-show="vm.openMenu === 'suppliers'" class="animate-slide">
-								<md-list-item  ng-repeat="supplier in vm.suppliers track by supplier.name">
+								<md-list-item  ng-repeat="supplier in vm.suppliers track by supplier.name" class="md-with-secondary">
 									<md-button class="menu-link" ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" aria-label="{{ ::supplier.name }}">
 										<md-icon style="margin: auto 12px auto 0; border-radius: 50%; overflow: hidden;"><img ng-src="{{ ::vm.getLogoForSupplier(supplier.name) }}" height="24" alt="{{ ::supplier.name }}" /></md-icon>
 										<span ng-bind="::supplier.name"></span>
+									</md-button>
+									<md-button class="md-secondary md-icon-button" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">
+										<md-icon md-svg-src="assets/images/icons/favorite-border.svg" ng-hide="vm.isPinned[supplier.id]"></md-icon>
+										<md-icon md-svg-src="assets/images/icons/favorite.svg" ng-show="vm.isPinned[supplier.id]"></md-icon>
 									</md-button>
 								</md-list-item>
 							</md-list>
