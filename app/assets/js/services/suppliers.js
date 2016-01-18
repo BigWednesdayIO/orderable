@@ -1,6 +1,7 @@
 function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage, _) {
 	var service = {},
-		currentSuppliers = browserStorage.getItem('suppliers') || [];
+		currentSuppliers = browserStorage.getItem('suppliers') || [],
+		pinnedSuppliers;
 
 	function notifyError (error) {
 		$mdToast.show(
@@ -105,6 +106,31 @@ function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage,
 			name: supplier.name,
 			label: supplier.name + ' membership number'
 		});
+	};
+
+	service.getPinnedSuppliers = function() {
+		if (!pinnedSuppliers) {
+			pinnedSuppliers = browserStorage.getItem('pinnedSuppliers') || [];
+		}
+		return $q.when(pinnedSuppliers);
+	};
+
+	service.togglePinnedSupplier = function(supplier) {
+		return service
+			.getPinnedSuppliers()
+			.then(function(latestPins) {
+				var index = _.findIndex(latestPins, {id: supplier.id});
+
+				if (index > -1) {
+					latestPins.splice(index, 1);
+				} else {
+					latestPins.push(supplier);
+				}
+
+				pinnedSuppliers = latestPins;
+				browserStorage.setItem('pinnedSuppliers', pinnedSuppliers);
+				return $q.when(pinnedSuppliers);
+			});
 	};
 
 	return service;

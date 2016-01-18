@@ -87,6 +87,13 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 
 	vm.removeRefinementFromUrl = searchService.removeRefinementFromUrl;
 
+	vm.onlyPinned = vm.search.pinned === 'true';
+
+	vm.toggleOnlyPinned = function() {
+		var href = vm.onlyPinned ? vm.applyRefinementToUrl('pinned', 'true') : vm.removeRefinementFromUrl('pinned', 'true');
+		$location.url(href);
+	};
+
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
 
 	vm.sortOptions = sortOptions;

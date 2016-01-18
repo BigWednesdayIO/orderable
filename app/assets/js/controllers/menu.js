@@ -1,6 +1,14 @@
 function MenuController ($rootScope, $state, $mdSidenav, navigationService, suppliersService, customerService, menuColours, brand) {
 	var vm = this;
 
+	function syncPins (updatedPins) {
+		vm.isPinned = updatedPins.reduce(function(pinned, supplier) {
+			pinned[supplier.id] = supplier;
+			return pinned;
+		}, {});
+		vm.hasPins = updatedPins.length > 0;
+	}
+
 	vm.brand = brand;
 
 	vm.menuColours = menuColours;
@@ -19,6 +27,16 @@ function MenuController ($rootScope, $state, $mdSidenav, navigationService, supp
 	vm.getBrandImageForSupplier = suppliersService.getBrandImageForSupplier;
 
 	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
+
+	suppliersService
+		.getPinnedSuppliers()
+		.then(syncPins);
+
+	vm.pinSupplier = function(supplier) {
+		suppliersService
+			.togglePinnedSupplier(supplier)
+			.then(syncPins);
+	}
 
 	vm.isSignedIn = customerService.isSignedIn();
 
