@@ -12,12 +12,12 @@
 						</h2>
 						<span class="flex"></span>
 						<span class="order__total" ng-bind="::order.basket.total | currency: '£'"></span>
+						<md-button class="md-icon-button md-accent md-hue-3" ng-show="vm.outstandingDeliveries[order.id]" ng-click="vm.markAllAsDelivered(order)" aria-label="Mark order fulfilled" title="View order summary">
+							<md-icon md-svg-src="assets/images/icons/done-all.svg"></md-icon>
+						</md-button>
 						<md-button class="md-icon-button md-accent md-hue-3" ng-href="account/orders/{{ ::order.id }}/" aria-label="View order summary" title="View order summary">
 							<md-icon md-svg-src="assets/images/icons/assignment.svg"></md-icon>
 						</md-button>
-						<!-- <md-button class="md-icon-button md-accent md-hue-3" aria-label="Mark order fulfilled" title="View order summary">
-							<md-icon md-svg-src="assets/images/icons/done-all.svg"></md-icon>
-						</md-button> -->
 					</div>
 					
 					<md-list style="padding: 0;">
@@ -34,15 +34,15 @@
 							</div>
 							<span class="flex"></span>
 							<div class="md-secondary layout-row">
-								<md-button class="md-icon-button" ng-click="" aria-label="Print order" title="Print order">
-									<md-icon md-svg-src="assets/images/icons/print.svg"></md-icon>
-								</md-button>
 								<!-- <md-button class="md-icon-button" ng-click="vm.downloadOrder(orderForm)" aria-label="Download invoice" title="Download invoice">
 									<md-icon md-svg-src="assets/images/icons/download.svg"></md-icon>
 								</md-button> -->
-								<!-- <md-button class="md-icon-button" ng-click="vm.markOrderFulfilled(orderForm)" aria-label="Mark supplier fulfilled" title="Mark supplier fulfilled">
+								<md-button class="md-icon-button" ng-show="vm.outstandingDeliveries[order.id][orderForm.id]" ng-click="vm.markAsDelivered(order, orderForm)" aria-label="Mark order delivered" title="Mark order delivered">
 									<md-icon md-svg-src="assets/images/icons/done.svg"></md-icon>
-								</md-button> -->
+								</md-button>
+								<md-button class="md-icon-button" ng-click="" aria-label="Print order" title="Print order">
+									<md-icon md-svg-src="assets/images/icons/print.svg"></md-icon>
+								</md-button>
 							</div>
 							<md-divider ng-if="::!$last"></md-divider>
 						</li>

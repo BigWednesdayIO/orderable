@@ -28,6 +28,37 @@ function OrdersService ($http, $q, API, customerService, _) {
 			}
 		});
 	};
+
+	service.getOutstandingDeliveries = function(orderForms) {
+		var outstanding = orderForms.filter(function(order_form) {
+			return order_form.status !== 'delivered';
+		});
+
+		return $q.when(outstanding);
+	}
+
+	service.updateOrderFormStatus = function(orderId, orderFormId, status) {
+		return $http({
+			method: 'PATCH',
+			url: API.orders + '/' + orderId + '/order_forms/' + orderFormId + '/status',
+			data: {
+				status: status
+			}
+		});
+	};
+
+	service.updateWholeOrderStatus = function(order, status) {
+		return service
+			.getOutstandingDeliveries(order.basket.order_forms)
+			.then(function(outstanding) {
+				var updates  = outstanding.map(function(orderForm) {
+					return service
+						.updateOrderFormStatus(order.id, orderForm.id, 'delivered');
+				});
+
+				return $q.all(updates);
+			});
+	};
 }
 
 angular
