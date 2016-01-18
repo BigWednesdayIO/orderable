@@ -1,4 +1,4 @@
-function OrdersService ($http, $q, API, customerService) {
+function OrdersService ($http, $q, API, customerService, _) {
 	var service = this;
 
 	service.getOrders = function() {
@@ -13,7 +13,10 @@ function OrdersService ($http, $q, API, customerService) {
 			headers: {
 				Authorization: session.token
 			}
-		});
+		})
+			.then(function(orders) {
+				return _.sortByOrder(orders, ['_metadata.created'], ['desc']);
+			});
 	};
 
 	service.getOrder = function(id) {
