@@ -115,6 +115,8 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		sessionStorage.setItem('viewMode', mode);
 	};
 
+	vm.showSupplierInfo = suppliersService.showSupplierInfoOverlay;
+
 	$listeners.push($rootScope.$on('$locationChangeSuccess', updateSearchResults));
 	$listeners.push($rootScope.$on('suppliersUpdated', updateSearchResults));
 

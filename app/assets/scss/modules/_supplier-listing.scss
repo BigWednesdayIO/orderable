@@ -7,6 +7,8 @@
 .supplier-listing {
 	margin-bottom: 40px;
 
+	$supplier-listing-text-shadow: 1px 1px 10px rgba(0,0,0,.87);
+
 	&__header {
 		padding: 16px 0;
 		border-bottom: $divider;
@@ -14,7 +16,7 @@
 		background-position: 50% 50%;
 		background-size: cover;
 		color: white;
-		text-shadow: 1px 1px 10px rgba(0,0,0,.87);
+		text-shadow: $supplier-listing-text-shadow;
 	}	
 
 	&__logo {
@@ -29,6 +31,13 @@
 
 	&__info {
 		margin: 0;
+	}
+
+	&__info-icon {
+		color: inherit;
+		vertical-align: bottom;
+		filter: drop-shadow($supplier-listing-text-shadow);
+		outline: none;
 	}
 
 	&__products {
