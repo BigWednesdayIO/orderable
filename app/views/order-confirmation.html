@@ -5,7 +5,7 @@
 				<header>
 					<h1 class="md-headline">Thanks for your order! <br /> Total: <span ng-bind="::vm.order.basket.total | currency: '£'"></span></h1>
 					<p class="order-confirmation__id">
-						<a ng-href="orders/{{ ::vm.order.id }}">#<span ng-bind="::vm.order.id"></span></a>
+						<a ng-href="account/orders/{{ ::vm.order.id }}/">#<span ng-bind="::vm.order.id"></span></a>
 					</p>
 				</header>
 
