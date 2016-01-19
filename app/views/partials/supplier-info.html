@@ -2,6 +2,18 @@
 	<md-dialog-content>
 		<h2 class="md-headline" ng-bind="::vm.supplier.name"></h2>
 		<p>Lorem ipsum dolor sit amet consectus...</p>
+		<ul class="unstyled-list layout-row supplier-links">
+			<md-button class="md-icon-button" ng-if="::vm.supplier.facebook" target="_blank" ng-href="https://facebook.com/{{ ::vm.supplier.facebook }}" aria-label="{{ ::vm.supplier.name }}'s Facebook page">
+				<md-icon md-svg-src="assets/images/icons/facebook-official.svg"></md-icon>
+			</md-button>
+			<md-button class="md-icon-button" ng-if="::vm.supplier.twitter" target="_blank" ng-href="https://twitter.com/{{ ::vm.supplier.twitter }}" aria-label="{{ ::vm.supplier.name }}'s Twitter profile">
+				<md-icon md-svg-src="assets/images/icons/twitter.svg"></md-icon>
+			</md-button>
+			<md-button ng-if="::vm.supplier.website" target="_blank" ng-href="{{ ::vm.supplier.website }}" aria-label="{{ ::vm.supplier.name }}'s website">
+				<md-icon md-svg-src="assets/images/icons/link.svg"></md-icon>
+				<span ng-bind="::vm.supplier.website"></span>
+			</md-button>
+		</ul>
 	</md-dialog-content>
 	<div class="md-actions">
 		<md-button class="md-primary md-raised" ng-click="vm.done()">Done</md-button>
