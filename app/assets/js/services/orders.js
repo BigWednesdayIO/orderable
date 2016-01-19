@@ -43,6 +43,9 @@ function OrdersService ($http, $q, API, customerService, _) {
 			url: API.orders + '/' + orderId + '/order_forms/' + orderFormId + '/status',
 			data: {
 				status: status
+			},
+			headers: {
+				Authorization: customerService.getSessionInfo().token
 			}
 		});
 	};
