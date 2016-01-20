@@ -30,14 +30,14 @@
 					</div>
 				</div>
 			</div>
-			<p class="product-details__description product-details--section" ng-bind-html="::vm.product.long_description"></p>
+			<p class="product-details__description product-details--section" ng-show="::vm.product.description" ng-bind-html="::vm.product.description"></p>
 			
 			<div class="product-details--section">
 				<h2 class="md-subhead-2" style="margin: -4px 0 4px">Details</h2>
 				<table class="product-details__attributes">
-					<tr clas="product-details__attributes__item">
-						<th class="product-details__attributes__heading md-body-1" scope="row">Brand</th>
-						<td class="product-details__attributes__item" ng-bind="vm.product.brand"></td>
+					<tr clas="product-details__attributes__item" ng-repeat="attribute in ::vm.productAttributes track by attribute.key">
+						<th class="product-details__attributes__heading md-body-1" scope="row" ng-bind="::attribute.name"></th>
+						<td class="product-details__attributes__item" ng-bind="::attribute.value"></td>
 					</tr>
 				</table>
 			</div>

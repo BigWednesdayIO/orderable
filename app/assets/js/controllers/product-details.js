@@ -1,4 +1,4 @@
-function ProductDetailsController (basketService, suppliersService, productData, _) {
+function ProductDetailsController (basketService, suppliersService, productAttributes, productData, _) {
 	var vm = this;
 
 	function setQuantities (quantity) {
@@ -13,6 +13,13 @@ function ProductDetailsController (basketService, suppliersService, productData,
 	vm.product = productData;
 
 	vm.product.thumbnail_image_url = vm.product.thumbnail_image_url || 'assets/images/placeholder.jpg';
+
+	vm.productAttributes = productAttributes.map(function(attribute) {
+		attribute.value = productData[attribute.key];
+		return attribute;
+	}).filter(function(attribute) {
+		return typeof attribute.value !== 'undefined';
+	})
 
 	vm.supplierLogo = suppliersService.getLogoForSupplier(productData.supplier_id);
 
@@ -59,7 +66,7 @@ ProductDetailsController.resolve = /* @ngInject */ {
 			.getProductById($stateParams.id)
 			.then(function(product) {
 				product.id = product.objectID;
-				product.long_description = $sce.trustAsHtml(product.long_description);
+				product.description = $sce.trustAsHtml(product.description);
 				return product;
 			});
 	}
