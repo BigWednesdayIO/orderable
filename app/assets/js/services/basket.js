@@ -1,4 +1,4 @@
-function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, authorizationService, _) {
+function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, suppliersService, authorizationService, _) {
 	var service = {};
 
 	function notifyError (error) {
@@ -103,11 +103,28 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 		});
 		calculateTotals();
 		return $q.when(service.basket);
-	}
+	};
+
+	service.checkProductSupplier = function(product) {
+		var currentSuppliers = suppliersService.getCurrentSuppliers();
+		var match = _.find(currentSuppliers, {id: product.supplier_id});
+
+		if (match) {
+			return $q.when(match);
+		}
+
+		return $q.reject({
+			message: 'Unfortunately this supplier does not deliver to your area'
+		});
+	};
 
 	service.addToBasket = function(product, quantity) {
 		return authorizationService
 			.requireSignIn()
+			.then(function() {
+				return service
+					.checkProductSupplier(product);
+			})
 			.then(function() {
 				var supplierIndex = _.findIndex(service.basket.order_forms, {supplier_id: product.supplier_id}),
 					productIndex;
@@ -139,6 +156,14 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 			.then(function(lineItem) {
 				showUpdate(lineItem);
 				return lineItem;
+			})
+			.catch(function notifyError (error) {
+				$mdToast.show(
+					$mdToast.simple()
+						.content(error.message)
+						.hideDelay(3000)
+				);
+				return $q.reject(error);
 			});
 	};
 
