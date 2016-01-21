@@ -93,6 +93,20 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 		});
 	}
 
+	function checkStock (product) {
+		var deferred = $q.defer();
+
+		if (product.in_stock !== false) {
+			deferred.resolve();
+		} else {
+			deferred.reject({
+				message: 'Sorry, this product is out of stock'
+			});
+		}
+
+		return deferred.promise;
+	}
+
 	service.basket = browserStorage.getItem('basket') || emptyBakset();
 
 	calculateTotals();
@@ -121,6 +135,9 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 	service.addToBasket = function(product, quantity) {
 		return authorizationService
 			.requireSignIn()
+			.then(function() {
+				return checkStock(product);
+			})
 			.then(function() {
 				return service
 					.checkProductSupplier(product);
