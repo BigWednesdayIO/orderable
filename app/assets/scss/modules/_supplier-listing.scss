@@ -91,7 +91,7 @@
 			}
 
 			&__image,
-			&__name,
+			&__title,
 			&__price,
 			&__quantity-wrapper {
 				display: inline-block;
@@ -104,10 +104,19 @@
 				margin: 0 8px 0 0;
 			}
 
-			&__name {
+			&__title {
 				margin: 8px 0;
 				white-space: normal;
 				max-width: calc(100% - 60px);
+			}
+
+			&__name,
+			&__sizing {
+				display: block;
+			}
+
+			&__sizing {
+				margin-top: 2px;
 			}
 
 			&__actions {

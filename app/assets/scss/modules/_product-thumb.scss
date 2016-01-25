@@ -21,16 +21,39 @@
 		margin: 0 auto;
 	}
 
-	&__name {
+	&__title {
 		margin: 16px 0 2px;
+	}
+
+	&__name {
+		display: inline;
+		margin: 0;
 
 		&:hover {
 			text-decoration: underline;
 		}
 	}
 
+	&__sizing {
+		display: inline-block;
+		color: rgba(0, 0, 0, .54);
+
+		&::before {
+			content: '(';
+		}
+
+		&::after {
+			content: ')';
+		}
+
+		&__multiples {
+			padding: 0 .2em;
+		}
+	}
+
 	&__name,
-	&__price {
+	&__price,
+	&__sizing {
 		line-height: 18px;
 	}
 
