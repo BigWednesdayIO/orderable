@@ -12,7 +12,7 @@
 				<div class="flex">
 					<h1 class="md-headline" ng-bind="vm.product.name"></h1>
 					<span class="product-details__price" price product="vm.product"></span>
-					<div class="product-details__actions layout-row layout-align-start-center">
+					<div class="product-details__actions layout-row layout-align-start-center" ng-if="::vm.product.in_stock !== false">
 						<md-select class="product-details__quantity" ng-model="vm.quantity" ng-change="vm.changeQuantity()" aria-label="Quantity">
 							<md-option ng-repeat="quantity in vm.quantities track by quantity" ng-value="{{ quantity }}">
 								<div class="md-text">
@@ -27,6 +27,9 @@
 							<span ng-show="vm.quantityInBasket === 0">Add to basket</span>
 							<span ng-show="vm.quantityInBasket > 0">Added to basket</span>
 						</md-button>
+					</div>
+					<div class="product-details__actions" ng-if="::vm.product.in_stock === false">
+						<span class="product-details__stock-message">This product it out of stock</span>
 					</div>
 				</div>
 			</div>

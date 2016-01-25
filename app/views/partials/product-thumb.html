@@ -12,10 +12,13 @@
 	</div>
 	<div class="product-thumb__actions">
 		<span class="product-thumb__price md-body-2" price product="vm.product"></span>
-		<md-button ng-if="::vm.basket" ng-show="vm.quantity === 0" ng-click="vm.addToBasket($event, 1)" class="md-icon-button product-thumb__add-button" aria-label="Add {{ ::vm.product.name }} to basket">
+		<md-icon ng-if="::vm.basket && vm.product.in_stock === false" class="product-thumb__stock md-warn md-hue-3" md-svg-src="assets/images/icons/error-outline.svg">
+			<md-tooltip>Out of stock</md-tooltip>
+		</md-icon>
+		<md-button ng-if="::vm.basket && vm.product.in_stock !== false" ng-show="vm.quantity === 0" ng-click="vm.addToBasket($event, 1)" class="md-icon-button product-thumb__add-button" aria-label="Add {{ ::vm.product.name }} to basket">
 			<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
 		</md-button>
-		<div ng-if="::vm.basket" ng-show="vm.quantity > 0" class="product-thumb__quantity-wrapper layout-row layout-align-center-center">
+		<div ng-if="::vm.basket && vm.product.in_stock !== false" ng-show="vm.quantity > 0" class="product-thumb__quantity-wrapper layout-row layout-align-center-center">
 			<md-button class="md-icon-button md-icon-button--quantity" ng-click="vm.changeQuantity($event, -1)" aria-label="Remove 1 from basket">
 				<md-icon md-svg-src="assets/images/icons/minus-circle.svg"></md-icon>
 			</md-button>

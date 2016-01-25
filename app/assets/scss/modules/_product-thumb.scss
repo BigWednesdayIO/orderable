@@ -80,6 +80,10 @@
 		font-size: 18px;
 	}
 
+	&__stock {
+		margin: 0 12px;
+	}
+
 	&:hover .md-button md-icon {
 		color: $md-primary;
 	}
