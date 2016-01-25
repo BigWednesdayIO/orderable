@@ -1,4 +1,4 @@
-function BasicValidationInterceptor ($q, $log) {
+function BasicValidationInterceptor ($location, $q, $log) {
 	function handleResponseError (response) {
 		var error = (response.data && typeof response.data === 'object') ? response.data : {};
 
@@ -11,7 +11,7 @@ function BasicValidationInterceptor ($q, $log) {
 		}
 
 		if (error.status === 401) {
-			$state.go('sign-in');
+			$location.url('/sign-in/?return_url=' + $location.url());
 		} else {
 			$log.error('API Call failed:', (response.config || {}).url, error.status, '-', error.message);
 		}
