@@ -1,4 +1,4 @@
-function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage, _) {
+function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, browserStorage, _) {
 	var service = {},
 		currentSuppliers = browserStorage.getItem('suppliers') || [],
 		pinnedSuppliers;
@@ -132,6 +132,22 @@ function SuppliersService ($rootScope, $mdToast, $http, $q, API, browserStorage,
 				return $q.when(pinnedSuppliers);
 			});
 	};
+
+	service.showSupplierInfoOverlay = function($event, id) {
+		return $mdDialog.show({
+			targetEvent: $event,
+			templateUrl: 'views/partials/supplier-info.html',
+			controller: 'SupplierInfoController',
+			controllerAs: 'vm',
+			resolve: {
+				supplierInfo: function() {
+					return service
+						.getSupplierInfo(id)
+				}
+			},
+			clickOutsideToClose: true
+		});
+	}
 
 	return service;
 }

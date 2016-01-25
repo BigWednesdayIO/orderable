@@ -1,0 +1,32 @@
+<md-dialog class="md-dialog--padded" style="width: 80%; max-width: 640px;">
+	<md-dialog-content>
+		<h2 class="md-headline" ng-bind="::vm.supplier.name"></h2>
+
+		<ul class="unstyled-list layout-row supplier-links" ng-if="::(vm.supplier.facebook || vm.supplier.twitter || vm.supplier.website)">
+			<li ng-if="::vm.supplier.facebook">
+				<a target="_blank" ng-href="https://facebook.com/{{ ::vm.supplier.facebook }}" aria-label="{{ ::vm.supplier.name }}'s Facebook page">
+					<md-icon md-svg-src="assets/images/icons/facebook-official.svg"></md-icon>
+				</a>
+			</li>
+			<li ng-if="::vm.supplier.twitter">
+				<a target="_blank" ng-href="https://twitter.com/{{ ::vm.supplier.twitter }}" aria-label="{{ ::vm.supplier.name }}'s Twitter profile">
+					<md-icon md-svg-src="assets/images/icons/twitter.svg"></md-icon>
+				</a>
+			</li>
+			<li ng-if="::vm.supplier.website">
+				<a target="_blank" ng-href="{{ ::vm.supplier.website }}" aria-label="{{ ::vm.supplier.name }}'s website">
+					<md-icon md-svg-src="assets/images/icons/link.svg" style="margin-right: 4px;"></md-icon>
+					<span ng-bind="::vm.supplier.website"></span>
+				</a>
+			</li>
+		</ul>
+
+		<p ng-show="::vm.supplier.description" ng-bind="::vm.supplier.description"></p>
+
+		<p style="color: rgba(0, 0, 0, .54)"><span ng-bind="::vm.supplier.name"></span> has been selling on Orderable since <span ng-bind="::vm.supplier._metadata.created | date: 'MMMM yyyy'"></span></p>
+
+	</md-dialog-content>
+	<div class="md-actions">
+		<md-button class="md-primary md-raised" ng-click="vm.done()">Done</md-button>
+	</div>
+</md-dialog>
