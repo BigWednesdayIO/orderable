@@ -1,4 +1,4 @@
-function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, suppliersService, authorizationService, _) {
+function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, suppliersService, membershipsService, authorizationService, _) {
 	var service = {};
 
 	function notifyError (error) {
@@ -123,13 +123,36 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 		var currentSuppliers = suppliersService.getCurrentSuppliers();
 		var match = _.find(currentSuppliers, {id: product.supplier_id});
 
-		if (match) {
-			return $q.when(match);
+		if (!match) {
+			return $q.reject({
+				message: 'Unfortunately this supplier does not deliver to your area'
+			});
 		}
 
-		return $q.reject({
-			message: 'Unfortunately this supplier does not deliver to your area'
-		});
+		return suppliersService
+			// Get latest info from server
+			.getSupplierInfo(match.id)
+			.then(function(supplier) {
+				if (!supplier.has_memberships || supplier.purchase_restrictions === 'none') {
+					return true;
+				}
+
+				return membershipsService
+					.getSupplierMembership(supplier.id)
+					.then(function(membership) {
+						if (supplier.purchase_restrictions === 'verified' && !membership.price_adjustment_group_id) {
+							return $q.reject({
+								message: 'Supplier needs to verify membership first'
+							});
+						}
+
+						return true;
+					}, function() {
+						return $q.reject({
+							message: 'You need to have a membership with this supplier to purchase from them'
+						});
+					});;
+			});
 	};
 
 	service.addToBasket = function(product, quantity) {
