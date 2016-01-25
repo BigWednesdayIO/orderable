@@ -99,13 +99,15 @@ function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, brow
 	};
 
 	service.getLoyaltySchemeForSupplier = function(supplier) {
-		return $q.when({
+		var membership = {
 			supplier: supplier,
 			logo: service.getLogoForSupplier(supplier),
 			brandImage: service.getBrandImageForSupplier(supplier),
 			name: supplier.name,
 			label: supplier.name + ' membership number'
-		});
+		};
+
+		return $q.when(supplier.has_memberships ? membership : null);
 	};
 
 	service.getPinnedSuppliers = function() {
