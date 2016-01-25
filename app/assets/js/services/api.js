@@ -7,7 +7,7 @@ function APIService (baseAPI) {
 
 	this.checkouts = baseAPI + 'checkouts'
 
-	this.categories = 'https://raw.githubusercontent.com/BigWednesdayIO/categories-api/feature/coffee-shop/categories.json';
+	this.categories = 'https://raw.githubusercontent.com/BigWednesdayIO/categories-api/feature/master.json';
 
 	this.customers = baseAPI + 'customers';
 
