@@ -3,7 +3,7 @@
 		<img class="product-thumb__image" ng-src="{{ ::vm.product.thumbnail_image_url }}" height="180" alt="{{ ::vm.product.name }}" />
 		<div class="product-thumb__title">
 			<h3 class="product-thumb__name md-body-1" ng-bind="::vm.product.name"></h3>
-			<div class="product-thumb__sizing"><!--
+			<div class="product-thumb__sizing" ng-show="::vm.product.pack_size || vm.product.unit_size"><!--
 			/--><span ng-show="::vm.product.pack_size" ng-bind="::vm.product.pack_size"></span><!--
 			/--><span class="product-thumb__sizing__multiples" ng-show="::vm.product.pack_size && vm.product.unit_size">&times;</span><!--
 			/--><span ng-show="::vm.product.unit_size" ng-bind="::vm.product.unit_size"></span><!--

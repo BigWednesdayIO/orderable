@@ -108,6 +108,28 @@ function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, brow
 		});
 	};
 
+	service.getLoyaltySchemesForSuppliers = function(suppliers) {
+		return service
+			.getAllSuppliers()
+			.then(function(upToDateSuppliers) {
+				var supplierLookup = upToDateSuppliers.reduce(function(lookup, supplier) {
+					lookup[supplier.id] = supplier;
+					return lookup;
+				}, {});
+
+				var loyaltySchemes = suppliers.map(function(supplier) {
+					return supplierLookup[supplier.id];
+				}).filter(function(supplier) {
+					return supplier && supplier.has_memberships;
+				}).map(function(supplier) {
+					return service
+						.getLoyaltySchemeForSupplier(supplier);
+				});
+
+				return $q.all(loyaltySchemes);
+			});
+	};
+
 	service.getPinnedSuppliers = function() {
 		if (!pinnedSuppliers) {
 			pinnedSuppliers = browserStorage.getItem('pinnedSuppliers') || [];

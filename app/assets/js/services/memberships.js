@@ -23,6 +23,20 @@ function MembershipsService ($http, $q, API, customerService, _) {
 			.catch(notifyError);
 	};
 
+	service.getSupplierMembership = function(supplierId) {
+		return service
+			.getMemberships()
+			.then(function(memberships) {
+				var membership = _.find(memberships, {supplier_id: supplierId});
+
+				if (!membership || !membership.membership_number || membership.membership_number === '') {
+					return $q.reject();
+				}
+
+				return membership;
+			});
+	};
+
 	service.addMembership = function(membership) {
 		var info = customerService.getSessionInfo();
 
