@@ -99,15 +99,35 @@ function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, brow
 	};
 
 	service.getLoyaltySchemeForSupplier = function(supplier) {
-		var membership = {
+		return $q.when({
 			supplier: supplier,
 			logo: service.getLogoForSupplier(supplier),
 			brandImage: service.getBrandImageForSupplier(supplier),
 			name: supplier.name,
 			label: supplier.name + ' membership number'
-		};
+		});
+	};
 
-		return $q.when(supplier.has_memberships ? membership : null);
+	service.getLoyaltySchemesForSuppliers = function(suppliers) {
+		return service
+			.getAllSuppliers()
+			.then(function(upToDateSuppliers) {
+				var supplierLookup = upToDateSuppliers.reduce(function(lookup, supplier) {
+					lookup[supplier.id] = supplier;
+					return lookup;
+				}, {});
+
+				var loyaltySchemes = suppliers.map(function(supplier) {
+					return supplierLookup[supplier.id];
+				}).filter(function(supplier) {
+					return supplier && supplier.has_memberships;
+				}).map(function(supplier) {
+					return service
+						.getLoyaltySchemeForSupplier(supplier);
+				});
+
+				return $q.all(loyaltySchemes);
+			});
 	};
 
 	service.getPinnedSuppliers = function() {

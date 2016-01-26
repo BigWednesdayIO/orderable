@@ -9,26 +9,28 @@ function LoyaltyListDirective () {
 			var vm = this;
 
 			function getLoyaltySchemes () {
-				$q.all(vm.suppliers.map(function(supplier) {
-					return suppliersService
-						.getLoyaltySchemeForSupplier(supplier);
-				}))
-					.then(function(loyaltySchemes) {
-						return membershipsService
-							.getMemberships()
-							.then(function(memberships) {
-								return loyaltySchemes.filter(function(loyaltyScheme) {
-									return !!loyaltyScheme;
-								}).map(function(loyaltyScheme) {
-									var number = _.result(_.findWhere(memberships, {supplier_id: loyaltyScheme.supplier.id}), 'membership_number');
+				$q.all([
+					suppliersService
+						.getLoyaltySchemesForSuppliers(vm.suppliers),
+					membershipsService
+						.getMemberships()
+				])
+					.then(function(promises) {
+						var loyaltySchemes = promises[0];
+						var memberships = promises[1].reduce(function(lookup, membership) {
+							lookup[membership.supplier_id] = membership;
+							return lookup;
+						}, {});
 
-									if (number) {
-										loyaltyScheme.number = number;
-									}
+						return loyaltySchemes.map(function(loyaltyScheme) {
+							var number = (memberships[loyaltyScheme.supplier.id] || {}).membership_number;
 
-									return loyaltyScheme;
-								});
-							});
+							if (number) {
+								loyaltyScheme.number = number;
+							}
+
+							return loyaltyScheme;
+						});
 					})
 					.then(function(loyaltySchemes) {
 						vm.loyaltySchemes = loyaltySchemes;
