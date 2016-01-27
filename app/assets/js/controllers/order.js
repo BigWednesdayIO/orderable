@@ -2,11 +2,11 @@ function OrderController ($q, ordersService, orderDetails, supplierInfo) {
 	var vm = this;
 
 	function checkRemainingDeliveries () {
-		ordersService
-			.getOutstandingDeliveries(vm.order.basket.order_forms)
-			.then(function(outstanding) {
-				vm.outstandingDeliveries = outstanding.length > 0;
-			});
+		var outstanding = vm.order.basket.order_forms.filter(function(order_form) {
+			return order_form.status !== 'delivered';
+		});
+
+		vm.outstandingDeliveries = outstanding.length > 0;
 	}
 
 	vm.order = orderDetails;
@@ -25,7 +25,13 @@ function OrderController ($q, ordersService, orderDetails, supplierInfo) {
 	vm.markAllAsDelivered = function() {
 		ordersService
 			.updateWholeOrderStatus(vm.order, 'delivered')
-			.then(checkRemainingDeliveries);
+			.then(function() {
+				vm.order.basket.order_forms = vm.order.basket.order_forms.map(function(orderForm) {
+					orderForm.status = 'delivered';
+					return orderForm;
+				});
+				vm.outstandingDeliveries = false;
+			})
 	};
 
 	checkRemainingDeliveries();

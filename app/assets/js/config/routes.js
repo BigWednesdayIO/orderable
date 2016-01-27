@@ -56,8 +56,14 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			resolve: AccountSettingsController.resolve,
 			templateUrl: 'views/account-settings.html'
 		})
-		.state('order-history', {
+		.state('open-orders', {
 			url: '/account/orders/',
+			controller: 'OpenOrdersController as vm',
+			resolve: OpenOrdersController.resolve,
+			templateUrl: 'views/open-orders.html'
+		})
+		.state('order-history', {
+			url: '/account/orders/history/',
 			controller: 'OrderHistoryController as vm',
 			resolve: OrderHistoryController.resolve,
 			templateUrl: 'views/order-history.html'
