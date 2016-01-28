@@ -38,7 +38,7 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 						]
 					});
 				});
-		};
+		}
 
 		markAsDelivered(orderForm)
 			.then(function(updatedOrderForm) {
@@ -53,7 +53,7 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 
 				return $mdToast.show(
 					$mdToast.simple()
-						.content('1 order marked as received')
+						.content('1 delivery marked as received')
 						.action('undo')
 						.hideDelay(3000)
 				);
@@ -66,12 +66,37 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 	};
 
 	vm.markAllAsDelivered = function(deliveryDay) {
+		var deliveries = deliveryDay.order_forms.length;
+		var dateIndex;
+
+		function undo () {
+			$q.all(deliveryDay.order_forms.map(function(orderForm) {
+				return ordersService
+					.updateOrderFormStatus(orderForm.order_id, orderForm.id, orderForm.status)
+			}))
+				.then(function() {
+					vm.orders.splice(dateIndex, 0, deliveryDay);
+				});
+		}
+
 		$q.all(deliveryDay.order_forms.map(function(orderForm) {
 			return markAsDelivered(orderForm);
 		}))
 			.then(function() {
-				var dateIndex = _.findIndex(vm.orders, {date: deliveryDay.date});
+				dateIndex = _.findIndex(vm.orders, {date: deliveryDay.date});
 				vm.orders.splice(dateIndex, 1);
+
+				return $mdToast.show(
+					$mdToast.simple()
+						.content(deliveries + ' ' + ((deliveries === 1) ? 'delivery' : 'deliveries') + ' marked as received')
+						.action('undo')
+						.hideDelay(3000)
+				);
+			})
+			.then(function(response) {
+				if (response === 'ok') {
+					return undo();
+				}
 			});
 	};
 
