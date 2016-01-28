@@ -1,10 +1,10 @@
-function OpenOrdersController ($filter, $state, $q, ordersService, openOrders, supplierInfo, _) {
+function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, openOrders, supplierInfo, _) {
 	var vm = this;
 	var $date = $filter('date');
 
 	function markAsDelivered (orderForm) {
 		return ordersService
-			.updateOrderFormStatus(orderForm.order_id, orderForm.id, 'delivered')
+			.updateOrderFormStatus(orderForm.order_id, orderForm.id, 'delivered');
 	}
 
 	vm.orders = openOrders;
@@ -18,19 +18,50 @@ function OpenOrdersController ($filter, $state, $q, ordersService, openOrders, s
 	};
 
 	vm.markAsDelivered = function(orderForm) {
+		var date = $date(orderForm.delivery_date, 'yyyy-MM-dd');
+		var dateIndex;
+		var orderFormIndex;
+
+		function undo () {
+			return ordersService
+				.updateOrderFormStatus(orderForm.order_id, orderForm.id, orderForm.status)
+				.then(function() {
+					if (orderFormIndex) {
+						vm.orders[dateIndex].order_forms.splice(orderFormIndex, 0, orderForm);
+						return;
+					}
+
+					vm.orders.splice(dateIndex, 0, {
+						date: date,
+						order_forms: [
+							orderForm
+						]
+					});
+				});
+		};
+
 		markAsDelivered(orderForm)
 			.then(function(updatedOrderForm) {
-				var date = $date(orderForm.delivery_date, 'yyyy-MM-dd');
-				var dateIndex = _.findIndex(vm.orders, {date: date});
-				var orderFormIndex;
+				dateIndex = _.findIndex(vm.orders, {date: date});
 
 				if (vm.orders[dateIndex].order_forms.length === 1) {
 					vm.orders.splice(dateIndex, 1);
-					return;
+				} else {
+					orderFormIndex = _.findIndex(vm.orders[dateIndex].order_forms, {id: orderForm.id});
+					vm.orders[dateIndex].order_forms.splice(orderFormIndex, 1);
 				}
 
-				orderFormIndex = _.findIndex(vm.orders[dateIndex].order_forms, {id: orderForm.id});
-				vm.orders[dateIndex].order_forms.splice(orderFormIndex, 1);
+				return $mdToast.show(
+					$mdToast.simple()
+						.content('1 order marked as received')
+						.action('undo')
+						.hideDelay(3000)
+				);
+			})
+			.then(function(response) {
+				if (response === 'ok') {
+					return undo();
+				}
 			});
 	};
 

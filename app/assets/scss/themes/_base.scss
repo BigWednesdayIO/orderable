@@ -258,10 +258,12 @@ fieldset {
 	transition: all $transition;
 }
 
-.animate-repeat.ng-leave.ng-leave-active {
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-enter {
 	opacity: 0;
 }
 
-.animate-repeat.ng-leave {
+.animate-repeat.ng-leave,
+.animate-repeat.ng-enter.ng-enter-active {
 	opacity:1;
 }
