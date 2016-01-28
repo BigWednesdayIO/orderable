@@ -21,6 +21,12 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 			.updateOrderFormStatus(orderForm.order_id, orderForm.id, 'delivered');
 	}
 
+	function markSupplierAsDelivered (supplier) {
+		return $q.all(supplier.order_forms.map(function(orderForm) {
+			return markAsDelivered(orderForm);
+		}))
+	}
+
 	function resetSupplierStatus (supplier) {
 		return $q.all(supplier.order_forms.map(function(orderForm) {
 			return ordersService
@@ -61,9 +67,7 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 				});
 		}
 
-		$q.all(supplier.order_forms.map(function(orderForm) {
-			return markAsDelivered(orderForm);
-		}))
+		markSupplierAsDelivered(supplier)
 			.then(function() {
 				dateIndex = _.findIndex(vm.orders, {date: date});
 
@@ -91,9 +95,7 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 				});
 		}
 
-		$q.all(deliveryDay.suppliers.map(function(supplier) {
-			return markAsDelivered(supplier);
-		}))
+		$q.all(deliveryDay.suppliers.map(markSupplierAsDelivered))
 			.then(function() {
 				dateIndex = _.findIndex(vm.orders, {date: deliveryDay.date});
 				vm.orders.splice(dateIndex, 1);
