@@ -51,10 +51,24 @@ function OrdersService ($filter, $http, $q, API, customerService, _) {
 						var date = new Date(orderForm.delivery_date)
 						return $date(date, 'yyyy-MM-dd');
 					})
-					.map(function(orderForms, date) {
+					.mapValues(function(orderForms) {
+						return _(orderForms)
+							.groupBy('supplier_id')
+							.map(function(supplierOrderForms, id) {
+								return {
+									supplier_id: id,
+									order_forms: supplierOrderForms,
+									line_item_count: supplierOrderForms.reduce(function(total, orderForm) {
+										return total += orderForm.line_item_count || 0;
+									}, 0)
+								};
+							})
+							.value();
+					})
+					.map(function(suppliers, date) {
 						return {
 							date: date,
-							order_forms: orderForms
+							suppliers: suppliers
 						};
 					})
 					.sortBy(['date'])

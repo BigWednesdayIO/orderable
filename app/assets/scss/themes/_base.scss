@@ -252,6 +252,10 @@ fieldset {
 	.with-hover-action:hover & {
 		opacity: 1;
 	}
+
+	.with-hover-action:hover .with-hover-action:not(:hover) & {
+		opacity: 0;
+	}
 }
 
 .animate-repeat {

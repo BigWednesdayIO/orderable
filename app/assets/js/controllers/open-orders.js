@@ -2,9 +2,30 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 	var vm = this;
 	var $date = $filter('date');
 
+	function offerUndo (deliveries, undo) {
+		return $mdToast.show(
+			$mdToast.simple()
+				.content(deliveries + ' ' + ((deliveries === 1) ? 'delivery' : 'deliveries') + ' marked as received')
+				.action('undo')
+				.hideDelay(3000)
+		)
+			.then(function(response) {
+				if (response === 'ok') {
+					return undo();
+				}
+			});
+	}
+
 	function markAsDelivered (orderForm) {
 		return ordersService
 			.updateOrderFormStatus(orderForm.order_id, orderForm.id, 'delivered');
+	}
+
+	function resetSupplierStatus (supplier) {
+		return $q.all(supplier.order_forms.map(function(orderForm) {
+			return ordersService
+				.updateOrderFormStatus(orderForm.order_id, orderForm.id, orderForm.status);
+		}));
 	}
 
 	vm.orders = openOrders;
@@ -17,86 +38,67 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 		});
 	};
 
-	vm.markAsDelivered = function(orderForm) {
-		var date = $date(orderForm.delivery_date, 'yyyy-MM-dd');
+	vm.markSupplierAsDelivered = function($event, supplier) {
+		var deliveries = supplier.order_forms.length;
+		var date = $date(supplier.order_forms[0].delivery_date, 'yyyy-MM-dd');
 		var dateIndex;
-		var orderFormIndex;
+		var supplierIndex;
+
+		$event.stopPropagation();
 
 		function undo () {
-			return ordersService
-				.updateOrderFormStatus(orderForm.order_id, orderForm.id, orderForm.status)
+			return resetSupplierStatus(supplier)
 				.then(function() {
-					if (orderFormIndex) {
-						vm.orders[dateIndex].order_forms.splice(orderFormIndex, 0, orderForm);
+					if (typeof supplierIndex !== 'undefined') {
+						vm.orders[dateIndex].suppliers.splice(supplierIndex, 0, supplier);
 						return;
 					}
 
 					vm.orders.splice(dateIndex, 0, {
 						date: date,
-						order_forms: [
-							orderForm
-						]
+						suppliers: [supplier]
 					});
 				});
 		}
 
-		markAsDelivered(orderForm)
-			.then(function(updatedOrderForm) {
+		$q.all(supplier.order_forms.map(function(orderForm) {
+			return markAsDelivered(orderForm);
+		}))
+			.then(function() {
 				dateIndex = _.findIndex(vm.orders, {date: date});
 
-				if (vm.orders[dateIndex].order_forms.length === 1) {
+				if (vm.orders[dateIndex].suppliers.length === 1) {
 					vm.orders.splice(dateIndex, 1);
 				} else {
-					orderFormIndex = _.findIndex(vm.orders[dateIndex].order_forms, {id: orderForm.id});
-					vm.orders[dateIndex].order_forms.splice(orderFormIndex, 1);
+					supplierIndex = _.findIndex(vm.orders[dateIndex].suppliers, {supplier_id: supplier.supplier_id});
+					vm.orders[dateIndex].suppliers.splice(supplierIndex, 1);
 				}
 
-				return $mdToast.show(
-					$mdToast.simple()
-						.content('1 delivery marked as received')
-						.action('undo')
-						.hideDelay(3000)
-				);
-			})
-			.then(function(response) {
-				if (response === 'ok') {
-					return undo();
-				}
+				return offerUndo(deliveries, undo);
 			});
 	};
 
 	vm.markAllAsDelivered = function(deliveryDay) {
-		var deliveries = deliveryDay.order_forms.length;
+		var deliveries = deliveryDay.suppliers.reduce(function(total, supplier) {
+			return total += supplier.order_forms.length;
+		}, 0);
 		var dateIndex;
 
 		function undo () {
-			$q.all(deliveryDay.order_forms.map(function(orderForm) {
-				return ordersService
-					.updateOrderFormStatus(orderForm.order_id, orderForm.id, orderForm.status)
-			}))
+			return $q.all(deliveryDay.suppliers.map(resetSupplierStatus))
 				.then(function() {
 					vm.orders.splice(dateIndex, 0, deliveryDay);
 				});
 		}
 
-		$q.all(deliveryDay.order_forms.map(function(orderForm) {
-			return markAsDelivered(orderForm);
+		$q.all(deliveryDay.suppliers.map(function(supplier) {
+			return markAsDelivered(supplier);
 		}))
 			.then(function() {
 				dateIndex = _.findIndex(vm.orders, {date: deliveryDay.date});
 				vm.orders.splice(dateIndex, 1);
 
-				return $mdToast.show(
-					$mdToast.simple()
-						.content(deliveries + ' ' + ((deliveries === 1) ? 'delivery' : 'deliveries') + ' marked as received')
-						.action('undo')
-						.hideDelay(3000)
-				);
-			})
-			.then(function(response) {
-				if (response === 'ok') {
-					return undo();
-				}
+				return offerUndo(deliveries, undo);
 			});
 	};
 

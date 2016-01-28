@@ -17,22 +17,44 @@
 						</md-button>
 					</div>
 					
-					<md-list style="padding: 0;">
-						<md-list-item class="md-2-line md-no-proxy md-with-secondary with-hover-action animate-repeat" style="padding: 0;" ng-click="vm.viewOrder(orderForm)" ng-class="{'md-3-line': $mdMedia('sm'), 'md-2-line': $mdMedia('gt-sm')}" ng-repeat="orderForm in order.order_forms track by orderForm.id">
-							<img class="md-avatar" ng-src="{{ ::vm.supplierInfo[orderForm.supplier_id].logo }}" alt="{{ ::vm.supplierInfo[orderForm.supplier_id].name }}" />
-							<div class="md-list-item-text layout-column">
-								<h3 ng-bind="::vm.supplierInfo[orderForm.supplier_id].name"></h3>
-								<div class="layout-gt-sm-row">
-									<h4 ng-bind="::orderForm.subtotal | currency: '£'"></h4>
-									<p style="font-weight: normal;">
-										<span class="hide-sm">&nbsp;&ndash;&nbsp;</span><span ng-bind="::orderForm.line_item_count"></span> item<span ng-hide="::orderForm.line_item_count === 1">s</span>
+					<ul class="unstyled-list">
+						<li class="with-hover-action animate-repeat" ng-repeat="supplier in order.suppliers track by supplier.supplier_id">
+							<md-button class="open-orders__supplier" ng-click="supplier.expanded = !supplier.expanded">
+								<img class="md-avatar open-orders__avatar" ng-src="{{ ::vm.supplierInfo[supplier.supplier_id].logo }}" alt="{{ ::vm.supplierInfo[supplier.supplier_id].name }}" />
+								<div class="layout-column layout-align-center">
+									<h3 class="open-orders__supplier__name md-subhead" ng-bind="::vm.supplierInfo[supplier.supplier_id].name"></h3>
+									<p class="open-orders__supplier__count">
+										<span ng-bind="::supplier.line_item_count"></span> item<span ng-hide="::supplier.line_item_count === 1">s</span>
 									</p>
 								</div>
-							</div>
-							<span class="flex"></span>
-							<md-icon md-svg-src="assets/images/icons/done.svg" class="hover-action md-secondary" ng-click="vm.markAsDelivered(orderForm)" aria-label="Mark order delivered">
-								<md-tooltip>Mark delivery as received</md-tooltip>
-							</md-icon>
+								<span class="flex"></span>
+								<md-button class="md-icon-button hover-action open-orders__action" ng-click="vm.markSupplierAsDelivered($event, supplier)" aria-label="Mark all deliveries from {{ ::vm.supplierInfo[supplier.supplier_id].name }} as received">
+									<md-icon md-svg-src="assets/images/icons/done-all.svg">
+										<md-tooltip>Mark all items from {{ ::vm.supplierInfo[supplier.supplier_id].name }} as received</md-tooltip>
+									</md-icon>
+								</md-button>
+							</md-button>
+							<table class="open-orders__items" ng-show="supplier.expanded">
+								<tbody ng-repeat="orderForm in supplier.order_forms track by orderForm.id">
+									<tr class="with-hover-action" ng-repeat="lineItem in orderForm.line_items track by lineItem.product.id">
+										<td style="width: 40px; padding: 4px 16px">
+											<img ng-src="{{ ::lineItem.product.thumbnail_image_url }}" alt="{{ ::lineItem.product.name }}" height="40" width="40" />
+										</td>
+										<th scope="row" style="padding-left: 0;">
+											<h4 style="margin: 0;" ng-bind="::lineItem.product.name"></h4>
+										</th>
+										<td class="numeric hide-sm" price product="::lineItem.product"></td>
+										<td class="numeric" ng-bind="lineItem.quantity"></td>
+										<td class="numeric hide-sm" ng-bind="lineItem.subtotal | currency: '£'"></td>
+										<td class="open-orders__items__action">
+											<!-- <md-button class="md-icon-button hover-action" style="margin: 0;">
+												<md-icon md-svg-src="assets/images/icons/done.svg"></md-icon>
+											</md-button> -->
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
 							<md-divider ng-if="!$last"></md-divider>
 						</li>
 					</ul>
