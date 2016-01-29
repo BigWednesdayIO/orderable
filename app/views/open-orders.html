@@ -1,8 +1,10 @@
 <main class="content-wrap content-wrap--940 flex">
-	<div class="order-history md-whiteframe md-whiteframe-z1 layout-margin">
-		<h1 class="md-headline">Open orders</h1>
-		
-		<p ng-hide="vm.orders.length">You don't have any open orders at this time. To see all your orders, including ones you've marked as received, go to your <a href="account/orders/history/">order history</a>.</p>
+	<h1 class="md-headline">Open orders</h1>
+
+	<p>Open orders shows all items that have yet to be delivered, soonest first. To see every order you've placed on Orderable, go to your <a href="account/orders/history/"><u>order history</u></a>.</p>
+
+	<div class="order-history md-whiteframe md-whiteframe-z1">
+		<p ng-hide="vm.orders.length">You don't have any open orders at this time. To see all your orders, including ones you've marked as received, go to your <a href="account/orders/history/"><u>order history</u></a>.</p>
 		<ul class="unstyled-list" ng-show="vm.orders.length">
 			<li class="animate-repeat" ng-repeat="order in vm.orders track by order.date">
 				<div class="md-list-item-text">
@@ -16,7 +18,7 @@
 							</md-icon>
 						</md-button>
 					</div>
-					
+
 					<ul class="unstyled-list">
 						<li class="with-hover-action animate-repeat" ng-repeat="supplier in order.suppliers track by supplier.supplier_id">
 							<md-button class="open-orders__supplier" ng-class="{'is-open': supplier.expanded}" ng-click="supplier.expanded = !supplier.expanded" md-swipe-left="vm.markSupplierAsDelivered($event, supplier)" md-swipe-right="vm.markSupplierAsDelivered($event, supplier)">
@@ -47,9 +49,9 @@
 											<h4 style="margin: 0;" ng-bind="::lineItem.product.name"></h4>
 										</th>
 										<td class="numeric hide-sm" price product="::lineItem.product"></td>
-										<td class="numeric" ng-bind="lineItem.quantity"></td>
+										<td class="open-orders__items__quantity" ng-bind="lineItem.quantity"></td>
 										<td class="numeric hide-sm" ng-bind="lineItem.subtotal | currency: '£'"></td>
-										<td class="open-orders__items__action">
+										<td class="open-orders__items__action hide-sm">
 											<!-- <md-button class="md-icon-button hover-action" style="margin: 0;">
 												<md-icon md-svg-src="assets/images/icons/done.svg"></md-icon>
 											</md-button> -->

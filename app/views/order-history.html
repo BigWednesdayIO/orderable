@@ -1,7 +1,9 @@
 <main class="content-wrap content-wrap--940 flex">
-	<div class="order-history md-whiteframe md-whiteframe-z1 layout-margin">
-		<h1 class="md-headline">Order History</h1>
-		
+	<h1 class="md-headline">Order History</h1>
+
+	<p>Order history shows every order you've placed on Orderable. To see only undelivered items, go to your <a href="account/orders/"><u>open orders</u></a>.</p>
+
+	<div class="order-history md-whiteframe md-whiteframe-z1">
 		<p ng-hide="::vm.orders.length">You haven't placed any orders yet</p>
 		<ul class="unstyled-list" ng-show="::vm.orders.length">
 			<li ng-repeat="order in ::vm.orders">
@@ -12,7 +14,7 @@
 						</h2>
 						<span class="flex"></span>
 						<span class="order__total" ng-bind="::order.basket.total | currency: '£'"></span>
-						<md-button class="md-icon-button md-accent md-hue-3" ng-href="account/orders/{{ ::order.id }}/" aria-label="View order summary" title="View order summary">
+						<md-button class="md-icon-button" ng-href="account/orders/{{ ::order.id }}/" aria-label="View order summary" title="View order summary">
 							<md-icon md-svg-src="assets/images/icons/assignment.svg"></md-icon>
 						</md-button>
 					</div>
