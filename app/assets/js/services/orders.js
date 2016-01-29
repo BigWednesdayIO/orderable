@@ -55,12 +55,28 @@ function OrdersService ($filter, $http, $q, API, customerService, _) {
 						return _(orderForms)
 							.groupBy('supplier_id')
 							.map(function(supplierOrderForms, id) {
+								var lineItems = _(supplierOrderForms)
+									.map('line_items')
+									.flatten()
+									.groupBy('product.id')
+									.mapValues(function(sameProductlineItems) {
+										return sameProductlineItems.reduce(function(merged, lineItem) {
+											merged.quantity += lineItem.quantity;
+											merged.subtotal += lineItem.subtotal;
+											return merged;
+										});
+									})
+									.map(_.identity)
+									.value();
+								var lineItemCount = supplierOrderForms.reduce(function(total, orderForm) {
+									return total += orderForm.line_item_count || 0;
+								}, 0);
+
 								return {
 									supplier_id: id,
 									order_forms: supplierOrderForms,
-									line_item_count: supplierOrderForms.reduce(function(total, orderForm) {
-										return total += orderForm.line_item_count || 0;
-									}, 0)
+									line_items: lineItems,
+									line_item_count: lineItemCount
 								};
 							})
 							.value();

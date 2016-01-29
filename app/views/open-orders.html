@@ -35,8 +35,8 @@
 								</md-button>
 							</md-button>
 							<table class="open-orders__items" ng-show="supplier.expanded">
-								<tbody ng-repeat="orderForm in supplier.order_forms track by orderForm.id">
-									<tr class="with-hover-action" ng-repeat="lineItem in orderForm.line_items track by lineItem.product.id">
+								<tbody>
+									<tr class="with-hover-action" ng-repeat="lineItem in supplier.line_items track by lineItem.product.id">
 										<td style="width: 40px; padding: 4px 16px">
 											<img ng-src="{{ ::lineItem.product.thumbnail_image_url }}" alt="{{ ::lineItem.product.name }}" height="40" width="40" />
 										</td>
