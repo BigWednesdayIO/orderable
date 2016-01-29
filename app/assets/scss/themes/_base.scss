@@ -244,3 +244,30 @@ fieldset {
 		color: rgba(0, 0, 0, .44);
 	}
 }
+
+.hover-action {
+	opacity: 0;
+	transition: opacity $transition;
+
+	.with-hover-action:hover & {
+		opacity: 1;
+	}
+
+	.with-hover-action:hover .with-hover-action:not(:hover) & {
+		opacity: 0;
+	}
+}
+
+.animate-repeat {
+	transition: all $transition;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-enter {
+	opacity: 0;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-enter.ng-enter-active {
+	opacity:1;
+}

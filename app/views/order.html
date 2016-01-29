@@ -6,7 +6,7 @@
 				<span class="breadcrumbs__spacer">›</span>
 			</span>
 			<span>
-				<a class="breadcrumbs__crumb" href="account/orders/">Orders</a>
+				<a class="breadcrumbs__crumb" href="account/orders/history/">Orders</a>
 				<span class="breadcrumbs__spacer">›</span>
 			</span>
 			<span style="display: inline-block">
@@ -22,15 +22,25 @@
 				<p class="md-subhead">Placed on <span ng-bind="::vm.order._metadata.created | date: 'EEE, MMM d'"></span> at <span ng-bind="::vm.order._metadata.created | date: 'h a'"></span></p>
 			</header>
 
+			<div class="layout-row layout-align-end">
+				<md-button class="md-primary md-raised" ng-click="vm.markAllAsDelivered()" ng-show="vm.outstandingDeliveries">All items have been delivered</md-button>
+			</div>
+
 			<ul class="order-forms unstyled-list">
 				<li class="order-form" ng-repeat="order_form in ::vm.order.basket.order_forms track by order_form.supplier_id">
-					<div class="layout-row layout-align-start-center md-accent-panel">
+					<div class="layout-row layout-align-start-center md-accent-panel with-hover-action">
 						<div class="supplier-logo" style="margin: 20px">
 							<img ng-src="{{ ::vm.supplierInfo[order_form.supplier_id].logo }}" height="56" width="56" alt="{{ ::vm.supplierInfo[order_form.supplier_id].name }}" />
 						</div>
 						<h2 class="md-headline flex">
 							<a ng-href="search/?supplier_id={{ ::order_form.supplier_id }}" ng-bind="::vm.supplierInfo[order_form.supplier_id].name"></a>
 						</h2>
+						<div class="order-form__delivery-status" ng-show="order_form.status === 'delivered'">Delivered</div>
+						<md-button class="order-form__delivery-status hover-action md-icon-button" ng-hide="order_form.status === 'delivered'" ng-click="vm.markAsDelivered(order_form)" aria-label="Mark as delivered">
+							<md-icon md-svg-src="assets/images/icons/done.svg">
+								<md-tooltip>Mark as delivered</md-tooltip>
+							</md-icon>
+						</md-button>
 						<strong class="order-form__subtotal" ng-bind="::order_form.subtotal | currency: '£'"></strong>
 					</div>
 

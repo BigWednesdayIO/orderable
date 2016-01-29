@@ -1,0 +1,72 @@
+<main class="content-wrap content-wrap--940 flex">
+	<h1 class="md-headline">Open orders</h1>
+
+	<p>Open orders shows all items that have yet to be delivered, soonest first. To see every order you've placed on Orderable, go to your <a href="account/orders/history/"><u>order history</u></a>.</p>
+
+	<div class="order-history md-whiteframe md-whiteframe-z1">
+		<p ng-hide="vm.orders.length">You don't have any open orders at this time. To see all your orders, including ones you've marked as received, go to your <a href="account/orders/history/"><u>order history</u></a>.</p>
+		<ul class="unstyled-list" ng-show="vm.orders.length">
+			<li class="animate-repeat" ng-repeat="order in vm.orders track by order.date">
+				<div class="md-list-item-text">
+					<div class="layout-row layout-align-start-center md-accent-panel with-hover-action" style="padding: 8px 16px" md-swipe-left="vm.markAllAsDelivered(order)" md-swipe-right="vm.markAllAsDelivered(order)">
+						<h2 class="md-subhead" ng-bind="::order.date | date: 'EEE, MMM d'"></h2>
+						<span class="flex"></span>
+						<span class="order__total" ng-bind="::order.basket.total | currency: '£'"></span>
+						<md-button class="md-icon-button md-accent md-hue-3 hover-action" style="margin: 0" ng-click="vm.markAllAsDelivered(order)" aria-label="Mark order fulfilled">
+							<md-icon md-svg-src="assets/images/icons/done-all.svg">
+								<md-tooltip>Mark all deliveries for {{ ::order.date | date: 'EEE, MMM d' }} as received</md-tooltip>
+							</md-icon>
+						</md-button>
+					</div>
+
+					<ul class="unstyled-list">
+						<li class="with-hover-action animate-repeat" ng-repeat="supplier in order.suppliers track by supplier.supplier_id">
+							<md-button class="open-orders__supplier" ng-class="{'is-open': supplier.expanded}" ng-click="supplier.expanded = !supplier.expanded" md-swipe-left="vm.markSupplierAsDelivered($event, supplier)" md-swipe-right="vm.markSupplierAsDelivered($event, supplier)">
+								<img class="md-avatar open-orders__avatar" ng-src="{{ ::vm.supplierInfo[supplier.supplier_id].logo }}" alt="{{ ::vm.supplierInfo[supplier.supplier_id].name }}" />
+								<div class="layout-column layout-align-center">
+									<h3 class="open-orders__supplier__name md-subhead" ng-bind="::vm.supplierInfo[supplier.supplier_id].name"></h3>
+									<p class="open-orders__supplier__count">
+										<span ng-bind="::supplier.line_item_count"></span> item<span ng-hide="::supplier.line_item_count === 1">s</span>
+									</p>
+								</div>
+								<span class="flex"></span>
+								<md-button class="md-icon-button hover-action" aria-label="show items">
+									<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
+								</md-button>
+								<md-button class="md-icon-button hover-action open-orders__action" ng-click="vm.markSupplierAsDelivered($event, supplier)" aria-label="Mark all deliveries from {{ ::vm.supplierInfo[supplier.supplier_id].name }} as received">
+									<md-icon md-svg-src="assets/images/icons/done.svg">
+										<md-tooltip>Mark all items from {{ ::vm.supplierInfo[supplier.supplier_id].name }} as received</md-tooltip>
+									</md-icon>
+								</md-button>
+							</md-button>
+							<table class="open-orders__items" ng-show="supplier.expanded">
+								<tbody>
+									<tr class="with-hover-action" ng-repeat="lineItem in supplier.line_items track by lineItem.product.id">
+										<td style="width: 40px; padding: 4px 16px">
+											<img ng-src="{{ ::lineItem.product.thumbnail_image_url }}" alt="{{ ::lineItem.product.name }}" height="40" width="40" />
+										</td>
+										<th scope="row" style="padding-left: 0;">
+											<h4 style="margin: 0;" ng-bind="::lineItem.product.name"></h4>
+										</th>
+										<td class="numeric hide-sm" price product="::lineItem.product"></td>
+										<td class="open-orders__items__quantity" ng-bind="lineItem.quantity"></td>
+										<td class="numeric hide-sm" ng-bind="lineItem.subtotal | currency: '£'"></td>
+										<td class="open-orders__items__action hide-sm">
+											<!-- <md-button class="md-icon-button hover-action" style="margin: 0;">
+												<md-icon md-svg-src="assets/images/icons/done.svg"></md-icon>
+											</md-button> -->
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<md-divider ng-if="!$last"></md-divider>
+						</li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>
+</main>
+
+<div ng-include="'views/partials/footer.html'"></div>

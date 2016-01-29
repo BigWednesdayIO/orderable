@@ -10,7 +10,7 @@ function BasicValidationInterceptor ($location, $q, $log) {
 			error.message = 'An unknown error occurred';
 		}
 
-		if (error.status === 401) {
+		if (error.status === 401 && ['/sign-in/', '/registration/'].indexOf($location.path()) === -1) {
 			$location.url('/sign-in/?return_url=' + $location.url());
 		} else {
 			$log.error('API Call failed:', (response.config || {}).url, error.status, '-', error.message);

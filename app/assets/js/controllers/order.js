@@ -1,9 +1,40 @@
-function OrderController (orderDetails, supplierInfo) {
+function OrderController ($q, ordersService, orderDetails, supplierInfo) {
 	var vm = this;
+
+	function checkRemainingDeliveries () {
+		var outstanding = vm.order.basket.order_forms.filter(function(order_form) {
+			return order_form.status !== 'delivered';
+		});
+
+		vm.outstandingDeliveries = outstanding.length > 0;
+	}
 
 	vm.order = orderDetails;
 
 	vm.supplierInfo = supplierInfo;
+
+	vm.markAsDelivered = function(orderForm) {
+		return ordersService
+			.updateOrderFormStatus(orderDetails.id, orderForm.id, 'delivered')
+			.then(function(updatedOrderForm) {
+				orderForm.status = updatedOrderForm.status;
+				checkRemainingDeliveries();
+			});
+	};
+
+	vm.markAllAsDelivered = function() {
+		ordersService
+			.updateWholeOrderStatus(vm.order, 'delivered')
+			.then(function() {
+				vm.order.basket.order_forms = vm.order.basket.order_forms.map(function(orderForm) {
+					orderForm.status = 'delivered';
+					return orderForm;
+				});
+				vm.outstandingDeliveries = false;
+			})
+	};
+
+	checkRemainingDeliveries();
 }
 
 OrderController.resolve = /* @ngInject */ {
