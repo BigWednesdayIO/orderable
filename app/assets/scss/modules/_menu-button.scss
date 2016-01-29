@@ -20,18 +20,14 @@
 	+ md-list {
 		padding: 0;
 	}
+}
 
-	.open-indicator {
-		transform: rotate3d(0, 0, 1, 0);
-		transition: transform $transition;
-	}
+.open-indicator {
+	transform: rotate3d(0, 0, 1, 0);
+	transition: transform $transition;
 
-	&.is-open {
-		// background-color: rgb(238,238,238);
-
-		.open-indicator {
-			transform: rotate3d(0, 0, 1, -180deg);
-		}
+	.is-open & {
+		transform: rotate3d(0, 0, 1, -180deg);
 	}
 }
 

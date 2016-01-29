@@ -19,7 +19,7 @@
 					
 					<ul class="unstyled-list">
 						<li class="with-hover-action animate-repeat" ng-repeat="supplier in order.suppliers track by supplier.supplier_id">
-							<md-button class="open-orders__supplier" ng-click="supplier.expanded = !supplier.expanded" md-swipe-left="vm.markSupplierAsDelivered($event, supplier)" md-swipe-right="vm.markSupplierAsDelivered($event, supplier)">
+							<md-button class="open-orders__supplier" ng-class="{'is-open': supplier.expanded}" ng-click="supplier.expanded = !supplier.expanded" md-swipe-left="vm.markSupplierAsDelivered($event, supplier)" md-swipe-right="vm.markSupplierAsDelivered($event, supplier)">
 								<img class="md-avatar open-orders__avatar" ng-src="{{ ::vm.supplierInfo[supplier.supplier_id].logo }}" alt="{{ ::vm.supplierInfo[supplier.supplier_id].name }}" />
 								<div class="layout-column layout-align-center">
 									<h3 class="open-orders__supplier__name md-subhead" ng-bind="::vm.supplierInfo[supplier.supplier_id].name"></h3>
@@ -28,8 +28,11 @@
 									</p>
 								</div>
 								<span class="flex"></span>
+								<md-button class="md-icon-button hover-action" aria-label="show items">
+									<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
+								</md-button>
 								<md-button class="md-icon-button hover-action open-orders__action" ng-click="vm.markSupplierAsDelivered($event, supplier)" aria-label="Mark all deliveries from {{ ::vm.supplierInfo[supplier.supplier_id].name }} as received">
-									<md-icon md-svg-src="assets/images/icons/done-all.svg">
+									<md-icon md-svg-src="assets/images/icons/done.svg">
 										<md-tooltip>Mark all items from {{ ::vm.supplierInfo[supplier.supplier_id].name }} as received</md-tooltip>
 									</md-icon>
 								</md-button>
