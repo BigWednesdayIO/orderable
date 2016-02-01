@@ -1,6 +1,6 @@
 function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, suppliersService, membershipsService, authorizationService, _) {
 	var service = {};
-	var taxAmount;
+	var taxAmount = 0.2;
 
 	function notifyError (error) {
 		$mdToast.show(
