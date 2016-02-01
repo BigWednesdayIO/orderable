@@ -73,7 +73,15 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			controller: 'OrderController as vm',
 			resolve: OrderController.resolve,
 			templateUrl: 'views/order.html'
-		});
+		})
+		.state('purchase-order', {
+			url: '/account/orders/:orderId/purchase-order/:id/',
+			controller: 'PurchaseOrderController as vm',
+			resolve: PurchaseOrderController.resolve,
+			templateUrl: 'views/purchase-order.html'
+		})
+
+		;
 
 	$urlRouterProvider.otherwise("/");
 

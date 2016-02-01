@@ -1,0 +1,119 @@
+<div class="content-wrap content-wrap--940 purchase-order">
+	<div class="layout-padding">
+		<div class="breadcrumbs layout-margin">
+			<span>
+				<a class="breadcrumbs__crumb" href="/">Home</a>
+				<span class="breadcrumbs__spacer">›</span>
+			</span>
+			<span>
+				<a class="breadcrumbs__crumb" href="account/orders/history/">Orders</a>
+				<span class="breadcrumbs__spacer">›</span>
+			</span>
+			<span>
+				<a class="breadcrumbs__crumb" ng-href="account/orders/{{ ::vm.order.order_id }}/" ng-bind="::vm.order.order_id"></a>
+				<span class="breadcrumbs__spacer">›</span>
+			</span>
+			<span style="display: inline-block">
+				<span class="breadcrumbs__crumb--final">Purchase order</span>
+				<a class="breadcrumbs__remove" ng-href="account/orders/{{ ::vm.order.order_id }}/">×</a>
+			</span>
+		</div>
+	</div>
+
+	<main class="layout-column flex">
+		<div class="purchase-order__row layout-align-space-between-start">
+			<h1 class="md-headline layout-margin">Purchase Order</h1>
+			<div class="layout-column layout-align-start-end">
+				<md-button class="md-primary md-raised hide-print" ng-click="vm.print()">
+					<md-icon md-svg-src="assets/images/icons/print.svg"></md-icon>
+					<span>Print purchase order</span>
+				</md-button>
+				<div class="md-whiteframe md-whiteframe-z1 layout-margin">
+					<table class="material-table">
+						<thead>
+							<tr>
+								<th class="numeric" scope="col">P.O. Number</th>
+								<th class="numeric" scope="col">P.O. Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="numeric" ng-bind="vm.order.id"></td>
+								<td class="numeric" ng-bind="::vm.order._metadata.created | date: 'dd/MM/yyyy'"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="purchase-order__row">
+			<div class="flex md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 12px 24px;">
+				<h2 class="md-subheader md-caption" style="margin: 4px 0 12px;">Vendor</h2>
+				<address-summary address="::vm.order.billing_address"></address-summary>
+				<p style="margin-bottom: 4px" ng-show="vm.membership"><strong>Membership number:</strong> <span ng-bind="vm.membership.membership_number"></span></p>
+			</div>
+
+			<div class="flex md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 12px 24px;">
+				<h2 class="md-subheader md-caption" style="margin: 4px 0 12px;">Deliver to</h2>
+				<address-summary address="::vm.order.delivery_address"></address-summary>
+				<p style="margin-bottom: 4px"><strong>Expected delivery date:</strong> <span ng-bind="::vm.order.delivery_window.start | date: 'dd/MM/yyyy'"></span></p>
+			</div>
+		</div>
+
+		<div class="layout-margin md-whiteframe md-whiteframe-z1">
+			<div class="material-table-wrapper">
+				<table class="material-table">
+					<thead>
+						<tr>
+							<th scope="col">Item</th>
+							<th scope="col">Description</th>
+							<th class="numeric" scope="col">Quantity</th>
+							<th class="numeric" scope="col">Unit price</th>
+							<th class="numeric" scope="col">Tax rate</th>
+							<th class="numeric" scope="col">Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="line_item in ::vm.order.line_items track by line_item.product.id">
+							<td ng-bind="::line_item.product.sku"></td>
+							<td ng-bind="::line_item.product.name"></td>
+							<td class="numeric" ng-bind="::line_item.quantity"></td>
+							<td class="numeric" ng-bind="::line_item.product.price | currency: '£'"></td>
+							<td class="numeric" ng-bind="::line_item.product.taxable ? '20%' : '0%'"></td>
+							<td class="numeric" ng-bind="::line_item.subtotal | currency: '£'"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="layout-margin layout-row layout-align-end" style="page-break-inside: avoid">
+			<table class="material-table md-whiteframe md-whiteframe-z1" style="width: auto;">
+				<tfoot>
+					<tr>
+						<th colspan="5" scope="row">Item(s)</th>
+						<td class="numeric" ng-bind="::vm.order.subtotal | currency: '£'"></td>
+					</tr>
+					<tr>
+						<th colspan="5" scope="row">Tax</th>
+						<td class="numeric" ng-bind="::vm.order.tax | currency: '£'"></td>
+					</tr>
+					<tr>
+						<th colspan="5" scope="row">Delivery</th>
+						<td class="numeric">
+							<span ng-show="::vm.order.delivery_window.price === 0">FREE</span>
+							<span ng-show="::vm.order.delivery_window.price > 0" ng-bind="::vm.order.delivery_window.price | currency: '£'"></span>
+						</td>
+					</tr>
+					<tr>
+						<th colspan="5" scope="row">Total</th>
+						<td class="numeric" ng-bind="::vm.order.total | currency: '£'"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</main>
+</div>
+
+<div ng-include="'views/partials/footer.html'"></div>

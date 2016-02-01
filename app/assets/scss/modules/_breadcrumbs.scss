@@ -32,4 +32,8 @@
 	&__spacer {
 		padding: 0 8px;
 	}
+
+	@media print {
+		display: none;
+	}
 }

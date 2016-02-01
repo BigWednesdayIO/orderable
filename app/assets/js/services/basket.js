@@ -1,5 +1,6 @@
 function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, browserStorage, suppliersService, membershipsService, authorizationService, _) {
 	var service = {};
+	var taxAmount;
 
 	function notifyError (error) {
 		$mdToast.show(
@@ -27,7 +28,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 	}
 
 	function toPounds (value) {
-		return value / 100;
+		return Math.round(value / 100);
 	}
 
 	function countProperty (collection, property) {
@@ -57,6 +58,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 				return line_item.product.taxable;
 			}), 'subtotal');
 
+			order_form.tax = toPounds(toPence(order_form.taxable_subtotal) * taxAmount);
+
+			order_form.total = toPounds(toPence(order_form.subtotal) + toPence(order_form.tax));
+
 			return order_form;
 		});
 
@@ -66,7 +71,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 
 		service.basket.taxable_subtotal = getTotal(service.basket.order_forms, 'taxable_subtotal');
 
-		service.basket.tax = toPounds(Math.round(toPence(service.basket.taxable_subtotal) * 0.2));
+		service.basket.tax = toPounds(toPence(service.basket.taxable_subtotal) * taxAmount);
 
 		service.basket.total = toPounds(toPence(service.basket.subtotal) + toPence(service.basket.tax));
 
