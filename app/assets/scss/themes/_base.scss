@@ -24,6 +24,11 @@ body,
 .event-wrapper {
 	max-height: 100%;
 	overflow: hidden;
+
+	@media print {
+		max-height: none;
+		overflow: visible;
+	}
 }
 
 [ui-view]:empty {
@@ -220,6 +225,11 @@ fieldset {
 
 .md-whiteframe {
 	background: white;
+
+	@media print {
+		border: $divider;
+		box-shadow: none;
+	}
 }
 
 .centred {
@@ -270,4 +280,10 @@ fieldset {
 .animate-repeat.ng-leave,
 .animate-repeat.ng-enter.ng-enter-active {
 	opacity:1;
+}
+
+@media print {
+	.hide-print {
+		display: none !important;
+	}
 }

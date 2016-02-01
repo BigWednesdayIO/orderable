@@ -1,0 +1,108 @@
+.material-table {
+	text-align: left;
+
+	thead {
+		font-size: 12px;
+		font-weight: 400;
+		color: rgba(0, 0, 0, .54);
+	}
+
+	tbody,
+	tfoot {
+		font-size: 13px;
+	}
+
+	th {
+		height: 56px;
+	}
+
+	td {
+		height: 48px;
+		border-top: $divider;
+	}
+
+	th,
+	td {
+		padding: 0 12px;
+
+		@media (min-width: $bp-medium) {
+			padding: 0 28px;
+
+			&:first-child {
+				padding-left: 24px;
+			}
+
+			&:last-child {
+				padding-right: 24px;
+			}
+		}
+	}
+
+	tfoot {
+		th {
+			height: 48px;
+			border-top: $divider;
+			font-size: 12px;
+			color: rgba(0, 0, 0, .54);
+			text-align: right;
+		}
+	}
+
+	.merge-start {
+		padding-right: 6px;
+	}
+
+	.merge-end {
+		padding-left: 6px;
+	}
+
+	.numeric {
+		text-align: right;
+		white-space: nowrap;
+
+		input {
+			text-align: inherit;
+
+			&::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+		}
+	}
+
+	/* md-select {
+		margin: 0 0 4px;
+	}
+
+	.md-select-value {
+		width: 48px;
+		min-width: 48px;
+		text-align: right;
+	}
+
+	.md-select-value,
+	.md-input {
+		border-bottom-color: transparent !important;
+	}
+
+	.md-select-icon {
+		width: 18px;
+		color: rgba(0, 0, 0, .54);
+	}
+
+	input {
+		padding: 0;
+		height: inherit;
+	}
+
+	md-radio-button[aria-label] .md-label {
+		display: none !important;
+	} */
+
+	&-wrapper {
+		// For tables that just need to spill over on smaller screens
+		max-width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+}
