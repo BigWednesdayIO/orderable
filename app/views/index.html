@@ -16,8 +16,8 @@
 <div class="supplier-logo-box">
 	<div class="content-wrap">
 		<div class="layout-row layout-align-center-center">
-			<a ng-href="{{ ::supplier.href }}" class="supplier-logo" ng-repeat="supplier in ::vm.suppliers">
-				<img ng-src="{{ ::supplier.logo }}" height="80" width="80" alt="{{ ::supplier.name }}" />
+			<a ng-href="{{ ::supplier.href }}" class="supplier-logo-box__logo" ng-repeat="supplier in ::vm.suppliers">
+				<div supplier-logo supplier="::supplier" size="$mdMedia('gt-sm') ? 80 : 60"></div>
 			</a>
 		</div>
 	</div>

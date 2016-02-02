@@ -1,8 +1,6 @@
 <div class="content-box featured md-whiteframe md-whiteframe-z1">
 	<a class="content-box__header layout-row layout-align-space-between-center" ng-href="{{ href }}">
-		<div class="supplier-logo content-box__logo">
-			<img ng-src="{{ ::supplierInfo.logo }}" height="56" width="56" alt />
-		</div>
+		<div class="content-box__logo" supplier-logo supplier="::supplierInfo" size="56"></div>
 		<h2 class="content-box__title md-headline flex" ng-bind="::supplierInfo.name"></h2>
 		<div class="content-box__action">
 			<md-button class="featured__more md-primary hide-sm" ng-bind="::buttonText || 'More'" aria-label="{{ ::buttonText || 'More' }}"></md-button>

@@ -24,13 +24,6 @@ function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, brow
 			url: API.suppliers,
 			cache: true
 		})
-			.then(function(suppliers) {
-				return suppliers.map(function(supplier) {
-					supplier.logo = service.getLogoForSupplier(supplier.name);
-					supplier.brand_image = service.getBrandImageForSupplier(supplier.name);
-					return supplier;
-				});
-			})
 			.catch(notifyError);
 	};
 
@@ -57,8 +50,6 @@ function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, brow
 				if (!supplier) {
 					return $q.reject(supplier);
 				}
-				supplier.logo = service.getLogoForSupplier(supplier.name);
-				supplier.brand_image = service.getBrandImageForSupplier(supplier.name);
 				return supplier;
 			});
 	};
@@ -74,35 +65,9 @@ function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, brow
 			});
 	};
 
-	service.getLogoForSupplier = function(supplier) {
-		var logos = {
-			'Pub Taverns': 'assets/images/pub-buying-club-logo.svg',
-			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
-			'Best Buy': 'assets/images/best-buy-logo.png',
-			'Walmart': 'assets/images/walmart-logo.png',
-			'placeholder': 'http://placehold.it/80x80?text='
-		};
-
-		return logos[supplier] || logos.placeholder + supplier;
-	};
-
-	service.getBrandImageForSupplier = function(supplier) {
-		var brandImage = {
-			'Pub Taverns': 'assets/images/pub-buying-club-logo.svg',
-			'Beer & Wine Co': 'assets/images/beer-and-wine-co-logo.jpg',
-			'Best Buy': 'assets/images/best-buy-tile.png',
-			'Walmart': 'assets/images/walmart-tile.jpg',
-			'placeholder': 'http://placehold.it/86x60?text='
-		};
-
-		return brandImage[supplier] || brandImage.placeholder + supplier;
-	};
-
 	service.getLoyaltySchemeForSupplier = function(supplier) {
 		return $q.when({
 			supplier: supplier,
-			logo: service.getLogoForSupplier(supplier),
-			brandImage: service.getBrandImageForSupplier(supplier),
 			name: supplier.name,
 			label: supplier.name + ' membership number'
 		});

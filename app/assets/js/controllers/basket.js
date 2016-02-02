@@ -1,4 +1,4 @@
-function BasketController ($rootScope, $state, $timeout, $q, basketService, checkoutService, wishlistService, suppliersService, membershipsService, wishlist, supplierNames) {
+function BasketController ($rootScope, $state, $timeout, $q, basketService, checkoutService, wishlistService, suppliersService, membershipsService, wishlist, supplierInfo) {
 	var vm = this,
 		blurTimer;
 
@@ -9,14 +9,12 @@ function BasketController ($rootScope, $state, $timeout, $q, basketService, chec
 		}))
 			.then(function(basketSuppliers) {
 				vm.basketSuppliers = basketSuppliers;
-			})
+			});
 	}
 
 	vm.basket = basketService.basket;
 
-	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
-
-	vm.supplierNames = supplierNames;
+	vm.supplierInfo = supplierInfo;
 
 	vm.removeFromBasket = function(product) {
 		return basketService
@@ -109,23 +107,16 @@ BasketController.resolve = /* @ngInject */ {
 		return basketService
 			.getServerBasket();
 	},
-	supplierNames: function($q, suppliersService, serverBasket) {
+	supplierInfo: function($q, suppliersService, serverBasket) {
 		return $q.all(serverBasket.order_forms.map(function(order_form) {
 			return suppliersService
-				.getNameForSupplier(order_form.supplier_id);
+				.getSupplierInfo(order_form.supplier_id);
 		}))
-			.then(function(names) {
-				return names
-					.map(function(name, i) {
-						return {
-							name: name,
-							id: serverBasket.order_forms[i].supplier_id
-						};
-					})
-					.reduce(function(map, supplier) {
-						map[supplier.id] = supplier.name;
-						return map;
-					}, {});
+			.then(function(suppliers) {
+				return suppliers.reduce(function(map, supplier) {
+					map[supplier.id] = supplier;
+					return map;
+				}, {});
 			});
 	},
 	wishlist: function(wishlistService) {

@@ -1,7 +1,7 @@
 <main class="content-wrap content-wrap--940">
 	<div class="product-details md-whiteframe md-whiteframe-z1">
-		<div class="supplier-listing__header" style="background-image: url('http://lorempixel.com/1000/200/food/3/');">
-			<img class="supplier-listing__logo" ng-src="{{ ::vm.supplierLogo }}" height="80" width="80" alt />
+		<div class="supplier-listing__header" style="{{ 'background-image: url(' + vm.supplier.banner_image + ');' }}">
+			<div class="supplier-listing__logo" supplier-logo supplier="::vm.supplier"></div>
 		</div>
 
 		<div class="product-details__inner">

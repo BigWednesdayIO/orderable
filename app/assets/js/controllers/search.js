@@ -65,9 +65,9 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		if (vm.search.supplier_id) {
 			$element.on('scroll', checkScrollPosition);
 			suppliersService
-				.getNameForSupplier(vm.search.supplier_id)
-				.then(function(name) {
-					vm.supplierName = name;
+				.getSupplierInfo(vm.search.supplier_id)
+				.then(function(info) {
+					vm.supplier = info;
 				});
 		} else {
 			$element.off('scroll', checkScrollPosition);
@@ -93,8 +93,6 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		var href = vm.onlyPinned ? vm.applyRefinementToUrl('pinned', 'true') : vm.removeRefinementFromUrl('pinned', 'true');
 		$location.url(href);
 	};
-
-	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
 
 	vm.sortOptions = sortOptions;
 

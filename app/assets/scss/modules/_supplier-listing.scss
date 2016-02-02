@@ -17,12 +17,13 @@
 		background-size: cover;
 		color: white;
 		text-shadow: $supplier-listing-text-shadow;
+		background-color: #E0E0E0;
 	}	
 
 	&__logo {
+		height: 80px;
+		width: 80px;
 		margin: 0 auto;
-		border-radius: 50%;
-		overflow: hidden;
 	}
 
 	&__name {
@@ -137,5 +138,21 @@
 				text-align: center;
 			}
 		}
+	}
+}
+
+.supplier-logo {
+	border-radius: 50%;
+	overflow: hidden;
+
+	&--placeholder {
+		color: white;
+		background: #9E9E9E;
+		text-shadow: none;
+		font-weight: 400;
+		text-align: center;
+		// Defaults
+		font-size: 34px;
+		line-height: 80px;
 	}
 }
