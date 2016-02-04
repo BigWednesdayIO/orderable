@@ -24,10 +24,6 @@ function MenuController ($rootScope, $state, $mdSidenav, navigationService, supp
 		return 'search/?supplier_id=' + encodeURIComponent(supplier);
 	};
 
-	vm.getBrandImageForSupplier = suppliersService.getBrandImageForSupplier;
-
-	vm.getLogoForSupplier = suppliersService.getLogoForSupplier;
-
 	suppliersService
 		.getPinnedSuppliers()
 		.then(syncPins);

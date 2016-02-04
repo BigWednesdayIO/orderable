@@ -3,7 +3,7 @@
 	<ul class="unstyled-list">
 		<li ng-repeat="supplier in ::vm.featuredSuppliers track by supplier.name">
 			<a class="sub-nav__featured__supplier" ng-href="{{ ::supplier.href }}">
-				<img ng-src="{{ ::supplier.image }}" height="50" alt="{{ ::supplier.name }}" />
+				<div class="supplier-logo--placeholder" style="background-color: {{ supplier.colour }}; height: 50px; line-height: 50px; font-size: {{ 50 * 0.425 }}px; text-decoration: none;" ng-bind="supplier.initials || supplier.name.substring(0, 2)" title="{{ ::supplier.name }}"></div>
 			</a>
 		</li>
 	</ul>

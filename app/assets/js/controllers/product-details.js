@@ -1,4 +1,4 @@
-function ProductDetailsController (basketService, suppliersService, productAttributes, productData, _) {
+function ProductDetailsController (basketService, productAttributes, productData, supplierInfo, _) {
 	var vm = this;
 
 	function setQuantities (quantity) {
@@ -11,6 +11,7 @@ function ProductDetailsController (basketService, suppliersService, productAttri
 	}
 
 	vm.product = productData;
+	vm.supplier = supplierInfo;
 
 	vm.product.thumbnail_image_url = vm.product.thumbnail_image_url || 'assets/images/placeholder.jpg';
 
@@ -19,9 +20,7 @@ function ProductDetailsController (basketService, suppliersService, productAttri
 		return attribute;
 	}).filter(function(attribute) {
 		return typeof attribute.value !== 'undefined';
-	})
-
-	vm.supplierLogo = suppliersService.getLogoForSupplier(productData.supplier_id);
+	});
 
 	vm.addToBasket = function() {
 		basketService
@@ -69,6 +68,10 @@ ProductDetailsController.resolve = /* @ngInject */ {
 				product.description = $sce.trustAsHtml(product.description);
 				return product;
 			});
+	},
+	supplierInfo: function(productData, suppliersService) {
+		return suppliersService
+			.getSupplierInfo(productData.supplier_id);
 	}
 };
 

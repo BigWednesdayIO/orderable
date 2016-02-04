@@ -209,17 +209,21 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 		})
 			.then(function(response) {
 				var suppliers = (_.find(response.facets, {field: 'supplier_id'}) || {}).values;
-
-				return suppliers.map(function(supplier) {
-					return {
-						name: supplier.value,
-						image: suppliersService.getBrandImageForSupplier(supplier.value),
-						href: 'search/' + service.buildQueryString({
-							supplier_id: supplier.value,
-							category_hierarchy: category
-						})
-					};
+				var promises = suppliers.map(function(supplier) {
+					return supplier.value;
+				}).map(function(supplierId) {
+					return suppliersService
+						.getSupplierInfo(supplierId)
+						.then(function(info) {
+							info.href = 'search/' + service.buildQueryString({
+								supplier_id: supplierId,
+								category_hierarchy: category
+							});
+							return info;
+						});
 				});
+
+				return $q.all(promises);
 			})
 			.catch(notifyError);
 	}

@@ -69,7 +69,7 @@
 											<md-icon md-svg-src="assets/images/icons/favorite.svg" ng-show="vm.isPinned[supplier.id]"></md-icon>
 										</md-button>
 										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="supplier__link">
-											<img ng-src="{{ ::vm.getBrandImageForSupplier(supplier.name) }}" class="supplier__image" height="60" alt="{{ ::supplier.name }}" />
+											<div class="supplier-logo--placeholder" style="background-color: {{ supplier.colour }}; height: 60px; line-height: 60px; font-size: {{ 60 * 0.425 }}px; text-decoration: none;" ng-bind="supplier.initials || supplier.name.substring(0, 2)" title="{{ ::supplier.name }}"></div>
 										</a>
 									</li>
 								</ul>
@@ -168,7 +168,7 @@
 							<md-list ng-show="vm.openMenu === 'suppliers'" class="animate-slide">
 								<md-list-item  ng-repeat="supplier in vm.suppliers track by supplier.name" class="md-with-secondary">
 									<md-button class="menu-link" ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" aria-label="{{ ::supplier.name }}">
-										<md-icon style="margin: auto 12px auto 0; border-radius: 50%; overflow: hidden;"><img ng-src="{{ ::vm.getLogoForSupplier(supplier.name) }}" height="24" alt="{{ ::supplier.name }}" /></md-icon>
+										<md-icon style="margin: auto 12px auto 0; "><div supplier-logo supplier="::supplier" size="24"></div></md-icon>
 										<span ng-bind="::supplier.name"></span>
 									</md-button>
 									<md-button class="md-secondary md-icon-button" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">

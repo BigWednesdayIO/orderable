@@ -29,9 +29,7 @@
 			<ul class="order-forms unstyled-list">
 				<li class="order-form" ng-repeat="order_form in ::vm.order.basket.order_forms track by order_form.supplier_id">
 					<div class="layout-row layout-align-start-center md-accent-panel with-hover-action">
-						<div class="supplier-logo" style="margin: 20px">
-							<img ng-src="{{ ::vm.supplierInfo[order_form.supplier_id].logo }}" height="56" width="56" alt="{{ ::vm.supplierInfo[order_form.supplier_id].name }}" />
-						</div>
+						<div supplier-logo supplier="::vm.supplierInfo[order_form.supplier_id]" size="56" style="margin: 20px"></div>
 						<h2 class="md-headline flex">
 							<a ng-href="search/?supplier_id={{ ::order_form.supplier_id }}" ng-bind="::vm.supplierInfo[order_form.supplier_id].name"></a>
 						</h2>
