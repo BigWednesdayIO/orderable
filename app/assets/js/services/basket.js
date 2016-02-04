@@ -77,6 +77,8 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 
 		browserStorage.setItem('basket', service.basket);
 		$rootScope.$emit('basketUpdated', service.basket.line_item_count);
+
+		return $q.when(service.basket);
 	}
 
 	function showUpdate (lineItem) {
@@ -116,12 +118,11 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 
 	calculateTotals();
 
-	service.createBasket = function() {
-		_.forEach(emptyBakset(), function(value, key) {
+	service.createBasket = function(basket) {
+		_.forEach(basket || emptyBakset(), function(value, key) {
 			service.basket[key] = value;
 		});
-		calculateTotals();
-		return $q.when(service.basket);
+		return calculateTotals();
 	};
 
 	service.checkProductSupplier = function(product) {
@@ -194,9 +195,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 					service.basket.order_forms[supplierIndex].line_items[productIndex].quantity = quantity;
 				}
 
-				calculateTotals();
-
-				return service.basket.order_forms[supplierIndex].line_items[productIndex];
+				return calculateTotals()
+					.then(function() {
+						return service.basket.order_forms[supplierIndex].line_items[productIndex];
+					});
 			})
 			.then(function(lineItem) {
 				showUpdate(lineItem);
@@ -236,9 +238,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 			service.basket.order_forms.splice(supplierIndex, 1);
 		}
 
-		calculateTotals();
-
-		return $q.when();
+		return calculateTotals();
 	};
 
 	service.getProductQuantity = function(product) {

@@ -1,4 +1,4 @@
-function HomepageController (customerService, suppliersService, availableSuppliers, featuredSupplierProducts) {
+function HomepageController (customerService, suppliersService, replenishmentService, availableSuppliers, featuredSupplierProducts, replenishmentItems) {
 	var vm = this;
 
 	vm.isSignedIn = customerService.isSignedIn();
@@ -9,6 +9,13 @@ function HomepageController (customerService, suppliersService, availableSupplie
 	});
 
 	vm.featuredSupplierProducts = featuredSupplierProducts;
+
+	vm.replenishmentItems = replenishmentItems;
+
+	vm.replenishAllItems = function() {
+		replenishmentService
+			.replenish(vm.replenishmentItems);
+	};
 }
 
 HomepageController.resolve = /* @ngInject */ {
@@ -44,6 +51,17 @@ HomepageController.resolve = /* @ngInject */ {
 			url: 'assets/images/orderable-hero.jpg',
 			cache: true
 		});
+	},
+	replenishmentItems: function(customerService, replenishmentService) {
+		if (!customerService.isSignedIn()) {
+			return [];
+		}
+
+		return replenishmentService
+			.getReplenishmentItems()
+			.catch(function() {
+				return [];
+			});
 	}
 };
 

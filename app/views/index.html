@@ -25,6 +25,24 @@
 
 <div class="content-wrap">
 	<main class="layout-margin">
+		<section ng-if="::vm.replenishmentItems.length">
+			<div class="layout-row layout-align-space-between-center" style="margin: 0 0 5px;">
+				<h2 class="md-title">
+					<!-- <md-icon md-svg-src="assets/images/icons/autorenew.svg"></md-icon> -->
+					<span>Frequently bought items</span>
+				</h2>
+				<md-button ng-click="vm.replenishAllItems()" class="md-primary md-raised" style="margin: 0;">
+					<md-icon md-svg-src="assets/images/icons/autorenew.svg"></md-icon>
+					<span>Replenish all items</span>
+				</md-button>
+			</div>
+			<div class="supplier-listing md-whiteframe md-whiteframe-z1">
+				<ul class="supplier-listing__products supplier-listing__products--grid-view supplier-listing__products--wide unstyled-list">
+					<li product-thumb product="item.product" basket="true" ng-repeat="item in ::vm.replenishmentItems track by item.product.id"></li>
+				</ul>
+			</div>
+		</section>
+
 		<supplier-featured-items ng-repeat="featured in ::vm.featuredSupplierProducts" supplier="::featured.supplier" hits="::featured.hits" button-text="Shop store"></supplier-featured-items>
 	</main>
 </div>

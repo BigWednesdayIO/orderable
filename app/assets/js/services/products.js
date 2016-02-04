@@ -1,4 +1,4 @@
-function ProductsService ($http, $mdToast, API) {
+function ProductsService ($http, $q, $mdToast, API) {
 	var service = this;
 
 	service.getProductById = function(id) {
