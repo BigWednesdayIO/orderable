@@ -10,6 +10,11 @@ function HomepageController (customerService, suppliersService, replenishmentSer
 
 	vm.featuredSupplierProducts = featuredSupplierProducts;
 
+	vm.replenishmentSuppliers = availableSuppliers.reduce(function(supplierMap, supplier) {
+		supplierMap[supplier.id] = supplier;
+		return supplierMap;
+	}, {});
+
 	vm.replenishmentItems = replenishmentItems;
 
 	vm.replenishAllItems = function() {
@@ -37,12 +42,17 @@ HomepageController.resolve = /* @ngInject */ {
 				});
 		}))
 			.then(function(response) {
-				return response.map(function(hits, index) {
-					return {
-						supplier: availableSuppliers[index].id,
-						hits: hits
-					};
-				});
+				return response
+					.filter(function(hits) {
+						// 7 is the minimum to have a meaningful 2nd page on large screen
+						return hits.length > 7;
+					})
+					.map(function(hits, index) {
+						return {
+							supplier: availableSuppliers[index].id,
+							hits: hits
+						};
+					});
 			});
 	},
 	homepageHero: function($http) {

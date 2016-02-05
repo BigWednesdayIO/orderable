@@ -3,6 +3,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 	var taxAmount = 0.2;
 
 	function notifyError (error) {
+		if (service.hideUpdates) {
+			return $q.reject(error);
+		}
+
 		$mdToast.show(
 			$mdToast.simple()
 				.content(error.message)
@@ -82,7 +86,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 	}
 
 	function showUpdate (lineItem) {
-		if (!$mdMedia('gt-md') || $state.is('basket') || $state.is('checkout')) {
+		if (service.hideUpdates || !$mdMedia('gt-md') || $state.is('basket') || $state.is('checkout')) {
 			return;
 		}
 		return $mdToast.show({
@@ -204,14 +208,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 				showUpdate(lineItem);
 				return lineItem;
 			})
-			.catch(function notifyError (error) {
-				$mdToast.show(
-					$mdToast.simple()
-						.content(error.message)
-						.hideDelay(3000)
-				);
-				return $q.reject(error);
-			});
+			.catch(notifyError);
 	};
 
 	service.removeFromBasket = function(product) {

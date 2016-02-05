@@ -87,4 +87,23 @@
 	&:hover .md-button md-icon {
 		color: $md-primary;
 	}
+
+	&--replenishment {
+		position: relative;
+
+		supplier-logo {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+		}
+
+		.md-icon-button--quantity {
+			opacity: 0;
+			transition: opacity $transition;
+		}
+
+		&:hover .md-icon-button--quantity {
+			opacity: 1;
+		}
+	}
 }

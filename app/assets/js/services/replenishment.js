@@ -1,12 +1,28 @@
 function ReplenishmentService ($state, $q, ordersService, productsService, basketService, deliveryDatesService, checkoutService, _) {
 	var service = this;
 
+	service.refreshLineItems = function(lineItems) {
+		return productsService
+			.getProductArray(_.map(lineItems, 'product.id'))
+			.then(function(upToDateProducts) {
+				return _(lineItems)
+					.map(function(lineItem) {
+						lineItem.product = _.find(upToDateProducts, {objectID: lineItem.product.id});
+						return lineItem;
+					})
+					.filter(function(lineItem) {
+						return typeof lineItem.product !== 'undefined';
+					})
+					.value();
+			});
+	}
+
 	service.getReplenishmentItems = function() {
 		return ordersService
 			.getOrders()
 			.then(function(orders) {
 				var today = (new Date()).getDate();
-				var twoWeeksAgo = (new Date()).setDate(today - 140);
+				var twoWeeksAgo = (new Date()).setDate(today - 14);
 				var lineItems = _(orders)
 					.filter(function(order) {
 						var then = new Date(order._metadata.created);
@@ -20,31 +36,18 @@ function ReplenishmentService ($state, $q, ordersService, productsService, baske
 					.filter(function(purchases) {
 						return purchases.length > 1;
 					})
-					.sortBy('length')
+					.sortByOrder(['length'], ['desc'])
 					.map(_.head)
-					.map(function(lineItem) {
-						return productsService
-							.getProductById(lineItem.product.id)
-							.then(function(product) {
-								lineItem.product = product;
-								// TODO update price
-								return lineItem;
-							})
-							.catch(function() {
-								return false;
-							});
-					})
 					.value();
 
-				return $q.all(lineItems);
-			})
-			.then(function(updatedLineItems) {
-				return updatedLineItems.filter(_.identity);
+				return service
+					.refreshLineItems(lineItems);
 			});
 	};
 
 	service.replenish = function(items) {
 		var oldBasket = angular.copy(basketService.basket);
+		basketService.hideUpdates = true;
 		return basketService
 			.createBasket()
 			.then(function() {
@@ -90,6 +93,7 @@ function ReplenishmentService ($state, $q, ordersService, productsService, baske
 					.completeCheckout(checkout);
 			})
 			.then(function(response) {
+				basketService.hideUpdates = false
 				return $q.all([
 					basketService
 						.createBasket(oldBasket),

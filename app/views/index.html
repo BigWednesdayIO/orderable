@@ -38,7 +38,7 @@
 			</div>
 			<div class="supplier-listing md-whiteframe md-whiteframe-z1">
 				<ul class="supplier-listing__products supplier-listing__products--grid-view supplier-listing__products--wide unstyled-list">
-					<li product-thumb product="item.product" basket="true" ng-repeat="item in ::vm.replenishmentItems track by item.product.id"></li>
+					<li replenishment-thumb product="item.product" quantity="item.quantity" supplier="vm.replenishmentSuppliers[item.product.supplier_id]" ng-repeat="item in ::vm.replenishmentItems track by item.product.id"></li>
 				</ul>
 			</div>
 		</section>

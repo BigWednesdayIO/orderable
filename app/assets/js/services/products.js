@@ -15,6 +15,16 @@ function ProductsService ($http, $q, $mdToast, API) {
 				return $q.reject(error);
 			});
 	};
+
+	service.getProductArray = function(ids) {
+		return $http({
+			method: 'GET',
+			url: API.products,
+			params: {
+				id: ids
+			}
+		});
+	};
 }
 
 angular
