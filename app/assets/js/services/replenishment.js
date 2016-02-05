@@ -51,13 +51,19 @@ function ReplenishmentService ($state, $q, ordersService, productsService, baske
 		return basketService
 			.createBasket()
 			.then(function() {
-				return $q.all(items.map(function(item) {
-					return basketService
-						.addToBasket(item.product, item.quantity)
-						.catch(function() {
-							return false;
-						});
-				}));				
+				var additions = items
+					.filter(function(item) {
+						return item.quantity > 0;
+					})
+					.map(function(item) {
+						return basketService
+							.addToBasket(item.product, item.quantity)
+							.catch(function() {
+								return false;
+							});
+					});
+
+				return $q.all(additions);
 			})
 			.then(function() {
 				return $q.all([

@@ -90,20 +90,35 @@
 
 	&--replenishment {
 		position: relative;
+		background: #eee;
 
+		&__include,
 		supplier-logo {
 			position: absolute;
 			top: 10px;
+		}
+
+		&__include {
+			right: 10px;
+
+			.md-label {
+				display: none;
+			}
+		}
+
+		supplier-logo {
 			left: 10px;
 		}
+	}
 
-		.md-icon-button--quantity {
-			opacity: 0;
-			transition: opacity $transition;
-		}
+	&--replenishment & {
+		&__link {
+			background: white;
+			transition: background $transition, opacity $transition;
 
-		&:hover .md-icon-button--quantity {
-			opacity: 1;
+			&.is-disabled {
+				opacity: .5;
+			}
 		}
 	}
 }

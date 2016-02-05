@@ -43,15 +43,15 @@ HomepageController.resolve = /* @ngInject */ {
 		}))
 			.then(function(response) {
 				return response
-					.filter(function(hits) {
-						// 7 is the minimum to have a meaningful 2nd page on large screen
-						return hits.length > 7;
-					})
 					.map(function(hits, index) {
 						return {
 							supplier: availableSuppliers[index].id,
 							hits: hits
 						};
+					})
+					.filter(function(featured) {
+						// 7 is the minimum to have a meaningful 2nd page on large screen
+						return featured.hits.length > 7;
 					});
 			});
 	},
