@@ -1,7 +1,7 @@
 <a class="product-thumb__link with-hover-action" ng-class="{'is-disabled': vm.quantity === 0}" ng-href="#" ng-click="vm.replenishItem()">
 	<supplier-logo supplier="::vm.supplier" size="32"></supplier-logo>
 	<div class="product-thumb--replenishment__include hover-action" ng-click="vm.trapClick($event)">
-		<md-checkbox class="md-accent md-hue-3" ng-click="vm.toggleInclude()" ng-checked="vm.quantity !== 0" aria-label="Include in {{ ::vm.product.name }} replenishment"></md-checkbox>
+		<md-checkbox class="md-accent md-hue-3" ng-model="vm.include" ng-change="vm.toggleInclude()" aria-label="Include in {{ ::vm.product.name }} replenishment"></md-checkbox>
 	</div>
 	<div class="product-thumb__info">
 		<img class="product-thumb__image" ng-src="{{ ::vm.product.thumbnail_image_url }}" height="180" alt="{{ ::vm.product.name }}" />
