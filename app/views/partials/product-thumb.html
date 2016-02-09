@@ -19,13 +19,7 @@
 			<md-icon md-svg-src="assets/images/icons/cart-add.svg"></md-icon>
 		</md-button>
 		<div ng-if="::vm.basket && vm.product.in_stock !== false" ng-show="vm.quantity > 0" class="product-thumb__quantity-wrapper layout-row layout-align-center-center">
-			<md-button class="md-icon-button md-icon-button--quantity" ng-click="vm.changeQuantity($event, -1)" aria-label="Remove 1 from basket">
-				<md-icon md-svg-src="assets/images/icons/minus-circle.svg"></md-icon>
-			</md-button>
-			<span class="product-thumb__quantity" ng-bind="vm.quantity"></span>
-			<md-button class="md-icon-button md-icon-button--quantity" ng-click="vm.changeQuantity($event, +1)" aria-label="Add 1 to basket">
-				<md-icon md-svg-src="assets/images/icons/plus-circle.svg"></md-icon>
-			</md-button>
+			<div edit-quantity quantity="vm.quantity"></div>
 		</div>
 	</div>
 </a>

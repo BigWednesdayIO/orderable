@@ -1,0 +1,7 @@
+<md-button class="md-icon-button md-icon-button--quantity" ng-class="{'hover-action': vm.hover}" ng-click="vm.changeQuantity($event, -1)" ng-disabled="vm.quantity < 1" aria-label="decrease quantity">
+	<md-icon md-svg-src="assets/images/icons/minus-circle.svg"></md-icon>
+</md-button>
+<span style="font-size: 18px;" ng-bind="vm.quantity"></span>
+<md-button class="md-icon-button md-icon-button--quantity" ng-class="{'hover-action': vm.hover}" ng-click="vm.changeQuantity($event, +1)" aria-label="increase quantity">
+	<md-icon md-svg-src="assets/images/icons/plus-circle.svg"></md-icon>
+</md-button>

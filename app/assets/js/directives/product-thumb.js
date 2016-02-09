@@ -29,10 +29,7 @@ function ProductThumbDirective () {
 				addToBasket(quantity);
 			};
 
-			vm.changeQuantity = function($event, quantity) {
-				$event.preventDefault();
-				vm.quantity += quantity;
-
+			vm.changeQuantity = function() {
 				$timeout.cancel(debounce);
 				debounce = $timeout(function() {
 					addToBasket(vm.quantity);
