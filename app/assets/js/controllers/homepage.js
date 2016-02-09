@@ -18,8 +18,12 @@ function HomepageController (customerService, suppliersService, replenishmentSer
 	vm.replenishmentItems = replenishmentItems;
 
 	vm.replenishAllItems = function() {
+		var filtered = vm.replenishmentItems.filter(function(item) {
+			return item.checked;
+		});
+
 		replenishmentService
-			.replenish(vm.replenishmentItems);
+			.replenish(filtered.length ? filtered : vm.replenishmentItems);
 	};
 }
 

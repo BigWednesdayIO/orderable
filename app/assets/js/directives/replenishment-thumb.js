@@ -6,9 +6,6 @@ function ReplenishmentThumbDirective () {
 			quantity: '=',
 			supplier: '='
 		},
-		link: function(scope, element) {
-			element.addClass('product-thumb product-thumb--replenishment');
-		},
 		controller: function(replenishmentService) {
 			var vm = this;
 			var initialQuantity = vm.quantity;
@@ -17,18 +14,11 @@ function ReplenishmentThumbDirective () {
 
 			vm.product.thumbnail_image_url = vm.product.thumbnail_image_url || 'assets/images/placeholder.jpg';
 
-			vm.include = true;
-
-			vm.toggleInclude = function() {
-				vm.quantity = (!vm.quantity) ? initialQuantity : 0;
-			};
-
 			vm.changeQuantity = function(quantity) {
 				vm.quantity += quantity;
 				if (vm.quantity < 0) {
 					vm.quantity = 0;
 				}
-				vm.include = (vm.quantity !== 0)
 			};
 
 			vm.trapClick = function($event) {

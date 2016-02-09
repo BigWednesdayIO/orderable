@@ -249,7 +249,10 @@ fieldset {
 	opacity: 0;
 	transition: opacity $transition;
 
-	.with-hover-action:hover & {
+	&:hover,
+	.with-hover-action:hover &,
+	.with-hover-action--sibling:hover &,
+	.with-hover-action:hover + .with-hover-action--sibling & {
 		opacity: 1;
 	}
 
