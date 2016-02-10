@@ -2,19 +2,24 @@
 	position: relative;
 
 	&__list {
-		display: flex;
-		flex-flow: row wrap;
-
 		> li {
-			width: 50%;
 			margin-bottom: 10px;
+		}
 
-			&:nth-child(odd) {
-				padding-right: 10px;
-			}
+		@media (min-width: $bp-medium) {
+			display: flex;
+			flex-flow: row wrap;
 
-			&:nth-child(even) {
-				padding-left: 10px;
+			> li {
+				width: 50%;
+
+				&:nth-child(odd) {
+					padding-right: 10px;
+				}
+
+				&:nth-child(even) {
+					padding-left: 10px;
+				}
 			}
 		}
 	}
@@ -37,7 +42,7 @@
 	}
 
 	&__title {
-		padding: 0 10px;
+		padding: 0 65px 0 10px;
 		text-align: left;
 	}
 
@@ -46,15 +51,38 @@
 		margin: 0;
 	}
 
-	&__quantity-wrapper {
+	&__action {
 		position: absolute;
 		top: 50%;
-		right: 5px;
 		transform: translateY(-50%);
+
+		&--left {
+			left: 10px;
+		}
+
+		&--right {
+			right: 10px;
+		}
+	}
+
+	&__quantity-wrapper {
+		margin-right: -5px;
 	}
 
 	&__quantity {
 		font-size: 18px;
+	}
+
+	&__check-wrapper {
+		padding: 10px 5px 10px 10px;
+		left: 0;
+		border-radius: 50%;
+		z-index: 9;
+		outline: none;
+		cursor: pointer;
+		user-select: none;
+		// Smooth rotation on iOS
+		-webkit-perspective: 500px;
 	}
 
 	&__logo,
@@ -70,6 +98,7 @@
 		&--placeholder {
 			height: 40px;
 			width: 40px;
+			flex-shrink: 0;
 		}
 	}
 
@@ -77,13 +106,18 @@
 		transform: rotate3d(0, 1, 0, -180deg);
 		height: 40px;
 		width: 40px;
-		line-height: 40px;
 		margin-top: -40px;
 		font-size: 24px;
 		text-align: center;
-		background: #A5D6A7;
-		color: white;
+		background: #757575;
 		border-radius: 50%;
+
+		md-icon {
+			color: white;
+			vertical-align: text-bottom;
+			opacity: .2;
+			transform: scale(.5);
+		}
 	}
 
 	&.is-checked & {
@@ -94,6 +128,13 @@
 		&__check-mark {
 			transform: rotate3d(0, 1, 0, 0);
 			z-index: 10;
+
+			md-icon {
+				opacity: 1;
+				transform: scale(1);
+				transition: opacity $transition, transform $transition;
+				transition-delay: .1s;
+			}
 		}
 	}
 }

@@ -4,7 +4,8 @@ function ReplenishmentThumbDirective () {
 		scope: {
 			product: '=',
 			quantity: '=',
-			supplier: '='
+			supplier: '=',
+			checked: '='
 		},
 		controller: function(replenishmentService) {
 			var vm = this;

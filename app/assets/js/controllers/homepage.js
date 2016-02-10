@@ -15,11 +15,13 @@ function HomepageController (customerService, suppliersService, replenishmentSer
 		return supplierMap;
 	}, {});
 
+	vm.checked = {};
+
 	vm.replenishmentItems = replenishmentItems;
 
 	vm.replenishAllItems = function() {
 		var filtered = vm.replenishmentItems.filter(function(item) {
-			return item.checked;
+			return vm.checked[item.product.id];
 		});
 
 		replenishmentService

@@ -1,14 +1,14 @@
-<div class="replenishment" ng-class="{'is-checked': vm.checked}">
-	<div ng-click="vm.checked = !vm.checked" style="position: absolute; top: 10px; left: 10px; z-index: 9; outline: none; -webkit-perspective: 500px;">
+<div class="replenishment with-hover-action" ng-class="{'is-checked': vm.checked[vm.product.id]}">
+	<div class="replenishment__check-wrapper replenishment__action replenishment__action--left" ng-click="vm.checked[vm.product.id] = !vm.checked[vm.product.id]">
 		<div supplier-logo class="replenishment__logo" supplier="::vm.supplier" size="40"></div>
 		<div class="replenishment__check-mark">
-			<span>✓</span>
+			<md-icon md-svg-src="assets/images/icons/done.svg"></md-icon>
 		</div>
 	</div>
 
-	<md-button class="replenishment__button md-whiteframe md-whiteframe-z1 layout-row layout-align-space-between-center with-hover-action" ng-disabled="vm.quantity === 0" ng-click="vm.replenishItem()">
+	<md-button class="replenishment__button md-whiteframe md-whiteframe-z1 layout-row layout-align-space-between-center" ng-disabled="vm.quantity === 0" ng-click="vm.replenishItem()">
 		<div class="replenishment__logo--placeholder"></div>
-		<div class="replenishment__title flex">
+		<div class="replenishment__title trim-text flex">
 			<h3 class="replenishment__name md-body-1" ng-bind="::vm.product.name"></h3>
 			<div class="product-sizing" ng-show="::vm.product.pack_size || vm.product.unit_size"><!--
 			/--><span ng-show="::vm.product.pack_size" ng-bind="::vm.product.pack_size"></span><!--
@@ -18,7 +18,7 @@
 		</div>
 	</md-button>
 
-	<div class="replenishment__quantity-wrapper with-hover-action--sibling layout-row layout-align-center-center" ng-click="vm.trapClick($event)">
+	<div class="replenishment__quantity-wrapper replenishment__action replenishment__action--right layout-row layout-align-center-center" ng-click="vm.trapClick($event)">
 		<md-button class="md-icon-button md-icon-button--quantity hover-action" ng-click="vm.changeQuantity(-1)" ng-disabled="vm.quantity < 1" aria-label="decrease quantity">
 			<md-icon md-svg-src="assets/images/icons/minus-circle.svg"></md-icon>
 		</md-button>

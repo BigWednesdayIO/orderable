@@ -35,7 +35,7 @@
 				</md-button>
 			</div>
 			<ul class="replenishment__list unstyled-list">
-				<li replenishment-thumb product="item.product" quantity="item.quantity" supplier="vm.replenishmentSuppliers[item.product.supplier_id]" ng-repeat="item in ::vm.replenishmentItems track by item.product.id"></li>
+				<li replenishment-thumb product="item.product" quantity="item.quantity" supplier="vm.replenishmentSuppliers[item.product.supplier_id]" checked="vm.checked" ng-repeat="item in ::vm.replenishmentItems track by item.product.id"></li>
 			</ul>
 		</section>
 
