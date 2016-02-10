@@ -1,4 +1,4 @@
-function PurchaseOrderController ($window, orderDetails, supplierInfo, supplierMembership) {
+function PurchaseOrderController ($window, $timeout, $stateParams, orderDetails, supplierInfo, supplierMembership) {
 	var vm = this;
 
 	vm.order = orderDetails;
@@ -10,6 +10,10 @@ function PurchaseOrderController ($window, orderDetails, supplierInfo, supplierM
 	vm.print = function() {
 		$window.print();
 	};
+
+	if ($stateParams.print) {
+		$timeout(vm.print, 500);
+	}
 }
 
 PurchaseOrderController.resolve = /* @ngInject */ {
