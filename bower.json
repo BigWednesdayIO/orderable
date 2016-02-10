@@ -25,6 +25,6 @@
     "angular-digest-hud": "mstrutt/digest-hud#feature/no-jquery"
   },
   "resolutions": {
-    "angular": "1.4.5-build.4188+sha.7e67e52"
+    "angular": "1.4.9"
   }
 }
