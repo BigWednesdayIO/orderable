@@ -75,7 +75,7 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			templateUrl: 'views/order.html'
 		})
 		.state('purchase-order', {
-			url: '/account/orders/:orderId/purchase-order/:id/',
+			url: '/account/orders/:orderId/purchase-order/:id/?print',
 			controller: 'PurchaseOrderController as vm',
 			resolve: PurchaseOrderController.resolve,
 			templateUrl: 'views/purchase-order.html'

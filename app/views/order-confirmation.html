@@ -33,6 +33,9 @@
 										<span ng-bind="::order_form.delivery_window.display_name"></span>
 									</h3>
 								</div>
+								<md-button class="md-icon-button md-accent md-hue-2 order-confirmation__po-button" ng-href="account/orders/{{ ::vm.order.id }}/purchase-order/{{ ::order_form.id }}/?print=true">
+									<md-icon md-svg-src="assets/images/icons/print.svg"></md-icon>
+								</md-button>
 								<md-divider ng-if="::!$last"></md-divider>
 							</md-list-item>
 						</md-list>

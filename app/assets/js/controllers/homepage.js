@@ -35,6 +35,11 @@ HomepageController.resolve = /* @ngInject */ {
 			.getAllSuppliers()
 	},
 	featuredSupplierProducts: function($q, searchService, availableSuppliers) {
+		// Speeding things up while I work on replenishment
+		if (true) {
+			return [];
+		}
+
 		return $q.all(availableSuppliers.map(function(supplier) {
 			return searchService
 				.getResults({
