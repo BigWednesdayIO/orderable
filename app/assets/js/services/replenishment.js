@@ -1,4 +1,4 @@
-function ReplenishmentService ($state, $q, ordersService, productsService, basketService, deliveryDatesService, checkoutService, _) {
+function ReplenishmentService ($state, $q, $timeout, ordersService, productsService, basketService, deliveryDatesService, checkoutService, _) {
 	var service = this;
 
 	service.refreshLineItems = function(lineItems) {
@@ -110,6 +110,28 @@ function ReplenishmentService ($state, $q, ordersService, productsService, baske
 				]);
 			});
 	};
+
+	var replenishmentItems = [];
+	var debounce;
+
+	service.replenishSingleItem = function(item) {
+		// Bundles up single replenishment calls into one request when placed close together
+		var deferred = $q.defer();
+
+		replenishmentItems.push(item);
+
+		$timeout.cancel(debounce);
+		debounce = $timeout(function() {
+			var action = service
+				.replenish(replenishmentItems);
+
+			replenishmentItems = [];
+
+			deferred.resolve(action);
+		}, 1000);
+
+		return deferred.promise;
+	}
 }
 
 angular

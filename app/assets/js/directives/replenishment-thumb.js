@@ -29,10 +29,10 @@ function ReplenishmentThumbDirective () {
 
 			vm.replenishItem = function() {
 				replenishmentService
-					.replenish([{
+					.replenishSingleItem({
 						product: vm.product,
 						quantity: vm.quantity
-					}]);
+					});
 			};
 		},
 		controllerAs: 'vm',
