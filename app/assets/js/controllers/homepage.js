@@ -1,4 +1,4 @@
-function HomepageController (customerService, suppliersService, availableSuppliers, featuredSupplierProducts) {
+function HomepageController (customerService, suppliersService, replenishmentService, availableSuppliers, featuredSupplierProducts, replenishmentItems) {
 	var vm = this;
 
 	vm.isSignedIn = customerService.isSignedIn();
@@ -9,6 +9,24 @@ function HomepageController (customerService, suppliersService, availableSupplie
 	});
 
 	vm.featuredSupplierProducts = featuredSupplierProducts;
+
+	vm.replenishmentSuppliers = availableSuppliers.reduce(function(supplierMap, supplier) {
+		supplierMap[supplier.id] = supplier;
+		return supplierMap;
+	}, {});
+
+	vm.checked = {};
+
+	vm.replenishmentItems = replenishmentItems;
+
+	vm.replenishAllItems = function() {
+		var filtered = vm.replenishmentItems.filter(function(item) {
+			return vm.checked[item.product.id];
+		});
+
+		replenishmentService
+			.replenish(filtered.length ? filtered : vm.replenishmentItems);
+	};
 }
 
 HomepageController.resolve = /* @ngInject */ {
@@ -30,12 +48,17 @@ HomepageController.resolve = /* @ngInject */ {
 				});
 		}))
 			.then(function(response) {
-				return response.map(function(hits, index) {
-					return {
-						supplier: availableSuppliers[index].id,
-						hits: hits
-					};
-				});
+				return response
+					.map(function(hits, index) {
+						return {
+							supplier: availableSuppliers[index].id,
+							hits: hits
+						};
+					})
+					.filter(function(featured) {
+						// 7 is the minimum to have a meaningful 2nd page on large screen
+						return featured.hits.length > 7;
+					});
 			});
 	},
 	homepageHero: function($http) {
@@ -44,6 +67,17 @@ HomepageController.resolve = /* @ngInject */ {
 			url: 'assets/images/orderable-hero.jpg',
 			cache: true
 		});
+	},
+	replenishmentItems: function(customerService, replenishmentService) {
+		if (!customerService.isSignedIn()) {
+			return [];
+		}
+
+		return replenishmentService
+			.getReplenishmentItems()
+			.catch(function() {
+				return [];
+			});
 	}
 };
 

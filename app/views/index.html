@@ -25,6 +25,20 @@
 
 <div class="content-wrap">
 	<main class="layout-margin">
+		<section class="replenishment" ng-if="::vm.replenishmentItems.length">
+			<div class="layout-row layout-align-space-between-center" style="margin: 0 0 5px;">
+				<h2 class="md-title">
+					<span>Instant order</span>
+				</h2>
+				<md-button ng-click="vm.replenishAllItems()" class="md-primary md-raised" style="margin: 0;">
+					<span>Resupply</span>
+				</md-button>
+			</div>
+			<ul class="replenishment__list unstyled-list">
+				<li replenishment-thumb product="item.product" quantity="item.quantity" supplier="vm.replenishmentSuppliers[item.product.supplier_id]" checked="vm.checked" ng-repeat="item in ::vm.replenishmentItems track by item.product.id"></li>
+			</ul>
+		</section>
+
 		<supplier-featured-items ng-repeat="featured in ::vm.featuredSupplierProducts" supplier="::featured.supplier" hits="::featured.hits" button-text="Shop store"></supplier-featured-items>
 	</main>
 </div>

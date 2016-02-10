@@ -61,6 +61,15 @@
 		padding: 0;
 	}
 
+	&__po-button {
+		align-self: center;
+
+		&.md-button.md-icon-button {
+			margin-left: 12px;
+			margin-right: 0;
+		}
+	}
+
 	@media (min-width: $bp-medium) {
 		main {
 			padding: 10px 60px;

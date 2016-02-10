@@ -249,6 +249,7 @@ fieldset {
 	opacity: 0;
 	transition: opacity $transition;
 
+	&:hover,
 	.with-hover-action:hover & {
 		opacity: 1;
 	}
@@ -276,4 +277,10 @@ fieldset {
 	.hide-print {
 		display: none !important;
 	}
+}
+
+.trim-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }

@@ -69,7 +69,7 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, custome
 	};
 
 	service.completeCheckout = function(data) {
-		if (!data.delivery_address.name || !data.billing_address.name || !data.payment_method) {
+		if (!data.delivery_address.name || !data.billing_address.name) {
 			return notifyError({
 				message: 'Please fill out all parts of the checkout form'
 			});

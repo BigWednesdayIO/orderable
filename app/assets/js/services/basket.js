@@ -3,6 +3,10 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 	var taxAmount = 0.2;
 
 	function notifyError (error) {
+		if (service.hideUpdates) {
+			return $q.reject(error);
+		}
+
 		$mdToast.show(
 			$mdToast.simple()
 				.content(error.message)
@@ -77,10 +81,12 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 
 		browserStorage.setItem('basket', service.basket);
 		$rootScope.$emit('basketUpdated', service.basket.line_item_count);
+
+		return $q.when(service.basket);
 	}
 
 	function showUpdate (lineItem) {
-		if (!$mdMedia('gt-md') || $state.is('basket') || $state.is('checkout')) {
+		if (service.hideUpdates || !$mdMedia('gt-md') || $state.is('basket') || $state.is('checkout')) {
 			return;
 		}
 		return $mdToast.show({
@@ -116,12 +122,11 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 
 	calculateTotals();
 
-	service.createBasket = function() {
-		_.forEach(emptyBakset(), function(value, key) {
+	service.createBasket = function(basket) {
+		_.forEach(basket || emptyBakset(), function(value, key) {
 			service.basket[key] = value;
 		});
-		calculateTotals();
-		return $q.when(service.basket);
+		return calculateTotals();
 	};
 
 	service.checkProductSupplier = function(product) {
@@ -194,22 +199,16 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 					service.basket.order_forms[supplierIndex].line_items[productIndex].quantity = quantity;
 				}
 
-				calculateTotals();
-
-				return service.basket.order_forms[supplierIndex].line_items[productIndex];
+				return calculateTotals()
+					.then(function() {
+						return service.basket.order_forms[supplierIndex].line_items[productIndex];
+					});
 			})
 			.then(function(lineItem) {
 				showUpdate(lineItem);
 				return lineItem;
 			})
-			.catch(function notifyError (error) {
-				$mdToast.show(
-					$mdToast.simple()
-						.content(error.message)
-						.hideDelay(3000)
-				);
-				return $q.reject(error);
-			});
+			.catch(notifyError);
 	};
 
 	service.removeFromBasket = function(product) {
@@ -236,9 +235,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 			service.basket.order_forms.splice(supplierIndex, 1);
 		}
 
-		calculateTotals();
-
-		return $q.when();
+		return calculateTotals();
 	};
 
 	service.getProductQuantity = function(product) {

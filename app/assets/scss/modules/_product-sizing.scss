@@ -1,0 +1,17 @@
+.product-sizing {
+	display: inline-block;
+	line-height: inherit;
+	color: rgba(0, 0, 0, .54);
+
+	&::before {
+		content: '(';
+	}
+
+	&::after {
+		content: ')';
+	}
+
+	&__multiples {
+		padding: 0 .2em;
+	}
+}

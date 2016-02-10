@@ -23,6 +23,7 @@
 
 	&__title {
 		margin: 16px 0 2px;
+		line-height: 18px;
 	}
 
 	&__name {
@@ -32,29 +33,6 @@
 		&:hover {
 			text-decoration: underline;
 		}
-	}
-
-	&__sizing {
-		display: inline-block;
-		color: rgba(0, 0, 0, .54);
-
-		&::before {
-			content: '(';
-		}
-
-		&::after {
-			content: ')';
-		}
-
-		&__multiples {
-			padding: 0 .2em;
-		}
-	}
-
-	&__name,
-	&__price,
-	&__sizing {
-		line-height: 18px;
 	}
 
 	&__actions {
@@ -69,6 +47,7 @@
 		display: flex;
 		flex-flow: row wrap;
 		align-items: baseline;
+		line-height: 18px;
 		font-weight: 600;
 	}
 
