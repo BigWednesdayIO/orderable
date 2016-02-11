@@ -1,0 +1,20 @@
+<div class="supplier-logos" ng-class="{'is-open': isOpen}" ng-click="toggleOpen()">
+	<div class="supplier-logos__viewport">
+		<div class="content-wrap">
+			<div class="supplier-logos__wrap">
+				<a ng-href="{{ ::supplier.href }}" class="supplier-logos__logo" ng-repeat="supplier in ::suppliers">
+					<div supplier-logo supplier="::supplier" size="$mdMedia('gt-sm') ? 80 : 60"></div>
+				</a>
+				<a ng-href="{{ ::supplier.href }}" class="supplier-logos__logo supplier-logos__logo--duplicate" ng-repeat="supplier in ::suppliers">
+					<div supplier-logo supplier="::supplier" size="$mdMedia('gt-sm') ? 80 : 60"></div>
+				</a>
+				<a ng-href="{{ ::supplier.href }}" class="supplier-logos__logo supplier-logos__logo--duplicate" ng-repeat="supplier in ::suppliers">
+					<div supplier-logo supplier="::supplier" size="$mdMedia('gt-sm') ? 80 : 60"></div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<md-button class="supplier-logos__expand-button md-icon-button md-raised" aria-label="expand suppliers">
+		<md-icon md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
+	</md-button>
+</div>
