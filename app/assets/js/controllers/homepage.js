@@ -34,9 +34,9 @@ HomepageController.resolve = /* @ngInject */ {
 		return suppliersService
 			.getAllSuppliers()
 	},
-	featuredSupplierProducts: function($q, searchService, availableSuppliers) {
+	featuredSupplierProducts: function($q, customerService, searchService, availableSuppliers) {
 		// Speeding things up while I work on replenishment
-		if (true) {
+		if (customerService.isSignedIn()) {
 			return [];
 		}
 

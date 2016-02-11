@@ -197,22 +197,6 @@ fieldset {
 	}
 }
 
-.supplier-logo-box {
-	border: $divider;
-	border-left-width: 0;
-	border-right-width: 0;
-	background: white;
-	margin-bottom: 40px;
-
-	&__logo {
-		margin: 10px;
-
-		@media (min-width: $bp-medium) {
-			margin: 20px;
-		}
-	}
-}
-
 .md-whiteframe {
 	background: white;
 
