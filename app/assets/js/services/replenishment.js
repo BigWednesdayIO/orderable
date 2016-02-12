@@ -88,15 +88,13 @@ function ReplenishmentService ($state, $q, $timeout, ordersService, customerServ
 
 				checkout.delivery_address = customerInfo.address || lastOrder.delivery_address;
 				checkout.billing_address = customerInfo.address || lastOrder.billing_address;
+				checkout.billing_address.email = customerInfo.email;
 				checkout.payment_method = lastOrder.payment_method;
 				checkout.basket.order_forms = checkout.basket.order_forms.map(function(orderForm) {
 					orderForm.delivery_window = deliveryDates[orderForm.supplier_id][0].windows[0];
 					return orderForm;
 				});
-				checkout.basket.shipping_total = checkout.basket.order_forms.reduce(function(total, order_form) {
-					return total + (((order_form.delivery_window || {}).price || 0) * 100);
-				}, 0) / 100;
-				checkout.basket.total = checkout.basket.subtotal + checkout.basket.tax + checkout.basket.shipping_total;
+				checkoutService.calculateDeliveryTotals(checkout.basket);
 
 				return checkoutService
 					.completeCheckout(checkout);

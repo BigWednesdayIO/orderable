@@ -68,6 +68,13 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, custome
 			});
 	};
 
+	service.calculateDeliveryTotals = function(basket) {
+		basket.shipping_total = basket.order_forms.reduce(function(total, order_form) {
+			return total + (((order_form.delivery_window || {}).price || 0) * 100);
+		}, 0) / 100;
+		basket.total = basket.subtotal + basket.tax + basket.shipping_total;
+	};
+
 	service.completeCheckout = function(data) {
 		if (!data.delivery_address.name || !data.billing_address.name) {
 			return notifyError({
