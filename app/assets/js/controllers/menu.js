@@ -18,6 +18,16 @@ function MenuController ($rootScope, $state, $mdSidenav, navigationService, supp
 			.toggle();
 	};
 
+	vm.accountLinks = [
+		{
+			name: 'Orders',
+			url: 'account/orders/'
+		}, {
+			name: 'Settings',
+			url: 'account/settings/'
+		}
+	];
+
 	vm.suppliers = suppliersService.getCurrentSuppliers();
 
 	vm.getUrlForSupplier = function(supplier) {
