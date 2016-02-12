@@ -46,6 +46,10 @@ function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) 
 			headers: {
 				Authorization: service.getSessionInfo().token
 			}
+		})
+		.then(function(info) {
+			customerInfo = info;
+			return info;
 		});
 	};
 
