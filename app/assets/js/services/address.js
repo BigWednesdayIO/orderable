@@ -3,7 +3,7 @@ function AddressService ($mdDialog, $q, customerService) {
 
 	service.getSavedAddress = function() {
 		return customerService
-			.getInfo()
+			.getUpToDateInfo()
 			.then(function(info) {
 				return info.address;
 			});

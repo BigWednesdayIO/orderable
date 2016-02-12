@@ -4,7 +4,6 @@ function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) 
 	var sessionInfo;
 
 	function storeCustomerInfo (info) {
-		customerInfo = info;
 		sessionInfo = {
 			id: info.id,
 			token: info.token
@@ -36,9 +35,14 @@ function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) 
 			return $q.when(false);
 		}
 
+		return service
+			.getUpToDateInfo();
+	};
+
+	service.getUpToDateInfo = function() {
 		return $http({
 			method: 'GET',
-			url: API.customers + '/' + id,
+			url: API.customers + '/' + service.getSessionInfo().id,
 			headers: {
 				Authorization: service.getSessionInfo().token
 			}
