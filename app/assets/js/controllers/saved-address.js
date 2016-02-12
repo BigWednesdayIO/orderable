@@ -1,4 +1,4 @@
-function SavedAddressController (addressService, customerService, customerAddress) {
+function SavedAddressController (addressService, customerAddress) {
 	var vm = this;
 
 	vm.address = customerAddress;
@@ -7,24 +7,19 @@ function SavedAddressController (addressService, customerService, customerAddres
 		addressService
 			.editAddress($event, vm.address)
 			.then(function(newAddress) {
-				return customerService
-					.updateInfo({
-						address: newAddress
-					});
+				return addressService
+					.updateSavedAddress(newAddress);
 			})
-			.then(function(updatedInfo) {
-				vm.address = updatedInfo.address;
+			.then(function(updatedAddress) {
+				vm.address = updatedAddress;
 			});
 	};
 }
 
 SavedAddressController.resolve = /* @ngInject */ {
-	customerAddress: function(customerService) {
-		return customerService
-			.getInfo()
-			.then(function(info) {
-				return info.address;
-			});
+	customerAddress: function(addressService) {
+		return addressService
+			.getSavedAddress();
 	},
 	requiresSignIn: function(authorizationService) {
 		return authorizationService

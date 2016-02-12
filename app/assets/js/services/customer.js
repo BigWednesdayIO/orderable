@@ -1,9 +1,14 @@
 function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) {
 	var service = this;
 	var customerInfo;
+	var sessionInfo;
 
 	function storeCustomerInfo (info) {
 		customerInfo = info;
+		sessionInfo = {
+			id: info.id,
+			token: info.token
+		};
 		browserStorage.setItem('customer_id', info.id);
 		browserStorage.setItem('token', info.token);
 		return info;
@@ -57,13 +62,17 @@ function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) 
 						Authorization: session.token
 					}
 				});
+			})
+			.then(function(updatedInfo) {
+				customerInfo = updatedInfo;
+				return updatedInfo;
 			});
 	};
 
 	service.getSessionInfo = function() {
 		return {
-			id: (customerInfo || {}).id || browserStorage.getItem('customer_id'),
-			token: (customerInfo || {}).token || browserStorage.getItem('token')
+			id: (sessionInfo || {}).id || browserStorage.getItem('customer_id'),
+			token: (sessionInfo || {}).token || browserStorage.getItem('token')
 		};
 	};
 
@@ -104,6 +113,7 @@ function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) 
 
 	service.signOut = function() {
 		customerInfo = null;
+		sessionInfo = null;
 		browserStorage.removeItem('customer_id');
 		browserStorage.removeItem('token');
 		$rootScope.$emit('userSignOut');
