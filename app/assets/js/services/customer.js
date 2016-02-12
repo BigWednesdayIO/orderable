@@ -40,6 +40,26 @@ function CustomerService ($rootScope, $mdToast, $http, $q, API, browserStorage) 
 		});
 	};
 
+	service.updateInfo = function(updates) {
+		var session = service.getSessionInfo();
+
+		return service
+			.getInfo()
+			.then(function(serverInfo) {
+				delete serverInfo.id;
+				delete serverInfo._metadata;
+
+				return $http({
+					method: 'PUT',
+					url: API.customers + '/' + session.id,
+					data: angular.extend(serverInfo, updates),
+					headers: {
+						Authorization: session.token
+					}
+				});
+			});
+	};
+
 	service.getSessionInfo = function() {
 		return {
 			id: (customerInfo || {}).id || browserStorage.getItem('customer_id'),

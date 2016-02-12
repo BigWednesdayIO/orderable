@@ -25,6 +25,9 @@ function MenuController ($rootScope, $state, $mdSidenav, navigationService, supp
 		}, {
 			name: 'Settings',
 			url: 'account/settings/'
+		}, {
+			name: 'Address',
+			url: 'account/address/'
 		}
 	];
 
