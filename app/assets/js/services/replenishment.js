@@ -92,6 +92,7 @@ function ReplenishmentService ($state, $q, $timeout, ordersService, customerServ
 				checkout.payment_method = lastOrder.payment_method;
 				checkout.basket.order_forms = checkout.basket.order_forms.map(function(orderForm) {
 					orderForm.delivery_window = deliveryDates[orderForm.supplier_id][0].windows[0];
+					orderForm.delivery_date = orderForm.delivery_window.date;
 					return orderForm;
 				});
 				checkoutService.calculateDeliveryTotals(checkout.basket);

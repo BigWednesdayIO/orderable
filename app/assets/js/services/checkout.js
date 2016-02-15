@@ -73,6 +73,10 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, custome
 			return total + (((order_form.delivery_window || {}).price || 0) * 100);
 		}, 0) / 100;
 		basket.total = basket.subtotal + basket.tax + basket.shipping_total;
+		basket.order_forms = basket.order_forms.map(function(orderForm) {
+			orderForm.delivery_date = orderForm.delivery_window.date;
+			return orderForm;
+		});
 	};
 
 	service.completeCheckout = function(data) {

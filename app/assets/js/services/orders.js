@@ -48,6 +48,7 @@ function OrdersService ($filter, $http, $q, API, customerService, _) {
 					});
 				});
 				var $date = $filter('date');
+				var today = $date(new Date(), 'yyyy-MM-dd');
 
 				return _(orderForms)
 					.flatten()
@@ -96,6 +97,16 @@ function OrdersService ($filter, $http, $q, API, customerService, _) {
 						};
 					})
 					.sortBy(['date'])
+					.groupBy(function(deliveryDay) {
+						return $filter('materialDate')(deliveryDay.date);
+					})
+					.map(function(groupedDays, materialDate) {
+						return {
+							date: materialDate,
+							days: groupedDays
+						};
+					})
+					.sortBy('days[0].date')
 					.value();
 			});
 	};

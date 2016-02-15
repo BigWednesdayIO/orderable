@@ -1,6 +1,7 @@
 function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, openOrders, supplierInfo, _) {
 	var vm = this;
 	var $date = $filter('date');
+	var $materialDate = $filter('materialDate');
 
 	function offerUndo (deliveries, undo) {
 		return $mdToast.show(
@@ -47,6 +48,8 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 	vm.markSupplierAsDelivered = function($event, supplier) {
 		var deliveries = supplier.order_forms.length;
 		var date = $date(supplier.order_forms[0].delivery_date, 'yyyy-MM-dd');
+		var materialDate = $materialDate(date);
+		var dateGroupIndex;
 		var dateIndex;
 		var supplierIndex;
 
@@ -55,28 +58,16 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 		function undo () {
 			return resetSupplierStatus(supplier)
 				.then(function() {
-					if (typeof supplierIndex !== 'undefined') {
-						vm.orders[dateIndex].suppliers.splice(supplierIndex, 0, supplier);
-						return;
-					}
-
-					vm.orders.splice(dateIndex, 0, {
-						date: date,
-						suppliers: [supplier]
-					});
+					vm.orders[dateGroupIndex].days[dateIndex].suppliers.splice(supplierIndex, 0, supplier);
 				});
 		}
 
 		markSupplierAsDelivered(supplier)
 			.then(function() {
-				dateIndex = _.findIndex(vm.orders, {date: date});
-
-				if (vm.orders[dateIndex].suppliers.length === 1) {
-					vm.orders.splice(dateIndex, 1);
-				} else {
-					supplierIndex = _.findIndex(vm.orders[dateIndex].suppliers, {supplier_id: supplier.supplier_id});
-					vm.orders[dateIndex].suppliers.splice(supplierIndex, 1);
-				}
+				dateGroupIndex = _.findIndex(vm.orders, {date: materialDate});
+				dateIndex = _.findIndex(vm.orders[dateGroupIndex].days, {date: date});
+				supplierIndex = _.findIndex(vm.orders[dateGroupIndex].days[dateIndex].suppliers, {supplier_id: supplier.supplier_id});
+				vm.orders[dateGroupIndex].days[dateIndex].suppliers.splice(supplierIndex, 1);
 
 				return offerUndo(deliveries, undo);
 			});
@@ -86,19 +77,22 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 		var deliveries = deliveryDay.suppliers.reduce(function(total, supplier) {
 			return total += supplier.order_forms.length;
 		}, 0);
+		var materialDate = $materialDate(deliveryDay.date);
 		var dateIndex;
+		var dateGroupIndex;
 
 		function undo () {
 			return $q.all(deliveryDay.suppliers.map(resetSupplierStatus))
 				.then(function() {
-					vm.orders.splice(dateIndex, 0, deliveryDay);
+					vm.orders[dateGroupIndex].days.splice(dateIndex, 0, deliveryDay);
 				});
 		}
 
 		$q.all(deliveryDay.suppliers.map(markSupplierAsDelivered))
 			.then(function() {
-				dateIndex = _.findIndex(vm.orders, {date: deliveryDay.date});
-				vm.orders.splice(dateIndex, 1);
+				dateGroupIndex = _.findIndex(vm.orders, {date: materialDate});
+				dateIndex = _.findIndex(vm.orders[dateGroupIndex].days, {date: deliveryDay.date});
+				vm.orders[dateGroupIndex].days.splice(dateIndex, 1);
 
 				return offerUndo(deliveries, undo);
 			});
