@@ -268,3 +268,9 @@ fieldset {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.site-industry {
+	flex-shrink: 0;
+	width: 148px;
+	margin-right: 8px;
+}
