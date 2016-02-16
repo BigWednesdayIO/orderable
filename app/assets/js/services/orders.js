@@ -29,6 +29,14 @@ function OrdersService ($filter, $http, $q, API, customerService, _) {
 		});
 	};
 
+	service.getLatestOrder = function() {
+		return service
+			.getOrders()
+			.then(function(orders) {
+				return _.head(orders);
+			});
+	};
+
 	service.getOutstandingDeliveries = function() {
 		return service
 			.getOrders()

@@ -1,4 +1,4 @@
-function CheckoutController ($rootScope, $state, checkoutService, addressService, checkoutData, customerInfo, supplierInfo, deliveryDates) {
+function CheckoutController ($rootScope, $state, checkoutService, addressService, checkoutData, customerInfo, supplierInfo, deliveryDates, suggestedAddress) {
 	var vm = this;
 
 	vm.checkout = checkoutData;
@@ -6,6 +6,11 @@ function CheckoutController ($rootScope, $state, checkoutService, addressService
 	vm.deliveryDates = deliveryDates;
 
 	vm.supplierInfo = supplierInfo;
+
+	if (suggestedAddress) {
+		vm.checkout.delivery_address = angular.copy(suggestedAddress);
+		vm.checkout.billing_address = angular.copy(suggestedAddress);
+	}
 
 	vm.checkout.billing_address.email = customerInfo.email;
 
@@ -34,13 +39,10 @@ function CheckoutController ($rootScope, $state, checkoutService, addressService
 					id: response.id
 				});
 			});
-	}
+	};
 
 	$rootScope.$on('deliveryUpdated', function() {
-		vm.checkout.basket.shipping_total = vm.checkout.basket.order_forms.reduce(function(total, order_form) {
-			return total + (((order_form.delivery_window || {}).price || 0) * 100);
-		}, 0) / 100;
-		vm.checkout.basket.total = vm.checkout.basket.subtotal + vm.checkout.basket.tax + vm.checkout.basket.shipping_total;
+		checkoutService.calculateDeliveryTotals(vm.checkout.basket);
 	});
 }
 
@@ -75,6 +77,17 @@ CheckoutController.resolve = /* @ngInject */ {
 	customerInfo: function(customerService) {
 		return customerService
 			.getInfo();
+	},
+	suggestedAddress: function(ordersService, customerInfo) {
+		if (customerInfo.address) {
+			return customerInfo.address;
+		}
+
+		return service
+			.getLatestOrder()
+			.then(function() {
+				latestOrder.delivery_address;
+			});
 	},
 	requiresSignIn: function(authorizationService) {
 		return authorizationService

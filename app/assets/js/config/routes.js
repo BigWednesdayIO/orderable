@@ -56,6 +56,12 @@ function RoutingConfig ($stateProvider, $urlRouterProvider, $locationProvider, $
 			resolve: AccountSettingsController.resolve,
 			templateUrl: 'views/account-settings.html'
 		})
+		.state('saved-address', {
+			url: '/account/address/',
+			controller: 'SavedAddressController as vm',
+			resolve: SavedAddressController.resolve,
+			templateUrl: 'views/saved-address.html'
+		})
 		.state('open-orders', {
 			url: '/account/orders/',
 			controller: 'OpenOrdersController as vm',

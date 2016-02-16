@@ -1,5 +1,13 @@
-function AddressService ($mdDialog, $q) {
+function AddressService ($mdDialog, $q, customerService) {
 	var service = this;
+
+	service.getSavedAddress = function() {
+		return customerService
+			.getUpToDateInfo()
+			.then(function(info) {
+				return info.address;
+			});
+	};
 
 	service.editAddress = function($event, address, extraFields) {
 		return $mdDialog
@@ -14,7 +22,17 @@ function AddressService ($mdDialog, $q) {
 				},
 				clickOutsideToClose: true
 			});
-	}
+	};
+
+	service.updateSavedAddress = function(address) {
+		return customerService
+			.updateInfo({
+				address: address
+			})
+			.then(function(updatedInfo) {
+				return updatedInfo.address;
+			});
+	};
 }
 
 angular

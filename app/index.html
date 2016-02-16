@@ -108,8 +108,7 @@
 							<md-icon class="open-indicator" md-svg-src="assets/images/icons/chevron-down.svg"></md-icon>
 						</a>
 						<div class="account-nav__items md-whiteframe-z1" dropdown-items>
-							<a href="account/orders/">Orders</a>
-							<a href="account/settings/">Settings</a>
+							<a ng-repeat="link in ::vm.accountLinks" ng-href="{{ ::link.url }}" ng-bind="::link.name"></a>
 							<a href="#" ng-show="vm.isSignedIn" ng-click="vm.signOut()">Sign out</a>
 						</div>
 					</nav>
@@ -206,13 +205,10 @@
 							</md-button>
 
 							<md-list ng-show="vm.openMenu === 'account'" class="animate-slide">
-								<md-list-item>
-									<md-button class="menu-link" ng-href="account/orders/">Orders</md-button>
+								<md-list-item ng-repeat="link in ::vm.accountLinks">
+									<md-button class="menu-link" ng-href="{{ ::link.url }}">{{ ::link.name }}</md-button>
 								</md-list-item>
-								<md-list-item>
-									<md-button class="menu-link" ng-href="account/settings/">Settings</md-button>
-								</md-list-item>
-								<md-list-item>
+								<md-list-item ng-show="vm.isSignedIn">
 									<md-button class="menu-link" ng-click="vm.signOut()">Sign out</md-button>
 								</md-list-item>
 							</md-list>
