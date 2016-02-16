@@ -1,4 +1,4 @@
-function AddressService ($mdDialog, $q, customerService) {
+function AddressService ($mdDialog, $http, $q, API, customerService) {
 	var service = this;
 
 	service.getSavedAddress = function() {
@@ -31,6 +31,20 @@ function AddressService ($mdDialog, $q, customerService) {
 			})
 			.then(function(updatedInfo) {
 				return updatedInfo.address;
+			});
+	};
+
+	service.lookupPostcode = function(postcode) {
+		return $http({
+			method: 'GET',
+			url: API.addressLookup + '/' + postcode,
+			params: {
+				'api-key': 	'X7MEgMQ4D0aH2hv1A983XA3284',
+				'format': true
+			}
+		})
+			.then(function(results) {
+				return results.Addresses;
 			});
 	};
 }

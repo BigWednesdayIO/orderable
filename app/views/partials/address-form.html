@@ -1,7 +1,26 @@
-<md-dialog class="md-dialog--padded">
+<md-dialog class="md-dialog--padded address-dialog">
 	<md-dialog-content>
 		<h2 class="md-headline">Edit address</h2>
-		<form name="vm.addressForm" ng-submit="vm.save($event)">
+		<form name="vm.addressLookup" ng-submit="vm.lookupAddress($event)" ng-hide="vm.hideLookup">
+			<div class="layout-row layout-align-start-end">
+				<md-input-container md-no-float>
+					<label>Postcode</label>
+					<input ng-model="vm.postcode" />
+				</md-input-container>
+				<md-button class="md-primary md-raised" style="margin-bottom: 0" type="submit">find address</md-button>
+			</div>
+			<md-select ng-model="vm.selectedAddress" ng-change="vm.addressSelected()" ng-show="vm.addresses.length" placeholder="Select address">
+				<md-option ng-repeat="address in vm.addresses track by address[0]" ng-value="address">{{ ::address[0] }}</md-option>
+			</md-select>
+		</form>
+
+		<form name="vm.addressForm" ng-submit="vm.save($event)" ng-show="vm.hideLookup">
+			<md-button type="button" class="md-icon-button address-dialog__action" ng-click="vm.hideLookup = false;" aria-label="Look up another address">
+				<md-icon md-svg-src="assets/images/icons/search.svg">
+					<md-tooltip>Look up another address</md-tooltip>
+				</md-icon>
+			</md-button>
+
 			<div class="layout-row">
 				<md-input-container class="flex-gt-sm-50">
 					<label>Name</label>
@@ -46,7 +65,7 @@
 			</div>
 		</form>
 	</md-dialog-content>
-	<div class="md-actions">
+	<div class="md-actions" ng-show="vm.hideLookup">
 		<md-button class="md-primary" ng-click="vm.cancel()">Cancel</md-button>
 		<md-button class="md-primary md-raised" ng-click="vm.save()">Save</md-button>
 	</div>
