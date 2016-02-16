@@ -30,32 +30,17 @@
 	flex-flow: row wrap;
 	overflow: hidden;
 
-	.pin {
+	&__pin {
 		position: absolute;
 		top: -8px;
 		right: -14px;
-		margin: 0;
-		opacity: .5;
-		transform: scale(1) translateY(0);
+		margin: 0 !important;
 		transition: transform .1s linear, opacity $transition;
-
-		&:hover {
-			transform: scale(1) translateY(-2px);
-			opacity: 1;
-		}
-
-		&:active {
-			transform: scale(.5) translateY(-2px);
-		}
-
-		md-icon {
-			color: rgba(0, 0, 0, .54) !important;
-		}
 	}
 
 	&--active {
-		.supplier {
-			opacity: .6;
+			.supplier {
+				opacity: .6;
 
 			&:hover,
 			&--is-pinned {
@@ -66,5 +51,30 @@
 				opacity: 1;
 			}
 		}
+	}
+}
+
+.pin-button {
+	transform: scale(1);
+	transition: transform .1s linear;
+
+	&:active {
+		transform: scale(.5);
+	}
+
+	&.md-secondary {
+		transform: scale(1) translate3d(0, -50%, 0);
+
+		&:active {
+			transform: scale(.5) translate3d(0, -75%, 0);
+		}
+	}
+
+	md-icon {
+		color: rgba(0, 0, 0, .24) !important;
+	}
+
+	.is-pinned {
+		color: rgba(0, 0, 0, .54) !important;
 	}
 }

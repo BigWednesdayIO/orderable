@@ -1,4 +1,4 @@
-function MembershipsService ($http, $q, API, customerService, _) {
+function MembershipsService ($mdToast, $http, $q, API, customerService, _) {
 	var service = this;
 
 	function notifyError (error) {

@@ -64,9 +64,8 @@
 							<md-content class="sub-nav" dropdown-items>
 								<ul class="pin-grid unstyled-list" ng-class="{'pin-grid--active': vm.hasPins}">
 									<li class="supplier" ng-repeat="supplier in vm.suppliers track by supplier.id" ng-class="{'supplier--is-pinned': vm.isPinned[supplier.id]}">
-										<md-button class="md-icon-button pin" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">
-											<md-icon md-svg-src="assets/images/icons/favorite-border.svg" ng-hide="vm.isPinned[supplier.id]"></md-icon>
-											<md-icon md-svg-src="assets/images/icons/favorite.svg" ng-show="vm.isPinned[supplier.id]"></md-icon>
+										<md-button class="md-icon-button pin-grid__pin pin-button" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">
+											<md-icon md-svg-src="assets/images/icons/pin.svg" ng-class="{'is-pinned': vm.isPinned[supplier.id]}"></md-icon>
 										</md-button>
 										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="supplier__link">
 											<div class="supplier-logo--placeholder" style="background-color: {{ supplier.colour }}; height: 60px; line-height: 60px; font-size: {{ 60 * 0.425 }}px; text-decoration: none;" ng-bind="supplier.initials || supplier.name.substring(0, 2)" title="{{ ::supplier.name }}"></div>
@@ -171,9 +170,8 @@
 										<md-icon style="margin: auto 12px auto 0; "><div supplier-logo supplier="::supplier" size="24"></div></md-icon>
 										<span ng-bind="::supplier.name"></span>
 									</md-button>
-									<md-button class="md-secondary md-icon-button" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">
-										<md-icon md-svg-src="assets/images/icons/favorite-border.svg" ng-hide="vm.isPinned[supplier.id]"></md-icon>
-										<md-icon md-svg-src="assets/images/icons/favorite.svg" ng-show="vm.isPinned[supplier.id]"></md-icon>
+									<md-button class="md-secondary md-icon-button pin-button" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">
+										<md-icon md-svg-src="assets/images/icons/pin.svg" ng-class="{'is-pinned': vm.isPinned[supplier.id]}"></md-icon>
 									</md-button>
 								</md-list-item>
 							</md-list>
