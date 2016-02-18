@@ -8,8 +8,8 @@
 		<div class="open-orders md-whiteframe md-whiteframe-z1">
 			<ul class="unstyled-list">
 				<li class="animate-repeat" ng-repeat="order in orderGroup.days track by order.date">
-					<div class="md-list-item-text">
-						<div class="open-orders__day layout-row layout-align-start-center with-hover-action" style="padding: 8px 16px" md-swipe-left="vm.markAllAsDelivered(order)" md-swipe-right="vm.markAllAsDelivered(order)" ng-hide="::['Yesterday', 'Today', 'Tomorrow'].indexOf(orderGroup.date) > -1">
+					<div class="md-list-item-text" swipe-away="vm.markAllAsDelivered(order)">
+						<div class="open-orders__day layout-row layout-align-start-center with-hover-action" style="padding: 8px 16px" swipe-away-target ng-hide="::['Yesterday', 'Today', 'Tomorrow'].indexOf(orderGroup.date) > -1">
 							<h2 class="md-subhead" ng-bind="::order.date | date: 'EEE, MMM d'"></h2>
 							<span class="flex"></span>
 							<span class="order__total" ng-bind="::order.basket.total | currency: '£'"></span>
@@ -21,8 +21,8 @@
 						</div>
 
 						<ul class="unstyled-list">
-							<li class="with-hover-action animate-repeat" ng-repeat="supplier in order.suppliers track by supplier.supplier_id">
-								<md-button class="open-orders__supplier" ng-class="{'is-open': supplier.expanded}" ng-click="supplier.expanded = !supplier.expanded" md-swipe-left="vm.markSupplierAsDelivered($event, supplier)" md-swipe-right="vm.markSupplierAsDelivered($event, supplier)">
+							<li class="with-hover-action animate-repeat" ng-repeat="supplier in order.suppliers track by supplier.supplier_id" swipe-away="vm.markSupplierAsDelivered($event, supplier)">
+								<md-button class="open-orders__supplier" ng-class="{'is-open': supplier.expanded}" ng-click="supplier.expanded = !supplier.expanded" swipe-away-target>
 									<div class="open-orders__avatar" supplier-logo supplier="::vm.supplierInfo[supplier.supplier_id]" size="40"></div>
 									<div class="layout-column layout-align-center">
 										<h3 class="open-orders__supplier__name md-subhead" ng-bind="::vm.supplierInfo[supplier.supplier_id].name"></h3>

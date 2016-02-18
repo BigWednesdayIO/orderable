@@ -274,3 +274,7 @@ fieldset {
 	width: 148px;
 	margin-right: 8px;
 }
+
+[swipe-away-target] {
+	user-select: none;
+}

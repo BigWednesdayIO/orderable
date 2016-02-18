@@ -53,7 +53,9 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 		var dateIndex;
 		var supplierIndex;
 
-		$event.stopPropagation();
+		if ($event) {
+			$event.stopPropagation();
+		}
 
 		function undo () {
 			return resetSupplierStatus(supplier)
