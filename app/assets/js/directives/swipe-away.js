@@ -15,19 +15,20 @@ function SwipeAwayDirective ($parse, $document, $window, $timeout) {
 			var visualUpdates;
 			var threshold;
 
-			var bodyStyle = $document[0].body.style;
 			var target = $element.find('[swipe-away-target]');
 			target = target.length ? target : $element;
 
 			var lockedIn;
 
+			var containerStyle = (document.querySelector('md-content') || $document[0].body).style;
+
 			function setStyles () {
-				bodyStyle.overflow = 'hidden';
+				containerStyle.overflow = 'hidden';
 				elementStyle.transition = 'none';
 			}
 
 			function resetStyles () {
-				bodyStyle.overflow = '';
+				containerStyle.overflow = '';
 				elementStyle.transition = '';
 			}
 
@@ -50,7 +51,10 @@ function SwipeAwayDirective ($parse, $document, $window, $timeout) {
 				var offset = getOffset();
 
 				if (offset.x > offset.y && offset.x > 5) {
-					lockedIn = true;
+					if (!lockedIn) {
+						setStyles();
+						lockedIn = true;
+					}
 					setOffset(x)
 				} else if (offset.y > offset.x && offset.y > 15) {
 					lockedIn = false;
@@ -97,7 +101,7 @@ function SwipeAwayDirective ($parse, $document, $window, $timeout) {
 					+ ', margin-bottom .2s ease-in-out';
 
 				var offset = getOffset();
-				if (offset.x < threshold) {
+				if (!threshold || offset.x < threshold) {
 					// Didn't complete swipe
 					setOffset(0);
 					$timeout(resetStyles, 200);

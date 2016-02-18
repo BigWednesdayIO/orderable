@@ -1,6 +1,7 @@
 .open-orders {
 	margin: 15px 0;
 	padding: 0;
+	background: #757575;
 
 	&__supplier {
 	    margin: 0;
@@ -80,5 +81,15 @@
 				width: auto;
 			}
 		}
+	}
+
+	&__order-group {
+		background: url('../images/icons/swipe-done-all.png') 0 21px no-repeat,
+			url('../images/icons/swipe-done-all.png') 100% 21px no-repeat;
+	}
+
+	&__orders {
+		background: url('../images/icons/swipe-done.png') 0 0 repeat-y,
+			url('../images/icons/swipe-done.png') 100% 0 repeat-y;
 	}
 }
