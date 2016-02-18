@@ -27,6 +27,7 @@
 							<span ng-show="vm.quantityInBasket === 0">Add to basket</span>
 							<span ng-show="vm.quantityInBasket > 0">Added to basket</span>
 						</md-button>
+						<span class="product-details__actions__spacer"></span>
 					</div>
 					<div class="product-details__actions" ng-if="::vm.product.in_stock === false">
 						<span class="product-details__stock-message">This product it out of stock</span>
@@ -49,4 +50,4 @@
 	</div>
 </main>
 
-<div ng-include="'views/partials/footer.html'"></div>
+<div class="product-details-footer" ng-include="'views/partials/footer.html'"></div>

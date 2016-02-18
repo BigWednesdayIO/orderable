@@ -26,7 +26,37 @@
 	}
 
 	&__actions {
-		margin-top: 16px;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 12px;
+		flex: 2;
+		background: white;
+		box-shadow: 0px -1px 3px 0px rgba(0, 0, 0, 0.2),
+			0px -1px 1px 0px rgba(0, 0, 0, 0.14),
+			0px -2px 1px -1px rgba(0, 0, 0, 0.12);
+
+		@media (min-width: $bp-medium) {
+			position: static;
+			padding: 0;
+			margin-top: 16px;
+			flex: none;
+			box-shadow: none;
+
+			&__spacer {
+				display: none;
+			}
+		}
+	}
+
+	&__actions__spacer,
+	&__quantity {
+		flex: 1;
+
+		@media (min-width: $bp-medium) {
+			flex: none;
+		}
 	}
 
 	&__quantity {
@@ -36,7 +66,13 @@
 
 	&__add-btn {
 		padding: 0 20px;
-		margin: 0 0 0 16px;
+		margin: 0 8px;
+		flex: 2;
+
+		@media (min-width: $bp-medium) {
+			margin: 0 0 0 16px;
+			flex: none;
+		}
 	}
 
 	&__stock-message {
@@ -74,5 +110,13 @@
 				border-top: 1px solid #e5e5e5;
 			}
 		}
+	}
+}
+
+.product-details-footer {
+	margin-bottom: 60px;
+
+	@media (min-width: $bp-medium) {
+		margin-bottom: 0;
 	}
 }
