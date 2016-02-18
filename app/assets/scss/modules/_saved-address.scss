@@ -1,9 +1,18 @@
 .saved-address {
+	position: relative;
+
 	@media (min-width: $bp-medium) {
 		width: (1/2) * 100%;
 	}
 
 	@media (min-width: $bp-large) {
 		width: (1/3) * 100%;
+	}
+
+	&__action {
+		position: absolute;
+		top: 6px;
+		right: 6px;
+		margin: 0;
 	}
 }

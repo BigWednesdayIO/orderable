@@ -1,11 +1,11 @@
 function AddressService ($mdDialog, $http, $q, API, customerService) {
 	var service = this;
 
-	service.getSavedAddress = function() {
+	service.getAddressBook = function() {
 		return customerService
 			.getUpToDateInfo()
 			.then(function(info) {
-				return info.address;
+				return info.addresses;
 			});
 	};
 
@@ -24,13 +24,13 @@ function AddressService ($mdDialog, $http, $q, API, customerService) {
 			});
 	};
 
-	service.updateSavedAddress = function(address) {
+	service.updateAddressBook = function(addresses) {
 		return customerService
 			.updateInfo({
-				address: address
+				addresses: addresses
 			})
 			.then(function(updatedInfo) {
-				return updatedInfo.address;
+				return updatedInfo.addresses;
 			});
 	};
 

@@ -1,0 +1,25 @@
+<main class="content-wrap content-wrap--940 flex">
+	<div class="layout-margin">
+		<h1 class="md-title">Address book</h1>
+		<p>This address will be used for instant ordering, and will be the default option at checkout</p>
+	</div>
+	<ul class="layout-gt-sm-row layout-wrap unstyled-list">
+		<li class="saved-address" ng-repeat="address in vm.addresses">
+			<div class="md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 12px">
+				<md-button class="md-icon-button saved-address__action" ng-click="vm.removeAddress($index)" aria-label="Delete address">
+					<md-icon md-svg-src="assets/images/icons/delete.svg"></md-icon>
+				</md-button>
+				<address-summary address="address"></address-summary>
+				<md-button class="md-primary align-text" ng-click="vm.editAddress($event, $index)">Edit address</md-button>
+			</div>
+		</li>
+		<li class="saved-address">
+			<md-button class="md-primary" ng-click="vm.editAddress($event)">
+				<md-icon md-svg-src="assets/images/icons/add.svg"></md-icon>
+				<span style="display: inline-block; vertical-align: middle;">Add an address</span>
+			</md-button>
+		</li>
+	</ul>
+</main>
+
+<div ng-include="'views/partials/footer.html'"></div>
