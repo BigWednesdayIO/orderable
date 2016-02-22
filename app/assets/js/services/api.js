@@ -14,6 +14,8 @@ function APIService (baseAPI) {
 	this.suppliers = baseAPI + 'suppliers';
 
 	this.orders = baseAPI + 'orders';
+
+	this.addressLookup = 'https://api.getAddress.io/v2/uk';
 }
 
 angular

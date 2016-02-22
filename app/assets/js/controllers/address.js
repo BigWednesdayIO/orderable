@@ -1,4 +1,4 @@
-function AddressController ($mdDialog, $q, address, extraFields) {
+function AddressController ($mdDialog, $q, address, addressService, extraFields) {
 	var vm = this;
 
 	vm.address = address;
@@ -22,6 +22,26 @@ function AddressController ($mdDialog, $q, address, extraFields) {
 		$mdDialog
 			.hide(vm.address);
 	};
+
+	vm.lookupAddress = function() {
+		return addressService
+			.lookupPostcode(vm.postcode)
+			.then(function(addresses) {
+				vm.addresses = addresses;
+			});
+	};
+
+	vm.addressSelected = function() {
+		vm.hideLookup = true;
+		vm.address.line_1 = vm.selectedAddress[0];
+		vm.address.line_2 = vm.selectedAddress[1];
+		vm.address.line_3 = vm.selectedAddress[2];
+		vm.address.city = vm.selectedAddress[3];
+		vm.address.region = vm.selectedAddress[4];
+		vm.address.postcode = vm.postcode;
+	};
+
+	vm.hideLookup = !!(address.name && address.line_1);
 }
 
 angular
