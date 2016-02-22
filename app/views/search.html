@@ -39,7 +39,7 @@
 				<section class="facets__section">
 					<h3 class="facets__heading md-body-2">Only Pinned Suppliers</h3>
 					<div class="facets__values">
-						<md-switch class="md-primary" ng-model="vm.onlyPinned" ng-change="vm.toggleOnlyPinned()" aria-label="Only pinned suppliers"></md-switch>
+						<md-switch class="md-primary pinned-toggle" ng-model="vm.onlyPinned" ng-change="vm.toggleOnlyPinned()" aria-label="Only pinned suppliers"></md-switch>
 					</div>
 				</section>
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
