@@ -41,6 +41,13 @@ function AddressController ($mdDialog, $q, address, addressService, extraFields)
 		vm.address.postcode = vm.postcode;
 	};
 
+	vm.isDefault = vm.address.default_delivery && vm.address.default_billing;
+
+	vm.changeDefault = function() {
+		vm.address.default_delivery = vm.isDefault;
+		vm.address.default_billing = vm.isDefault;
+	};
+
 	vm.hideLookup = !!(address.name && address.line_1);
 }
 

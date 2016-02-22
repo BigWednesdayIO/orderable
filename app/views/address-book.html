@@ -4,8 +4,8 @@
 		<p>This address will be used for instant ordering, and will be the default option at checkout</p>
 	</div>
 	<ul class="layout-gt-sm-row layout-wrap unstyled-list">
-		<li class="saved-address" ng-repeat="address in vm.addresses">
-			<div class="md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 12px">
+		<li class="saved-address" ng-repeat="address in vm.addresses" ng-class="{'is-default': address.default_billing && address.default_delivery}">
+			<div class="saved-address__container md-whiteframe md-whiteframe-z1 layout-margin">
 				<md-button class="md-icon-button saved-address__action" ng-click="vm.removeAddress($index)" aria-label="Delete address">
 					<md-icon md-svg-src="assets/images/icons/delete.svg"></md-icon>
 				</md-button>

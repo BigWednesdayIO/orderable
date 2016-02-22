@@ -19,6 +19,14 @@ function AddressBookController (addressService, addressBook) {
 		return addressService
 			.editAddress($event, address)
 			.then(function(newAddress) {
+				if (newAddress.default_billing && newAddress.default_delivery) {
+					newAddressBook = newAddressBook.map(function(addr) {
+						addr.default_delivery = false;
+						addr.default_billing = false;
+						return addr;
+					});
+				}
+
 				if (index > -1) {
 					newAddressBook[index] = newAddress;
 				} else {

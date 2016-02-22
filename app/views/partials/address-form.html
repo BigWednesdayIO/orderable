@@ -18,7 +18,7 @@
 			</div>
 		</form>
 
-		<form name="vm.addressForm" ng-submit="vm.save($event)" ng-show="vm.hideLookup">
+		<form name="vm.addressForm" ng-submit="vm.save($event)" ng-show="vm.hideLookup" style="overflow: hidden;">
 			<md-button type="button" class="md-icon-button address-dialog__action" ng-click="vm.hideLookup = false;" aria-label="Look up another address">
 				<md-icon md-svg-src="assets/images/icons/search.svg">
 					<md-tooltip>Look up another address</md-tooltip>
@@ -66,6 +66,9 @@
 					<label>Postcode</label>
 					<input name="postcode" ng-model="vm.address.postcode" required />
 				</md-input-container>
+			</div>
+			<div>
+				<md-checkbox class="md-primary" ng-model="vm.isDefault" ng-change="vm.changeDefault()">Default address</md-checkbox>
 			</div>
 		</form>
 	</md-dialog-content>
