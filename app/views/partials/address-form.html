@@ -12,6 +12,10 @@
 			<md-select ng-model="vm.selectedAddress" ng-change="vm.addressSelected()" ng-show="vm.addresses.length" placeholder="Select address">
 				<md-option ng-repeat="address in vm.addresses track by address[0]" ng-value="address">{{ ::address[0] }}</md-option>
 			</md-select>
+			<div>
+				<br />
+				<a href="#" class="secondary-link" ng-click="vm.hideLookup = true">or enter address manually</a>
+			</div>
 		</form>
 
 		<form name="vm.addressForm" ng-submit="vm.save($event)" ng-show="vm.hideLookup">

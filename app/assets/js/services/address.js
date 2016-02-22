@@ -1,6 +1,17 @@
 function AddressService ($mdDialog, $http, $q, API, customerService) {
 	var service = this;
 
+	function cleanAddresses (addresses) {
+		return addresses.map(function(address) {
+			Object.keys(address).forEach(function(key) {
+				if (address[key] === '') {
+					delete address[key];
+				}
+			})
+			return address;
+		});
+	}
+
 	service.getAddressBook = function() {
 		return customerService
 			.getUpToDateInfo()
@@ -27,7 +38,7 @@ function AddressService ($mdDialog, $http, $q, API, customerService) {
 	service.updateAddressBook = function(addresses) {
 		return customerService
 			.updateInfo({
-				addresses: addresses
+				addresses: cleanAddresses(addresses)
 			})
 			.then(function(updatedInfo) {
 				return updatedInfo.addresses;

@@ -14,7 +14,7 @@ function AddressBookController (addressService, addressBook) {
 
 	vm.editAddress = function($event, index) {
 		var address = vm.addresses[index] || {};
-		var newAddressBook = vm.addresses;
+		var newAddressBook = angular.copy(vm.addresses);
 
 		return addressService
 			.editAddress($event, address)
@@ -30,11 +30,11 @@ function AddressBookController (addressService, addressBook) {
 	};
 
 	vm.removeAddress = function($index) {
-		var newAddressBook = vm.addresses;
+		var newAddressBook = angular.copy(vm.addresses);
 
 		newAddressBook.splice($index, 1);
 		return syncAddressBook(newAddressBook);
-	}
+	};
 }
 
 AddressBookController.resolve = /* @ngInject */ {
