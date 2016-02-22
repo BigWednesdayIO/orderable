@@ -85,9 +85,10 @@ function ReplenishmentService ($state, $q, $timeout, ordersService, customerServ
 				var customerInfo = responses[1]
 				var lastOrder = _.head(responses[2]);
 				var deliveryDates = responses[3];
+				var customerAddress = (customerInfo.addresses || [])[0]
 
-				checkout.delivery_address = customerInfo.address || lastOrder.delivery_address;
-				checkout.billing_address = customerInfo.address || lastOrder.billing_address;
+				checkout.delivery_address = customerAddress || lastOrder.delivery_address;
+				checkout.billing_address = customerAddress || lastOrder.billing_address;
 				checkout.billing_address.email = customerInfo.email;
 				checkout.payment_method = lastOrder.payment_method;
 				checkout.basket.order_forms = checkout.basket.order_forms.map(function(orderForm) {
