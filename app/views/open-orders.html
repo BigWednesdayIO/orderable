@@ -1,15 +1,17 @@
 <main class="content-wrap content-wrap--940 flex">
-	<h1 class="md-headline">Open orders</h1>
+	<div class="pad-small">
+		<h1 class="md-headline">Open orders</h1>
 
-	<p>Open orders shows all items that have yet to be delivered, soonest first. To see every order you've placed on Orderable, go to your <a href="account/orders/history/"><u>order history</u></a>.</p>
+		<p>Open orders shows all items that have yet to be delivered, soonest first. To see every order you've placed on Orderable, go to your <a href="account/orders/history/"><u>order history</u></a>.</p>
+	</div>
 
 	<div ng-repeat="orderGroup in ::vm.orders track by orderGroup.date" ng-show="orderGroup.days.length">
-		<h2  class="md-title" ng-bind="::orderGroup.date"></h2>
+		<h2 class="md-title pad-small" ng-bind="::orderGroup.date"></h2>
 		<div class="open-orders md-whiteframe md-whiteframe-z1">
 			<ul class="unstyled-list">
-				<li class="animate-repeat" ng-repeat="order in orderGroup.days track by order.date">
-					<div class="md-list-item-text">
-						<div class="open-orders__day layout-row layout-align-start-center with-hover-action" style="padding: 8px 16px" md-swipe-left="vm.markAllAsDelivered(order)" md-swipe-right="vm.markAllAsDelivered(order)" ng-hide="::['Yesterday', 'Today', 'Tomorrow'].indexOf(orderGroup.date) > -1">
+				<li class="open-orders__order-group animate-repeat" ng-repeat="order in orderGroup.days track by order.date" ng-show="order.suppliers.length">
+					<div class="md-list-item-text" swipe-away="vm.markAllAsDelivered(order)">
+						<div class="open-orders__day layout-row layout-align-start-center with-hover-action" style="padding: 8px 16px" swipe-away-target ng-hide="::['Yesterday', 'Today', 'Tomorrow'].indexOf(orderGroup.date) > -1">
 							<h2 class="md-subhead" ng-bind="::order.date | date: 'EEE, MMM d'"></h2>
 							<span class="flex"></span>
 							<span class="order__total" ng-bind="::order.basket.total | currency: '£'"></span>
@@ -20,9 +22,9 @@
 							</md-button>
 						</div>
 
-						<ul class="unstyled-list">
-							<li class="with-hover-action animate-repeat" ng-repeat="supplier in order.suppliers track by supplier.supplier_id">
-								<md-button class="open-orders__supplier" ng-class="{'is-open': supplier.expanded}" ng-click="supplier.expanded = !supplier.expanded" md-swipe-left="vm.markSupplierAsDelivered($event, supplier)" md-swipe-right="vm.markSupplierAsDelivered($event, supplier)">
+						<ul class="open-orders__orders unstyled-list">
+							<li class="md-whiteframe with-hover-action animate-repeat" ng-repeat="supplier in order.suppliers track by supplier.supplier_id" swipe-away="vm.markSupplierAsDelivered($event, supplier)">
+								<md-button class="open-orders__supplier" ng-class="{'is-open': supplier.expanded}" ng-click="supplier.expanded = !supplier.expanded" swipe-away-target>
 									<div class="open-orders__avatar" supplier-logo supplier="::vm.supplierInfo[supplier.supplier_id]" size="40"></div>
 									<div class="layout-column layout-align-center">
 										<h3 class="open-orders__supplier__name md-subhead" ng-bind="::vm.supplierInfo[supplier.supplier_id].name"></h3>

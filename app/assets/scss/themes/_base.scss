@@ -274,3 +274,17 @@ fieldset {
 	width: 148px;
 	margin-right: 8px;
 }
+
+[swipe-away-target] {
+	user-select: none;
+}
+
+.pad-small {
+	padding-left: 8px;
+	padding-right: 8px;
+
+	@media (min-width: $bp-large) {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
