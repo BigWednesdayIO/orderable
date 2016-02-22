@@ -3,7 +3,7 @@ function AddressBookController (addressService, addressBook) {
 
 	function syncAddressBook (newAddressBook) {
 		return addressService
-			.updateAddressBook(newAddressBook);
+			.updateAddressBook(newAddressBook)
 			.then(function(updatedAddressBook) {
 				vm.addresses = updatedAddressBook;
 				return updatedAddressBook;
