@@ -1,87 +1,88 @@
-function DeliveryDatesService ($q, $filter) {
+function DeliveryDatesService ($filter, suppliersService) {
 	var service = this;
 
 	var $date = $filter('date');
 
-	service.getDatesForOrderForm = function(order_form) {
+	service.getDatesForOrderForm = function(orderForm) {
 		var dates = [
-				new Date(),
-				new Date(),
-				new Date()
-			],
-			now = dates[0],
-			dayOfMonth = now.getDate();
+			new Date(),
+			new Date(),
+			new Date()
+		];
+		var dayOfMonth = dates[0].getDate();
+		var tomorrow = (new Date()).setDate(dayOfMonth + 1);
 
-		dates = dates.map(function(date, i) {
-			// Now days in a row, starting today
-			date.setDate(dayOfMonth + i);
-			return $date(date, 'yyyy-MM-dd');
-		}).map(function(date, i) {
-			return {
-				date: date,
-				windows: [
-					{
+		return suppliersService
+			.getSupplierInfo(orderForm.supplier_id)
+			.then(function(supplierInfo) {
+				var i = supplierInfo.lead_time || 0;
+
+				return dates.map(function(date) {
+					// Now days in a row, starting tomorrow, skipping Sunday
+					do {
+						i++;
+						date.setDate(dayOfMonth + i);
+					} while(date.getDay() === 0);
+					return $date(date, 'yyyy-MM-dd');
+				}).map(function(date) {
+					var deliveryCharge = supplierInfo.delivery_charge || 0;
+
+					return {
 						date: date,
-						start: date + 'T08:00:00',
-						end: date + 'T22:00:00',
-						price: 7.99,
-						available: true
-					}, {
-						date: date,
-						start: date + 'T08:00:00',
-						end: date + 'T13:00:00',
-						price: 7.99,
-						available: !!i
-					}, {
-						date: date,
-						start: date + 'T13:00:00',
-						end: date + 'T17:00:00',
-						price: 7.99,
-						available: true
-					}, {
-						date: date,
-						start: date + 'T17:00:00',
-						end: date + 'T22:00:00',
-						price: 7.99,
-						available: true
-					}
-				]
-			};
-		}).map(function(delivery) {
-			var isToday = $date(delivery.date, 'yyyy MM dd') === $date(now, 'yyyy MM dd');
+						windows: [
+							{
+								date: date,
+								start: date + 'T08:00:00',
+								end: date + 'T22:00:00',
+								price: deliveryCharge,
+								available: true
+							}, {
+								date: date,
+								start: date + 'T08:00:00',
+								end: date + 'T13:00:00',
+								price: deliveryCharge,
+								available: true
+							}, {
+								date: date,
+								start: date + 'T13:00:00',
+								end: date + 'T17:00:00',
+								price: deliveryCharge,
+								available: true
+							}, {
+								date: date,
+								start: date + 'T17:00:00',
+								end: date + 'T22:00:00',
+								price: deliveryCharge,
+								available: true
+							}
+						]
+					};
+				}).map(function(delivery) {
+					var isTomorrow = $date(delivery.date, 'yyyy MM dd') === $date(tomorrow, 'yyyy MM dd');
 
-			delivery.display_name = isToday ? 'Today' : $date(delivery.date, 'EEE, MMM d');
+					delivery.display_name = isTomorrow ? 'Tomorrow' : $date(delivery.date, 'EEE, MMM d');
 
-			delivery.windows = delivery.windows.map(function(deliveryWindow, index) {
-				var startTime = $date(deliveryWindow.start, 'h'),
-					startPeriod = $date(deliveryWindow.start, 'a'),
-					endTime = $date(deliveryWindow.end, 'h'),
-					endPreiod = $date(deliveryWindow.end, 'a');
+					delivery.windows = delivery.windows.map(function(deliveryWindow, index) {
+						var startTime = $date(deliveryWindow.start, 'h'),
+							startPeriod = $date(deliveryWindow.start, 'a'),
+							endTime = $date(deliveryWindow.end, 'h'),
+							endPreiod = $date(deliveryWindow.end, 'a');
 
-				if (startPeriod !== endPreiod) {
-					startTime += ' ' + startPeriod;
-				}
+						if (startPeriod !== endPreiod) {
+							startTime += ' ' + startPeriod;
+						}
 
-				endTime += ' ' + endPreiod;
+						endTime += ' ' + endPreiod;
 
-				deliveryWindow.display_name = '';
+						deliveryWindow.display_name = startTime + ' - ' + endTime;
+						deliveryWindow.date_display_name = delivery.display_name;
 
-				if (index === 0 && now > new Date(deliveryWindow.start)) {
-					deliveryWindow.display_name += 'before';
-				} else {
-					deliveryWindow.display_name += startTime + ' -';
-				}
+						return deliveryWindow;
+					});
 
-				deliveryWindow.display_name += ' ' + endTime;
-				deliveryWindow.date_display_name = delivery.display_name;
-
-				return deliveryWindow;
+					return delivery;
+				});
 			});
-
-			return delivery;
-		});
-
-		return $q.when(dates);
 	};
 }
 
