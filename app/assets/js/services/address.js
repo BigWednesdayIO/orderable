@@ -1,11 +1,32 @@
-function AddressService ($mdDialog, $http, $q, API, customerService) {
+function AddressService ($mdDialog, $http, $q, API, customerService, _) {
 	var service = this;
 
-	service.getSavedAddress = function() {
+	function cleanAddresses (addresses) {
+		return addresses.map(function(address) {
+			Object.keys(address).forEach(function(key) {
+				if (address[key] === '') {
+					delete address[key];
+				}
+			})
+			return address;
+		});
+	}
+
+	service.getAddressBook = function() {
 		return customerService
 			.getUpToDateInfo()
 			.then(function(info) {
-				return info.address;
+				return info.addresses;
+			});
+	};
+
+	service.getDefaultAddress = function(addresses) {
+		return (addresses ? $q.when(addresses) : service.getAddressBook())
+			.then(function(addressBook) {
+				if (!addressBook) {
+					return;
+				}
+				return _.find(addressBook, {default_billing: true, default_delivery: true}) || addressBook[0];
 			});
 	};
 
@@ -24,13 +45,13 @@ function AddressService ($mdDialog, $http, $q, API, customerService) {
 			});
 	};
 
-	service.updateSavedAddress = function(address) {
+	service.updateAddressBook = function(addresses) {
 		return customerService
 			.updateInfo({
-				address: address
+				addresses: cleanAddresses(addresses)
 			})
 			.then(function(updatedInfo) {
-				return updatedInfo.address;
+				return updatedInfo.addresses;
 			});
 	};
 

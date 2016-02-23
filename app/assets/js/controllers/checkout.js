@@ -78,15 +78,15 @@ CheckoutController.resolve = /* @ngInject */ {
 		return customerService
 			.getInfo();
 	},
-	suggestedAddress: function(ordersService, customerInfo) {
-		if (customerInfo.address) {
-			return customerInfo.address;
-		}
-
-		return service
+	suggestedAddress: function(addressService, ordersService, customerInfo) {
+		var suggested = addressService.getDefaultAddress(customerInfo.addresses);
+		return suggested || service
 			.getLatestOrder()
-			.then(function() {
+			.then(function(latestOrder) {
 				latestOrder.delivery_address;
+			})
+			.catch(function() {
+				return {};
 			});
 	},
 	requiresSignIn: function(authorizationService) {
