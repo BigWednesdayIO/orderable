@@ -22,7 +22,7 @@ function DeliveryDatesService ($filter, suppliersService) {
 					do {
 						i++;
 						date.setDate(dayOfMonth + i);
-					} while(date.getDay() === 0);
+					} while (date.getDay() === 0);
 					return $date(date, 'yyyy-MM-dd');
 				}).map(function(date) {
 					var deliveryCharge = supplierInfo.delivery_charge || 0;
