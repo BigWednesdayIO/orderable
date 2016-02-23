@@ -1,4 +1,4 @@
-function ReplenishmentService ($state, $q, $timeout, ordersService, customerService, productsService, basketService, deliveryDatesService, checkoutService, _) {
+function ReplenishmentService ($state, $q, $timeout, ordersService, customerService, productsService, basketService, deliveryDatesService, checkoutService, addressService, _) {
 	var service = this;
 
 	service.refreshLineItems = function(lineItems) {
@@ -85,7 +85,7 @@ function ReplenishmentService ($state, $q, $timeout, ordersService, customerServ
 				var customerInfo = responses[1]
 				var lastOrder = _.head(responses[2]);
 				var deliveryDates = responses[3];
-				var customerAddress = (customerInfo.addresses || [])[0]
+				var customerAddress = addressService.getDefaultAddress(customerInfo.addresses);
 
 				checkout.delivery_address = customerAddress || lastOrder.delivery_address;
 				checkout.billing_address = customerAddress || lastOrder.billing_address;

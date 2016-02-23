@@ -25,4 +25,17 @@
 		right: 0;
 		margin: 0 !important;
 	}
+
+	.address-dialog & {
+		&__container {
+			border-radius: .5em;
+			transition: background $transition;
+
+			&:hover,
+			&:focus {
+				background: rgba(158,158,158,0.2);
+				outline: none;
+			}
+		}
+	}
 }

@@ -1,4 +1,4 @@
-function AddressService ($mdDialog, $http, $q, API, customerService) {
+function AddressService ($mdDialog, $http, $q, API, customerService, _) {
 	var service = this;
 
 	function cleanAddresses (addresses) {
@@ -17,6 +17,16 @@ function AddressService ($mdDialog, $http, $q, API, customerService) {
 			.getUpToDateInfo()
 			.then(function(info) {
 				return info.addresses;
+			});
+	};
+
+	service.getDefaultAddress = function(addresses) {
+		return (addresses ? $q.when(addresses) : service.getAddressBook())
+			.then(function(addressBook) {
+				if (!addressBook) {
+					return;
+				}
+				return _.find(addressBook, {default_billing: true, default_delivery: true}) || addressBook[0];
 			});
 	};
 

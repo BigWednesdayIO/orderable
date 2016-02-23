@@ -87,6 +87,7 @@ a,
 button,
 [ng-click] {
 	touch-action: manipulation;
+	cursor: pointer;
 }
 
 [ng-cloak] {

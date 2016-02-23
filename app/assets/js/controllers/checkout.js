@@ -78,12 +78,9 @@ CheckoutController.resolve = /* @ngInject */ {
 		return customerService
 			.getInfo();
 	},
-	suggestedAddress: function(ordersService, customerInfo) {
-		if (customerInfo.addresses) {
-			return customerInfo.addresses[0];
-		}
-
-		return service
+	suggestedAddress: function(addressService, ordersService, customerInfo) {
+		var suggested = addressService.getDefaultAddress(customerInfo.addresses);
+		return suggested || service
 			.getLatestOrder()
 			.then(function(latestOrder) {
 				latestOrder.delivery_address;

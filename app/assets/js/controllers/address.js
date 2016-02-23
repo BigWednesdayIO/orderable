@@ -1,4 +1,4 @@
-function AddressController ($mdDialog, $q, address, addressService, extraFields) {
+function AddressController ($state, $mdDialog, $q, address, addressService, extraFields) {
 	var vm = this;
 
 	vm.address = address;
@@ -46,6 +46,21 @@ function AddressController ($mdDialog, $q, address, addressService, extraFields)
 	vm.changeDefault = function() {
 		vm.address.default_delivery = vm.isDefault;
 		vm.address.default_billing = vm.isDefault;
+	};
+
+	vm.isAddressBook = $state.is('address-book');
+
+	var addressBookPromise;
+	vm.showAddressBook = function() {
+		(addressBookPromise || addressService.getAddressBook())
+			.then(function(addressBook) {
+				vm.addressBook = addressBook;
+			});
+	};
+
+	vm.chooseFromAddressBook = function(address) {
+		vm.address = address;
+		vm.addressBook = false;
 	};
 
 	vm.hideLookup = !!(address.name && address.line_1);
