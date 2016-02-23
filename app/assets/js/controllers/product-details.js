@@ -13,7 +13,7 @@ function ProductDetailsController (basketService, productAttributes, productData
 	vm.product = productData;
 	vm.supplier = supplierInfo;
 
-	vm.product.thumbnail_image_url = vm.product.thumbnail_image_url || 'assets/images/placeholder.jpg';
+	vm.product.thumbnail_image_url = API.product_images + vm.product.id + '.jpg';
 
 	vm.productAttributes = productAttributes.map(function(attribute) {
 		attribute.value = productData[attribute.key];

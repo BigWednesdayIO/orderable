@@ -3,7 +3,9 @@ function APIService (baseAPI) {
 
 	this.products = baseAPI + 'indexes/orderable-products';
 	this.search = this.products + '/query';
-	this.search_suggestions = baseAPI + 'indexes/crateful-suggestions/query'
+	this.search_suggestions = baseAPI + 'indexes/crateful-suggestions/query';
+
+	this.product_images = baseAPI + '/images/dc3gcqic2/image/upload/';
 
 	this.checkouts = baseAPI + 'checkouts'
 

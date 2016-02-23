@@ -13,7 +13,7 @@ function ReplenishmentThumbDirective () {
 
 			vm.product.id = vm.product.objectID;
 
-			vm.product.thumbnail_image_url = vm.product.thumbnail_image_url || 'assets/images/placeholder.jpg';
+			vm.product.thumbnail_image_url = API.product_images + vm.product.id + '.jpg';
 
 			vm.changeQuantity = function(quantity) {
 				vm.quantity += quantity;

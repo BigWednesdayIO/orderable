@@ -8,7 +8,7 @@ function ProductThumbDirective () {
 		link: function(scope, element) {
 			element.addClass('product-thumb');
 		},
-		controller: function($timeout, basketService) {
+		controller: function($timeout, basketService, API) {
 			var vm = this,
 				debounce;
 
@@ -22,7 +22,7 @@ function ProductThumbDirective () {
 
 			vm.product.id = vm.product.objectID;
 
-			vm.product.thumbnail_image_url = vm.product.thumbnail_image_url || 'assets/images/placeholder.jpg';
+			vm.product.thumbnail_image_url = API.product_images + vm.product.id + '.jpg';
 
 			vm.addToBasket = function($event, quantity) {
 				$event.preventDefault();
