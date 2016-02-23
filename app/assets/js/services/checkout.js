@@ -102,7 +102,21 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, custome
 					});
 			})
 			.catch(notifyError);
-	}
+	};
+
+	service.getPaymentMethods = function() {
+		var methods = [
+			{
+				display_name: 'Add to account balance',
+				value: 'account'
+			}, {
+				display_name: 'Cash on delivery',
+				value: 'cash'
+			}
+		];
+
+		return $q.when(methods);
+	};
 
 	return service;
 }

@@ -85,21 +85,24 @@ function ReplenishmentService ($state, $q, $timeout, ordersService, customerServ
 				var customerInfo = responses[1]
 				var lastOrder = _.head(responses[2]);
 				var deliveryDates = responses[3];
-				var customerAddress = addressService.getDefaultAddress(customerInfo.addresses);
 
-				checkout.delivery_address = customerAddress || lastOrder.delivery_address;
-				checkout.billing_address = customerAddress || lastOrder.billing_address;
-				checkout.billing_address.email = customerInfo.email;
-				checkout.payment_method = lastOrder.payment_method;
-				checkout.basket.order_forms = checkout.basket.order_forms.map(function(orderForm) {
-					orderForm.delivery_window = deliveryDates[orderForm.supplier_id][0].windows[0];
-					orderForm.delivery_date = orderForm.delivery_window.date;
-					return orderForm;
-				});
-				checkoutService.calculateDeliveryTotals(checkout.basket);
+				return addressService
+					.getDefaultAddress(customerInfo.addresses)
+					.then(function(customerAddress) {
+						checkout.delivery_address = customerAddress || lastOrder.delivery_address;
+						checkout.billing_address = customerAddress || lastOrder.billing_address;
+						checkout.billing_address.email = customerInfo.email;
+						checkout.payment_method = lastOrder.payment_method;
+						checkout.basket.order_forms = checkout.basket.order_forms.map(function(orderForm) {
+							orderForm.delivery_window = deliveryDates[orderForm.supplier_id][0].windows[0];
+							orderForm.delivery_date = orderForm.delivery_window.date;
+							return orderForm;
+						});
+						checkoutService.calculateDeliveryTotals(checkout.basket);
 
-				return checkoutService
-					.completeCheckout(checkout);
+						return checkoutService
+							.completeCheckout(checkout);
+					});
 			})
 			.then(function(response) {
 				basketService.hideUpdates = false
