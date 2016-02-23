@@ -1,4 +1,4 @@
-function CheckoutController ($rootScope, $state, checkoutService, addressService, checkoutData, customerInfo, supplierInfo, deliveryDates, suggestedAddress) {
+function CheckoutController ($rootScope, $state, checkoutService, addressService, checkoutData, customerInfo, supplierInfo, deliveryDates, suggestedAddress, paymentMethods) {
 	var vm = this;
 
 	vm.checkout = checkoutData;
@@ -22,6 +22,9 @@ function CheckoutController ($rootScope, $state, checkoutService, addressService
 				vm.checkout[addressName] = newAddress;
 			});
 	};
+
+	vm.paymentMethods = paymentMethods;
+	vm.checkout.payment_method = paymentMethods[0].value;
 
 	vm.editPayment = function($event) {
 		checkoutService
@@ -79,15 +82,22 @@ CheckoutController.resolve = /* @ngInject */ {
 			.getInfo();
 	},
 	suggestedAddress: function(addressService, ordersService, customerInfo) {
-		var suggested = addressService.getDefaultAddress(customerInfo.addresses);
-		return suggested || service
-			.getLatestOrder()
-			.then(function(latestOrder) {
-				latestOrder.delivery_address;
+		return addressService
+			.getDefaultAddress(customerInfo.addresses)
+			.then(function(suggested) {
+				return suggested || service
+					.getLatestOrder()
+					.then(function(latestOrder) {
+						latestOrder.delivery_address;
+					})
 			})
 			.catch(function() {
 				return {};
 			});
+	},
+	paymentMethods: function(checkoutService) {
+		return checkoutService
+			.getPaymentMethods();
 	},
 	requiresSignIn: function(authorizationService) {
 		return authorizationService

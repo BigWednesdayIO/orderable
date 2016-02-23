@@ -39,8 +39,7 @@
 					<div class="checkout__form-section__fields flex">
 						<h3 class="md-subhead" style="margin-top: 0">How would you like to pay for this order?</h3>
 						<md-radio-group ng-model="vm.checkout.payment_method">
-							<md-radio-button value="cash" class="md-primary">Cash on delivery</md-radio-button>
-							<md-radio-button value="account" class="md-primary">Add to account balance</md-radio-button>
+							<md-radio-button class="md-primary" ng-repeat="method in ::vm.paymentMethods track by method.value" ng-value="method.value">{{ ::method.display_name }}</md-radio-button>
 						</md-radio-group>
 						<address-summary address="vm.checkout.billing_address" style="margin-top: 20px;"></address-summary>
 						<md-button class="md-primary align-text" ng-click="vm.editAddress($event, 'billing')">Edit billing address</md-button>
