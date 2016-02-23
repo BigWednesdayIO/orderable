@@ -1,6 +1,6 @@
 <div class="checkout__delivery-option" ng-class="{'checkout__delivery-option--open': vm.showOptions}">
 	<md-icon md-svg-src="assets/images/icons/event.svg"></md-icon>
-	<span class="checkout__delivery-option__current"><span ng-bind="vm.orderForm.delivery_window.date_display_name"></span>, <span ng-bind="vm.orderForm.delivery_window.display_name"></span> (<span ng-bind="vm.orderForm.delivery_window.price | currency: '£'"></span>)</span>
+	<span class="checkout__delivery-option__current"><span ng-bind="vm.orderForm.delivery_window.date_display_name"></span>, <span ng-bind="vm.orderForm.delivery_window.display_name"></span> (<span ng-show="vm.orderForm.delivery_window.price > 0" ng-bind="vm.orderForm.delivery_window.price | currency: '£'"></span><span ng-show="vm.orderForm.delivery_window.price === 0">FREE</span>)</span>
 	<md-button class="md-primary" ng-click="vm.changeWindow()">Change window</md-button>
 
 	<div class="delivery-calendar md-whiteframe md-whiteframe-z2" ng-show="vm.showOptions">
@@ -19,7 +19,10 @@
 							<div class="layout-row">
 								<span ng-bind="::($index === 0 ? window.date_display_name + ', ' : '') + window.display_name"></span>
 								<span class="flex"></span>
-								<span ng-show="::window.available" ng-bind="::window.price | currency: '£'"></span>
+								<span ng-show="::window.available">
+									<span ng-show="::window.price > 0" ng-bind="::window.price | currency: '£'"></span>
+									<span ng-show="::window.price === 0">FREE</span>
+								</span>
 								<span ng-hide="::window.available">SOLD OUT</span>
 							</div>
 						</md-button>
