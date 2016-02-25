@@ -5,6 +5,9 @@ function ProductDetailsController (basketService, productAttributes, productData
 		vm.quantityInBasket = quantity;
 		if (vm.quantityInBasket > 0) {
 			vm.quantities = _.range(0, 10);
+			if (vm.quantityInBasket > 9) {
+				vm.quantities.push(vm.quantityInBasket);
+			}
 		} else {
 			vm.quantities = _.range(1, 10)
 		}
