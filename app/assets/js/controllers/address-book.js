@@ -1,4 +1,4 @@
-function AddressBookController (addressService, addressBook) {
+function AddressBookController ($mdToast, addressService, addressBook) {
 	var vm = this;
 
 	function syncAddressBook (newAddressBook) {
@@ -8,6 +8,20 @@ function AddressBookController (addressService, addressBook) {
 				vm.addresses = updatedAddressBook;
 				return updatedAddressBook;
 			});	
+	}
+
+	function offerUndo (undo) {
+		return $mdToast.show(
+			$mdToast.simple()
+				.content('Address deleted')
+				.action('undo')
+				.hideDelay(3000)
+		)
+			.then(function(response) {
+				if (response === 'ok') {
+					return undo();
+				}
+			});
 	}
 
 	vm.addresses = addressBook || [];
@@ -39,9 +53,18 @@ function AddressBookController (addressService, addressBook) {
 
 	vm.removeAddress = function($index) {
 		var newAddressBook = angular.copy(vm.addresses);
+		var addressToRemove = newAddressBook[$index];
+
+		function undo () {
+			newAddressBook.splice($index, 0, addressToRemove);
+			return syncAddressBook(newAddressBook);
+		}
 
 		newAddressBook.splice($index, 1);
-		return syncAddressBook(newAddressBook);
+		return syncAddressBook(newAddressBook)
+			.then(function() {
+				return offerUndo(undo);
+			});
 	};
 }
 
