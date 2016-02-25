@@ -54,7 +54,7 @@ function MenuController ($rootScope, $state, $mdSidenav, navigationService, supp
 			.signOut()
 			.then(function() {
 				vm.isSignedIn = false;
-				$state.go('home');
+				$state.go('home', {}, {reload: true});
 			});
 	};
 
