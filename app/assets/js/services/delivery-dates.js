@@ -15,14 +15,16 @@ function DeliveryDatesService ($filter, suppliersService) {
 		return suppliersService
 			.getSupplierInfo(orderForm.supplier_id)
 			.then(function(supplierInfo) {
-				var i = supplierInfo.lead_time || 0;
+				var i = supplierInfo.delivery_lead_time || 1;
+				var deliveryDays = supplierInfo.delivery_days || [1, 2, 3, 4, 5, 6];
 
 				return dates.map(function(date) {
 					// Now days in a row, starting tomorrow, skipping Sunday
 					do {
-						i++;
+						date = new Date();
 						date.setDate(dayOfMonth + i);
-					} while (date.getDay() === 0);
+						i++;
+					} while (deliveryDays.indexOf(date.getDay()) === -1);
 					return $date(date, 'yyyy-MM-dd');
 				}).map(function(date) {
 					var deliveryCharge = supplierInfo.delivery_charge || 0;
