@@ -74,7 +74,9 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, custome
 		}, 0) / 100;
 		basket.total = basket.subtotal + basket.tax + basket.shipping_total;
 		basket.order_forms = basket.order_forms.map(function(orderForm) {
-			orderForm.delivery_date = orderForm.delivery_window.date;
+			if (orderForm.delivery_window) {
+				orderForm.delivery_date = orderForm.delivery_window.date;
+			}
 			return orderForm;
 		});
 	};
