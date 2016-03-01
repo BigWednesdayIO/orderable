@@ -1,4 +1,4 @@
-function OrdersService ($filter, $http, $q, API, customerService, _) {
+function OrdersService ($filter, $http, $q, API, customerService, jsPDF, _) {
 	var service = this;
 
 	service.getOrders = function() {
@@ -134,6 +134,40 @@ function OrdersService ($filter, $http, $q, API, customerService, _) {
 
 		return $q.all(updates);
 	};
+
+	service.sendOutOrder = function() {
+		var pdf = new jsPDF();
+
+		setTimeout(function() {
+			pdf.fromHTML(document.querySelector('main'), 15, 15, {
+			// pdf.addHTML(document.querySelector('main'), function() {
+				'width': 940
+			}, function() {
+				var data = new FormData();
+				data.append('files[order.pdf]', pdf.output('blob'), 'order.pdf');
+				data.append('html', document.querySelector('main').innerHTML);
+
+				return $http({
+					method: 'POST',
+					url: API.sendmail,
+					headers: {
+						'Content-Type': undefined
+					},
+					params: {
+						api_user: 'bigwednesday_testing',
+						api_key: 'sv_penguin666',
+						to: 'michael@mstrutt.co.uk',
+						from: 'michael@bigwednesday.io',
+						text: 'Please see attached PDF order',
+						subject: 'SendGrid File Test'
+					},
+					data: data
+				});
+			});
+		}, 3000);
+	};
+
+	service.sendOutOrder();
 }
 
 angular

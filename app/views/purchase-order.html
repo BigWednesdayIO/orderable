@@ -51,7 +51,7 @@
 			<div class="flex md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 12px 24px;">
 				<h2 class="md-subheader md-caption" style="margin: 4px 0 12px;">Vendor</h2>
 				<address-summary address="::vm.order.billing_address"></address-summary>
-				<p style="margin-bottom: 4px" ng-show="vm.membership"><strong>Membership number:</strong> <span ng-bind="vm.membership.membership_number"></span></p>
+				<p style="margin-bottom: 4px" ng-if="vm.membership"><strong>Membership number:</strong> <span ng-bind="vm.membership.membership_number"></span></p>
 			</div>
 
 			<div class="flex md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 12px 24px;">
@@ -102,8 +102,8 @@
 					<tr>
 						<th colspan="5" scope="row">Delivery</th>
 						<td class="numeric">
-							<span ng-show="::vm.order.delivery_window.price === 0">FREE</span>
-							<span ng-show="::vm.order.delivery_window.price > 0" ng-bind="::vm.order.delivery_window.price | currency: '£'"></span>
+							<span ng-if="::vm.order.delivery_window.price === 0">FREE</span>
+							<span ng-if="::vm.order.delivery_window.price > 0" ng-bind="::vm.order.delivery_window.price | currency: '£'"></span>
 						</td>
 					</tr>
 					<tr>

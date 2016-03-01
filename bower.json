@@ -22,9 +22,16 @@
     "lodash": "~3.10.1",
     "fastclick": "~1.0.6",
     "Element.closest": "closest#~1.0.3",
-    "angular-digest-hud": "mstrutt/digest-hud#feature/no-jquery"
+    "angular-digest-hud": "mstrutt/digest-hud#feature/no-jquery",
+    "jspdf": "^1.2.60",
+    "html2canvas": "^0.4.1"
   },
   "resolutions": {
     "angular": "1.4.9"
+  },
+  "overrides": {
+    "jspdf": {
+      "main": "dist/jspdf.min.js"
+    }
   }
 }

@@ -16,6 +16,8 @@ function APIService (baseAPI) {
 	this.orders = baseAPI + 'orders';
 
 	this.addressLookup = 'https://api.getAddress.io/v2/uk';
+
+	this.sendmail = 'https://api.sendgrid.com/api/mail.send.json'
 }
 
 angular
