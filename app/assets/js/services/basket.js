@@ -32,7 +32,7 @@ function BasketService ($rootScope, $q, $document, $mdMedia, $mdToast, $state, b
 	}
 
 	function toPounds (value) {
-		return Math.round(value / 100);
+		return Math.round(value) / 100;
 	}
 
 	function countProperty (collection, property) {
