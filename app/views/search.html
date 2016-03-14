@@ -43,6 +43,7 @@
 					</div>
 				</section>
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
+				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field" ng-show="facet.values.length">
 					<div class="layout-row layout-align-space-between-start">
 						<h3 class="facets__heading md-body-2" ng-bind="::(facet.display_name || facet.field)"></h3>
 						<a ng-href="{{ vm.removeRefinementFromUrl(facet.field) }}" class="facets__clear" ng-show="vm.search[facet.field]">Clear</a>
