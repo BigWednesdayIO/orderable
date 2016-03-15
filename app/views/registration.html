@@ -36,13 +36,13 @@
 				<li>
 					<md-input-container>
 						<label>VAT number (optional)</label>
-						<input ng-model="vm.userDetails.vat_number" pattern="^(GB)?(([1-9]\d{8})|([1-9]\d{11})|(GD[1-9]\d{2})|(HA[1-9]\d{2}))$" required />
+						<input ng-model="vm.userDetails.vat_number" pattern="^(GB)?(([1-9]\d{8})|([1-9]\d{11})|(GD[1-9]\d{2})|(HA[1-9]\d{2}))$" />
 					</md-input-container>
 				</li>
 				<li>
 					<md-input-container>
 						<label>Line of business (optional)</label>
-						<md-select ng-model="vm.userDetails.line_of_business" required>
+						<md-select ng-model="vm.userDetails.line_of_business">
 							<md-option ng-repeat="lineOfBusiness in ::vm.linesOfBusiness" ng-value="::lineOfBusiness">
 								<span ng-bind="::lineOfBusiness"></span>
 							</md-option>
