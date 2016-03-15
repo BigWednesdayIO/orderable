@@ -11,13 +11,13 @@
 				</li> -->
 				<li>
 					<md-input-container>
-						<label>Email</label>
+						<label>Your email address</label>
 						<input type="email" ng-model="vm.userDetails.email" required />
 					</md-input-container>
 				</li>
 				<li>
 					<md-input-container>
-						<label>Password</label>
+						<label>Create a password</label>
 						<input type="password" ng-model="vm.userDetails.password" required />
 					</md-input-container>
 				</li>
@@ -35,13 +35,13 @@
 				</li> -->
 				<li>
 					<md-input-container>
-						<label>VAT number</label>
+						<label>VAT number (optional)</label>
 						<input ng-model="vm.userDetails.vat_number" pattern="^(GB)?(([1-9]\d{8})|([1-9]\d{11})|(GD[1-9]\d{2})|(HA[1-9]\d{2}))$" required />
 					</md-input-container>
 				</li>
 				<li>
 					<md-input-container>
-						<label>Line of business</label>
+						<label>Line of business (optional)</label>
 						<md-select ng-model="vm.userDetails.line_of_business" required>
 							<md-option ng-repeat="lineOfBusiness in ::vm.linesOfBusiness" ng-value="::lineOfBusiness">
 								<span ng-bind="::lineOfBusiness"></span>
