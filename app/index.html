@@ -109,6 +109,7 @@
 						<div class="account-nav__items md-whiteframe-z1" dropdown-items>
 							<a ng-repeat="link in ::vm.accountLinks" ng-href="{{ ::link.url }}" ng-bind="::link.name"></a>
 							<a href="#" ng-show="vm.isSignedIn" ng-click="vm.signOut()">Sign out</a>
+							<a href="/sign-in/" ng-hide="vm.isSignedIn">Sign in</a>
 						</div>
 					</nav>
 					<div class="postcode-wrapper" ng-controller="PostcodeController as vm">
@@ -210,6 +211,9 @@
 								</md-list-item>
 								<md-list-item ng-show="vm.isSignedIn">
 									<md-button class="menu-link" ng-click="vm.signOut()">Sign out</md-button>
+								</md-list-item>
+								<md-list-item ng-hide="vm.isSignedIn">
+									<md-button class="menu-link" ng-href="/sign-in/">Sign in</md-button>
 								</md-list-item>
 							</md-list>
 						</div>
