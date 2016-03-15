@@ -40,6 +40,10 @@ function ReplenishmentService ($state, $q, $timeout, ordersService, customerServ
 					.map(_.head)
 					.value();
 
+				if (!lineItems.length) {
+					return lineItems;
+				}
+
 				return service
 					.refreshLineItems(lineItems);
 			});
