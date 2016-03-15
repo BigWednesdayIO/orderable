@@ -58,8 +58,6 @@
 		</aside>
 
 		<main class="search-results-wrapper flex layout-margin">
-			<div ng-if="!vm.hits.length">No search results</div>
-
 			<div ng-if="!vm.search.supplier_id">
 				<supplier-featured-items ng-repeat="(supplier, hits) in vm.hitsBySupplier" supplier="supplier" hits="hits"></supplier-featured-items>
 			</div>
@@ -68,8 +66,8 @@
 				<div class="supplier-listing__header" style="{{ 'background-image: url(' + vm.supplier.banner_image + ');' }}">
 					<div class="supplier-listing__logo" supplier-logo supplier="vm.supplier"></div>
 					<h2 class="supplier-listing__name md-title">
-						<span ng-bind="::vm.supplier.name"></span>
-						<md-icon class="supplier-listing__info-icon" md-svg-src="assets/images/icons/info-outline.svg" ng-click="vm.showSupplierInfo($event, vm.search.supplier_id)" aria-label="Find out more about {{ ::vm.supplier.name }}">
+						<span ng-bind="vm.supplier.name"></span>
+						<md-icon class="supplier-listing__info-icon" md-svg-src="assets/images/icons/info-outline.svg" ng-click="vm.showSupplierInfo($event, vm.search.supplier_id)" aria-label="Find out more about {{ vm.supplier.name }}">
 						</md-icon>
 					</h2>
 				</div>
@@ -78,6 +76,9 @@
 					<li product-thumb product="hit" basket="true" ng-repeat="hit in vm.hits track by hit.objectID"></li>
 				</ul>
 			</div>
+
+			<div ng-if="!vm.hits.length">No search results</div>
+
 			<div class="layout-row layout-align-space-around-center" style="margin: -16px 0 16px;" ng-hide="vm.hits.length === vm.totalHits">
 				<md-progress-circular md-mode="{{ vm.loadingNextPage ? 'indeterminate' : '' }}"></md-progress-circular>
 			</div>
