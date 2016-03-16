@@ -31,6 +31,11 @@ function ProductThumbDirective () {
 
 			vm.changeQuantity = function($event, quantity) {
 				$event.preventDefault();
+
+				if (quantity === 0) {
+					return;
+				}
+
 				vm.quantity += quantity;
 
 				$timeout.cancel(debounce);
