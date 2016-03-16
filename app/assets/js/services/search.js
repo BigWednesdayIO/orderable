@@ -83,6 +83,9 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 			method: 'POST',
 			data: {
 				query: query
+			},
+			headers: {
+				Authorization: 'Bearer NG0TuV~u2ni#BP|'
 			}
 		})
 			.then(function(response) {

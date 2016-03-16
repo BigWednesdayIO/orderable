@@ -20,11 +20,22 @@ function ProductsService ($http, $q, $mdToast, API) {
 	};
 
 	service.getProductArray = function(ids) {
+		if (ids.length === 1) {
+			return service
+				.getProductById(ids[0])
+				.then(function(product) {
+					return [product];
+				});
+		}
+
 		return $http({
 			method: 'GET',
 			url: API.products,
 			params: {
 				id: ids
+			},
+			headers: {
+				Authorization: 'Bearer NG0TuV~u2ni#BP|'
 			}
 		});
 	};
