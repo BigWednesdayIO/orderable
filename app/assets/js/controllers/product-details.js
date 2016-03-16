@@ -1,4 +1,4 @@
-function ProductDetailsController (basketService, productAttributes, productData, supplierInfo, _) {
+function ProductDetailsController (basketService, productAttributes, productData, supplierInfo, breadcrumbs, _) {
 	var vm = this;
 
 	function setQuantities (quantity) {
@@ -54,6 +54,8 @@ function ProductDetailsController (basketService, productAttributes, productData
 
 	};
 
+	vm.breadcrumbs = breadcrumbs;
+
 	basketService
 		.getProductQuantity(vm.product)
 		.then(function(quantity) {
@@ -75,6 +77,20 @@ ProductDetailsController.resolve = /* @ngInject */ {
 	supplierInfo: function(productData, suppliersService) {
 		return suppliersService
 			.getSupplierInfo(productData.supplier_id);
+	},
+	breadcrumbs: function(breadcrumbsService, supplierInfo, productData) {
+		return breadcrumbsService
+			.getBreadcrumbs({
+				supplier_id: supplierInfo.id,
+				category_hierarchy: productData.category_path
+			})
+			.then(function(breadcrumbs) {
+				breadcrumbs.push({
+					name: productData.name,
+					href: 'product/' + productData.id + '/'
+				});
+				return breadcrumbs
+			});
 	}
 };
 
