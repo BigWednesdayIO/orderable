@@ -29,6 +29,13 @@ function ProductThumbDirective () {
 				addToBasket(quantity);
 			};
 
+			function updateQuantity () {
+				$timeout.cancel(debounce);
+				debounce = $timeout(function() {
+					addToBasket(vm.quantity);
+				}, 300);
+			}
+
 			vm.changeQuantity = function($event, quantity) {
 				$event.preventDefault();
 
@@ -37,11 +44,15 @@ function ProductThumbDirective () {
 				}
 
 				vm.quantity += quantity;
+				updateQuantity();
+			};
 
-				$timeout.cancel(debounce);
-				debounce = $timeout(function() {
-					addToBasket(vm.quantity);
-				}, 300);
+			vm.quantityChanged = function() {
+				if (!vm.quantity && vm.quantity !== 0) {
+					return;
+				}
+
+				updateQuantity();
 			};
 
 			basketService
