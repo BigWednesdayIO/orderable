@@ -19,16 +19,19 @@
 					<h1 class="md-headline" ng-bind="vm.product.name"></h1>
 					<span class="product-details__price" price product="vm.product"></span>
 					<div class="product-details__actions layout-row layout-align-start-center" ng-if="::vm.product.in_stock !== false">
-						<md-select class="product-details__quantity" ng-model="vm.quantity" ng-change="vm.changeQuantity()" aria-label="Quantity">
-							<md-option ng-repeat="quantity in vm.quantities track by quantity" ng-value="{{ quantity }}">
+						<md-select class="product-details__quantity" ng-model="vm.quantity" ng-change="vm.changeQuantity()" ng-show="vm.quantity < 10" aria-label="Quantity">
+							<md-option ng-repeat="quantity in vm.quantities track by quantity.value" ng-value="{{ quantity.value }}">
 								<div class="md-text">
-									<span ng-if="!!quantity" ng-bind="quantity"></span>
-									<span ng-if="!quantity">
+									<span ng-if="!!quantity.value" ng-bind="quantity.name"></span>
+									<span ng-if="!quantity.value">
 										<md-icon md-svg-src="assets/images/icons/delete.svg"></md-icon>
 									</span>
 								</div>
 							</md-option>
 						</md-select>
+						<md-input-container ng-show="vm.quantity >= 10" style="width: 68px; padding: 2px;">
+							<input type="number" ng-model="vm.quantity" ng-min="1" ng-change="vm.changeQuantity()" ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}" aria-label="Quantity" />
+						</md-input-container>
 						<md-button class="md-primary md-raised product-details__add-btn" ng-click="vm.addToBasket()" ng-disabled="vm.quantityInBasket > 0">
 							<span ng-show="vm.quantityInBasket === 0">Add to basket</span>
 							<span ng-show="vm.quantityInBasket > 0">Added to basket</span>
