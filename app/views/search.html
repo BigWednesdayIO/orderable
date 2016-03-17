@@ -27,13 +27,12 @@
 	<div class="layout-row flex">
 		<aside class="layout-margin" ng-class="{'hide-sm': !vm.showMobileRefinement}">
 			<md-content class="md-whiteframe-z1 facets">
-				<section class="facets__section" ng-show="vm.pinnedSuppliers.length">
+				<section class="facets__section" ng-if="vm.pinnedSuppliers.length">
 					<h3 class="facets__heading md-body-2">Only Pinned Suppliers</h3>
 					<div class="facets__values">
 						<md-switch class="md-primary pinned-toggle" ng-model="vm.onlyPinned" ng-change="vm.toggleOnlyPinned()" aria-label="Only pinned suppliers"></md-switch>
 					</div>
 				</section>
-				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field" ng-show="facet.values.length">
 					<div class="layout-row layout-align-space-between-start">
 						<h3 class="facets__heading md-body-2" ng-bind="::(facet.display_name || facet.field)"></h3>
