@@ -1,4 +1,4 @@
-function ProductDetailsController (basketService, productAttributes, productData, supplierInfo, breadcrumbs, _) {
+function ProductDetailsController ($window, basketService, productAttributes, productData, supplierInfo, breadcrumbs, _) {
 	var vm = this;
 
 	function setQuantities (quantity) {
@@ -55,6 +55,11 @@ function ProductDetailsController (basketService, productAttributes, productData
 	};
 
 	vm.breadcrumbs = breadcrumbs;
+
+	vm.backToResults = function($event) {
+		$event.preventDefault();
+		$window.history.back();
+	};
 
 	basketService
 		.getProductQuantity(vm.product)
