@@ -13,7 +13,7 @@
 					<md-option ng-repeat="option in ::vm.sortOptions" ng-value="::option.value" ng-bind="::option.display_name"></md-option>
 				</md-select>
 			</md-input-container>
-			<div class="toggle-buttons" style="margin-left: 16px;">
+			<div class="toggle-buttons" ng-show="vm.search.supplier_id" style="margin-left: 16px;">
 				<md-button ng-class="{'md-primary': vm.viewMode === 'list'}" ng-click="vm.setViewMode('list')" aria-label="List view">
 					<md-icon md-svg-src="assets/images/icons/view-list.svg"></md-icon>
 				</md-button>

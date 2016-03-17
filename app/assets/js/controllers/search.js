@@ -108,7 +108,7 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		$location.url(searchService.applyRefinementToUrl('sort', vm.sortBy));
 	};
 
-	vm.viewMode = sessionStorage.getItem('viewMode') || 'grid';
+	vm.viewMode = sessionStorage.getItem('viewMode') || 'list';
 
 	vm.setViewMode = function(mode) {
 		vm.viewMode = mode;
