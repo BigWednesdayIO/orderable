@@ -70,8 +70,14 @@
 	}
 
 	&__summary {
-		@media (min-width: $bp-medium) {
+		@media (min-width: $bp-large) {
 			width: 320px;
+
+			&__inner {
+				position: fixed;
+				top: 128px;
+				width: inherit;
+			}
 		}
 
 		&__details {
