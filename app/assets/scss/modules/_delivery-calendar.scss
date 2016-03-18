@@ -8,8 +8,17 @@
 	font-size: 16px;
 
 	&__header {
-		padding: 4px;
+		padding: 4px 4px 0;
+		margin-bottom: 16px;
 		border-bottom: $divider;
+		overflow: auto;
+	}
+
+	&__overflow {
+		white-space: nowrap;
+		text-align: center;
+		overflow: visible;
+		position: relative;
 	}
 
 	&__options {

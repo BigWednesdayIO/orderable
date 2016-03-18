@@ -7,6 +7,10 @@ function DeliveryDatesService ($filter, suppliersService) {
 		var dates = [
 			new Date(),
 			new Date(),
+			new Date(),
+			new Date(),
+			new Date(),
+			new Date(),
 			new Date()
 		];
 		var dayOfMonth = dates[0].getDate();
