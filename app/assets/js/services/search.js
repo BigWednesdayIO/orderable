@@ -225,7 +225,7 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 					return [];
 				}
 
-				promises = suppliers.map(function(supplier) {
+				promises = suppliers.slice(0, 6).map(function(supplier) {
 					return supplier.value;
 				}).map(function(supplierId) {
 					return suppliersService
