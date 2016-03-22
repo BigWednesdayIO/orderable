@@ -13,23 +13,25 @@ md-autocomplete {
 	}
 }
 
+$search-field-size: 34px;
+
 .search-form {
 	display: flex;
 	align-items: center;
-	flex: 1;
+	flex: 3;
 
 	@media (min-width: $bp-large) {
-		margin: 0 8px 0 16px;
+		margin: 0 8px;
 
 		md-autocomplete {
 			flex: 1;
-			height: 30px;
+			height: ($search-field-size - 2px);
 			border: 1px solid rgba(0,0,0,.15);
 			border-right-width: 0;
 			box-sizing: content-box;
 
 			input {
-				line-height: 30px;
+				line-height: $search-field-size;
 			}
 		}
 	}
@@ -39,9 +41,9 @@ md-autocomplete {
 		box-shadow: 0 0 1px rgba(0,0,0,.15) !important;
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
-		height: 30px;
-		min-height: 30px;
-		line-height: 30px;
+		height: $search-field-size;
+		min-height: $search-field-size;
+		line-height: $search-field-size;
 		width: 60px;
 		min-width: 60px;
 
