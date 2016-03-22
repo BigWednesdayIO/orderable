@@ -120,6 +120,21 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, custome
 		return $q.when(methods);
 	};
 
+	service.editDeliveryNote = function($event, deliveryNote, supplierName) {
+		return $mdDialog
+			.show({
+				targetEvent: $event,
+				templateUrl: 'views/partials/delivery-note.html',
+				controller: 'DeliveryNoteController',
+				controllerAs: 'vm',
+				locals: {
+					deliveryNote: deliveryNote,
+					supplierName: supplierName
+				},
+				clickOutsideToClose: true
+			});
+	};
+
 	return service;
 }
 
