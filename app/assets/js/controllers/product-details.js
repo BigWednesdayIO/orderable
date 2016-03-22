@@ -10,7 +10,7 @@ function ProductDetailsController ($window, basketService, productAttributes, pr
 
 	function setQuantities (quantity) {
 		vm.quantityInBasket = quantity;
-		vm.quantities = _.range(1, 10).map(nameAndValue);
+		vm.quantities = _.range((quantity > 0 ? 0 : 1), 10).map(nameAndValue);
 		vm.quantities.push({
 			name: '10+',
 			value: 10
