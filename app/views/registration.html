@@ -39,16 +39,6 @@
 						<input ng-model="vm.userDetails.vat_number" pattern="^(GB)?(([1-9]\d{8})|([1-9]\d{11})|(GD[1-9]\d{2})|(HA[1-9]\d{2}))$" />
 					</md-input-container>
 				</li>
-				<li>
-					<md-input-container>
-						<label>Line of business (optional)</label>
-						<md-select ng-model="vm.userDetails.line_of_business">
-							<md-option ng-repeat="lineOfBusiness in ::vm.linesOfBusiness" ng-value="::lineOfBusiness">
-								<span ng-bind="::lineOfBusiness"></span>
-							</md-option>
-						</md-select>
-					</md-input-container>
-				</li>
 				<li class="layout-row-reverse layout-align-space-between-center">
 					<md-button class="md-primary md-raised" type="submit">Register</md-button>
 					<span>Already a member? <a ng-href="sign-in/{{ vm.returnUrl ? '?return_url=' + vm.returnUrl : '' }}" class="md-primary" style="text-decoration: underline">Sign in</a>.</span>
