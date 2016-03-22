@@ -7,6 +7,15 @@ function CheckoutController ($rootScope, $state, checkoutService, addressService
 
 	vm.supplierInfo = supplierInfo;
 
+	vm.addDeliveryNote = function($event, orderForm) {
+		var supplierName = vm.supplierInfo[orderForm.supplier_id].name;
+		checkoutService
+			.editDeliveryNote($event, orderForm.delivery_note, supplierName)
+			.then(function(deliveryNote) {
+				orderForm.delivery_note = deliveryNote;
+			});
+	};
+
 	if (suggestedAddress) {
 		vm.checkout.delivery_address = angular.copy(suggestedAddress);
 		vm.checkout.billing_address = angular.copy(suggestedAddress);

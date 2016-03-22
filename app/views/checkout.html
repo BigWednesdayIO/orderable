@@ -1,5 +1,5 @@
 <div class="content-wrap">
-	<form class="checkout layout-gt-sm-row layout-align-space-between-start flex">
+	<form class="checkout layout-gt-md-row layout-align-space-between-start flex">
 		<main class="checkout__container md-whiteframe md-whiteframe-z1" flex layout-margin>
 			<h1 class="checkout__heading md-headline">Checkout</h1>
 
@@ -19,6 +19,10 @@
 								<div class="layout-row layout-align-start-center md-accent-panel">
 									<div supplier-logo supplier="::vm.supplierInfo[order_form.supplier_id]" size="40" style="margin: 10px 20px;"></div>
 									<h3 class="md-subhead" ng-bind="::vm.supplierInfo[order_form.supplier_id].name"></h3>
+									<span class="flex"></span>
+									<md-button class="md-icon-button checkout__delivery-note" ng-class="{'with-note': order_form.delivery_note}" ng-click="vm.addDeliveryNote($event, order_form)" aria-label="Add note to {{::vm.supplierInfo[order_form.supplier_id].name}}">
+										<md-icon md-svg-src="assets/images/icons/insert-comment.svg"></md-icon>
+									</md-button>
 								</div>
 
 								<delivery-window order-form="order_form" delivery-dates="::vm.deliveryDates[order_form.supplier_id]"></delivery-window>
@@ -48,35 +52,37 @@
 			</ol>
 		</main>
 
-		<aside class="checkout__container checkout__summary md-whiteframe md-whiteframe-z1" layout-margin>
-			<h2 class="checkout__heading md-headline">Order Summary</h2>
-			<table class="checkout__summary__details">
-				<tbody>
-					<tr>
-						<th scope="row">Item(s)</th>
-						<td ng-bind="vm.checkout.basket.subtotal | currency: '£'"></td>
-					</tr>
-					<tr>
-						<th scope="row">Estimated tax</th>
-						<td ng-bind="vm.checkout.basket.tax | currency: '£'"></td>
-					</tr>
-					<tr>
-						<th scope="row">Delivery</th>
-						<td>
-							<span ng-show="!vm.checkout.basket.shipping_total && vm.checkout.basket.shipping_total !== 0">--</span>
-							<span ng-show="vm.checkout.basket.shipping_total === 0">FREE</span>
-							<span ng-show="vm.checkout.basket.shipping_total > 0" ng-bind="vm.checkout.basket.shipping_total | currency: '£'"></span>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot class="checkout__summary__total">
-					<tr>
-						<th scope="row">Estimated total</th>
-						<td ng-bind="vm.checkout.basket.total | currency: '£'"></td>
-					</tr>
-				</tfoot>
-			</table>
-			<md-button class="checkout__action md-primary md-raised" ng-click="vm.completeCheckout()">Place order</md-button>
+		<aside class="checkout__summary" layout-margin>
+			<div class="checkout__summary__inner checkout__container md-whiteframe md-whiteframe-z1">
+				<h2 class="checkout__heading md-headline">Order Summary</h2>
+				<table class="checkout__summary__details">
+					<tbody>
+						<tr>
+							<th scope="row">Item(s)</th>
+							<td ng-bind="vm.checkout.basket.subtotal | currency: '£'"></td>
+						</tr>
+						<tr>
+							<th scope="row">Estimated tax</th>
+							<td ng-bind="vm.checkout.basket.tax | currency: '£'"></td>
+						</tr>
+						<tr>
+							<th scope="row">Delivery</th>
+							<td>
+								<span ng-show="!vm.checkout.basket.shipping_total && vm.checkout.basket.shipping_total !== 0">--</span>
+								<span ng-show="vm.checkout.basket.shipping_total === 0">FREE</span>
+								<span ng-show="vm.checkout.basket.shipping_total > 0" ng-bind="vm.checkout.basket.shipping_total | currency: '£'"></span>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot class="checkout__summary__total">
+						<tr>
+							<th scope="row">Estimated total</th>
+							<td ng-bind="vm.checkout.basket.total | currency: '£'"></td>
+						</tr>
+					</tfoot>
+				</table>
+				<md-button class="checkout__action md-primary md-raised" ng-click="vm.completeCheckout()">Place order</md-button>
+			</div>
 		</aside>
 	</form>
 </div>

@@ -42,9 +42,9 @@ function BreadcrumbsService ($location, $q, searchService, categoriesService, su
 			});
 	}
 
-	service.getBreadcrumbs = function() {
-		var search = $location.search(),
-			breadcrumbs, params, query;
+	service.getBreadcrumbs = function(search) {
+		var breadcrumbs, params, query;
+		search = search || $location.search();
 
 		breadcrumbs = [
 			{

@@ -1,0 +1,12 @@
+<md-dialog class="md-dialog--padded" style="width: 540px;">
+	<md-dialog-content>
+		<h2 class="md-subhead" style="margin-bottom: 15px;">Delivery note for <span ng-bind="::vm.supplierName"></span></h2>
+		<form name="vm.deliveryNoteForm" ng-submit="vm.saveDeliveryNote($event)">
+			<textarea autofocus rows="4" ng-model="vm.deliveryNote" style="width: 100%; margin-bottom: 5px;"></textarea>
+		</form>
+	</md-dialog-content>
+	<div class="md-actions">
+		<md-button class="md-primary" ng-click="vm.cancel()">Cancel</md-button>
+		<md-button class="md-primary md-raised" ng-click="vm.save()">Save</md-button>
+	</div>
+</md-dialog>

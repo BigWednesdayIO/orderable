@@ -4,11 +4,13 @@
 	<md-button class="md-primary" ng-click="vm.changeWindow()">Change window</md-button>
 
 	<div class="delivery-calendar md-whiteframe md-whiteframe-z2" ng-show="vm.showOptions">
-		<div class="delivery-calendar__header layout-row layout-align-center">
-			<md-button class="calendar-date" ng-repeat="delivery in ::vm.deliveryDates track by delivery.date" ng-click="vm.showDay = delivery.date" ng-class="{'md-primary': vm.showDay === delivery.date}" aria-label="{{ ::delivery.display_name }}">
-				<span class="calendar-date__day" ng-bind="::delivery.display_name.split(',')[0]"></span>
-				<span class="calendar-date__date" ng-bind="::delivery.date | date: 'd'"></span>
-			</md-button>
+		<div class="delivery-calendar__header">
+			<div class="delivery-calendar__overflow">
+				<md-button class="calendar-date" ng-repeat="delivery in ::vm.deliveryDates track by delivery.date" ng-click="vm.showDay = delivery.date" ng-class="{'md-primary': vm.showDay === delivery.date}" aria-label="{{ ::delivery.display_name }}">
+					<span class="calendar-date__day" ng-bind="::delivery.display_name.split(',')[0]"></span>
+					<span class="calendar-date__date" ng-bind="::delivery.date | date: 'd'"></span>
+				</md-button>
+			</div>
 		</div>
 
 		<div class="delivery-calendar__options">

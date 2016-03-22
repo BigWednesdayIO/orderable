@@ -1,16 +1,7 @@
 <div class="content-wrap">
 	<div class="layout-gt-sm-row layout-align-space-between-center layout-padding">
 		<div class="breadcrumbs" ng-controller="BreadcrumbsController as vm" ng-show="vm.breadcrumbs.length > 1">
-			<span ng-repeat="crumb in vm.breadcrumbs track by crumb.href">
-				<span ng-if="!$last">
-					<a class="breadcrumbs__crumb" ng-href="{{ ::crumb.href }}" ng-bind="::crumb.name"></a>
-					<span class="breadcrumbs__spacer">›</span>
-				</span>
-				<span ng-if="$last" style="display: inline-block">
-					<span class="breadcrumbs__crumb--final" ng-bind="::crumb.name"></span>
-					<a class="breadcrumbs__remove" ng-href="{{ vm.breadcrumbs[$index - 1].href }}">&times;</a>
-				</span>
-			</span>
+			<breadcrumbs crumbs="vm.breadcrumbs"></breadcrumbs>
 		</div>
 
 		<span class="flex" style="padding: 0"></span>
@@ -22,7 +13,7 @@
 					<md-option ng-repeat="option in ::vm.sortOptions" ng-value="::option.value" ng-bind="::option.display_name"></md-option>
 				</md-select>
 			</md-input-container>
-			<div class="toggle-buttons" style="margin-left: 16px;">
+			<div class="toggle-buttons" ng-show="vm.search.supplier_id" style="margin-left: 16px;">
 				<md-button ng-class="{'md-primary': vm.viewMode === 'list'}" ng-click="vm.setViewMode('list')" aria-label="List view">
 					<md-icon md-svg-src="assets/images/icons/view-list.svg"></md-icon>
 				</md-button>
@@ -36,13 +27,12 @@
 	<div class="layout-row flex">
 		<aside class="layout-margin" ng-class="{'hide-sm': !vm.showMobileRefinement}">
 			<md-content class="md-whiteframe-z1 facets">
-				<section class="facets__section">
+				<section class="facets__section" ng-if="vm.pinnedSuppliers.length">
 					<h3 class="facets__heading md-body-2">Only Pinned Suppliers</h3>
 					<div class="facets__values">
 						<md-switch class="md-primary pinned-toggle" ng-model="vm.onlyPinned" ng-change="vm.toggleOnlyPinned()" aria-label="Only pinned suppliers"></md-switch>
 					</div>
 				</section>
-				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field">
 				<section class="facets__section" ng-repeat="facet in vm.facets track by facet.field" ng-show="facet.values.length">
 					<div class="layout-row layout-align-space-between-start">
 						<h3 class="facets__heading md-body-2" ng-bind="::(facet.display_name || facet.field)"></h3>
@@ -58,8 +48,6 @@
 		</aside>
 
 		<main class="search-results-wrapper flex layout-margin">
-			<div ng-if="!vm.hits.length">No search results</div>
-
 			<div ng-if="!vm.search.supplier_id">
 				<supplier-featured-items ng-repeat="(supplier, hits) in vm.hitsBySupplier" supplier="supplier" hits="hits"></supplier-featured-items>
 			</div>
@@ -68,8 +56,8 @@
 				<div class="supplier-listing__header" style="{{ 'background-image: url(' + vm.supplier.banner_image + ');' }}">
 					<div class="supplier-listing__logo" supplier-logo supplier="vm.supplier"></div>
 					<h2 class="supplier-listing__name md-title">
-						<span ng-bind="::vm.supplier.name"></span>
-						<md-icon class="supplier-listing__info-icon" md-svg-src="assets/images/icons/info-outline.svg" ng-click="vm.showSupplierInfo($event, vm.search.supplier_id)" aria-label="Find out more about {{ ::vm.supplier.name }}">
+						<span ng-bind="vm.supplier.name"></span>
+						<md-icon class="supplier-listing__info-icon" md-svg-src="assets/images/icons/info-outline.svg" ng-click="vm.showSupplierInfo($event, vm.search.supplier_id)" aria-label="Find out more about {{ vm.supplier.name }}">
 						</md-icon>
 					</h2>
 				</div>
@@ -78,6 +66,9 @@
 					<li product-thumb product="hit" basket="true" ng-repeat="hit in vm.hits track by hit.objectID"></li>
 				</ul>
 			</div>
+
+			<div ng-if="!vm.hits.length">No search results</div>
+
 			<div class="layout-row layout-align-space-around-center" style="margin: -16px 0 16px;" ng-hide="vm.hits.length === vm.totalHits">
 				<md-progress-circular md-mode="{{ vm.loadingNextPage ? 'indeterminate' : '' }}"></md-progress-circular>
 			</div>

@@ -91,21 +91,27 @@
 		width: 180px;
 		flex-shrink: 0;
 
+		> ul {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-around;
+		}
+
 		&__supplier {
 			display: block;
-			padding: 4px 0;
-			border: $divider;
-			background: white;
-			margin-bottom: 10px;
-			transition: box-shadow $transition;
+			margin-bottom: 12px;
 
-			&:hover {
-				box-shadow: 0 2px 5px 0 rgba(0,0,0,.16);
-				text-decoration: none !important;
+			> .supplier-logo {
+				margin: 0 auto;
+				transition: box-shadow $transition;
 			}
 
-			> img {
-				margin: 0 auto;
+			&:hover {
+				text-decoration: none !important;
+
+				> .supplier-logo {
+					box-shadow: 0 2px 5px 0 rgba(0,0,0,.16);
+				}
 			}
 		}
 	}

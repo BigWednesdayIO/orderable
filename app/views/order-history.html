@@ -20,7 +20,7 @@
 					</div>
 					
 					<md-list style="padding: 0;">
-						<md-list-item class="md-2-line md-no-proxy md-with-secondary" ng-class="{'md-3-line': $mdMedia('sm'), 'md-2-line': $mdMedia('gt-sm')}" ng-repeat="orderForm in ::order.basket.order_forms">
+						<md-list-item class="md-2-line md-with-secondary" ng-class="{'md-3-line': $mdMedia('sm'), 'md-2-line': $mdMedia('gt-sm')}" ng-repeat="orderForm in ::order.basket.order_forms" ng-click="vm.viewPurchaseOrder(order.id, orderForm.id)">
 							<div class="md-avatar" supplier-logo supplier="::vm.supplierInfo[orderForm.supplier_id]" size="40"></div>
 							<div class="md-list-item-text layout-column">
 								<h3 ng-bind="::vm.supplierInfo[orderForm.supplier_id].name"></h3>
@@ -33,7 +33,7 @@
 							</div>
 							<span class="flex"></span>
 							<div class="md-secondary layout-row">
-								<md-button class="md-icon-button" ng-href="account/orders/{{ ::order.id }}/purchase-order/{{ ::orderForm.id }}/" aria-label="Print order" title="Print order">
+								<md-button class="md-icon-button" ng-href="account/orders/{{ ::order.id }}/purchase-order/{{ ::orderForm.id }}/?print=true" aria-label="Print order" title="Print order">
 									<md-icon md-svg-src="assets/images/icons/print.svg"></md-icon>
 								</md-button>
 							</div>

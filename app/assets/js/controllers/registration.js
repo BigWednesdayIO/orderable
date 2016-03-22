@@ -1,7 +1,5 @@
-function RegistrationController ($stateParams, $location, customerService, linesOfBusiness) {
+function RegistrationController ($stateParams, $location, customerService) {
 	var vm = this;
-
-	vm.linesOfBusiness = linesOfBusiness;
 
 	if ($stateParams.return_url) {
 		vm.returnUrl = encodeURIComponent($stateParams.return_url);

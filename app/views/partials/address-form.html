@@ -70,11 +70,11 @@
 				<input name="address1" ng-model="vm.address.line_1" required />
 			</md-input-container>
 			<md-input-container>
-				<label>Address line 2</label>
+				<label>Address line 2 (optional)</label>
 				<input name="address2" ng-model="vm.address.line_2" />
 			</md-input-container>
 			<md-input-container ng-show="vm.address.line_2 || vm.address.line_3">
-				<label>Address line 3</label>
+				<label>Address line 3 (optional)</label>
 				<input name="address3" ng-model="vm.address.line_3" />
 			</md-input-container>
 			<div class="layout-gt-sm-row">
@@ -83,7 +83,7 @@
 					<input name="city" ng-model="vm.address.city" required />
 				</md-input-container>
 				<md-input-container class="flex">
-					<label>County</label>
+					<label>County (optional)</label>
 					<input name="county" ng-model="vm.address.region" />
 				</md-input-container>
 				<md-input-container class="flex">

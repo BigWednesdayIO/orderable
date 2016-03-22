@@ -1,4 +1,4 @@
-function SearchController ($rootScope, $scope, $stateParams, $location, $element, suppliersService, searchService, sortOptions, searchResponse) {
+function SearchController ($rootScope, $scope, $stateParams, $location, $element, suppliersService, searchService, sortOptions, pinnedSuppliers, searchResponse) {
 	var vm = this,
 		searchPage = 1,
 		raw = $element[0],
@@ -87,6 +87,8 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 
 	vm.removeRefinementFromUrl = searchService.removeRefinementFromUrl;
 
+	vm.pinnedSuppliers = pinnedSuppliers;
+
 	vm.onlyPinned = vm.search.pinned === 'true';
 
 	vm.toggleOnlyPinned = function() {
@@ -106,7 +108,7 @@ function SearchController ($rootScope, $scope, $stateParams, $location, $element
 		$location.url(searchService.applyRefinementToUrl('sort', vm.sortBy));
 	};
 
-	vm.viewMode = sessionStorage.getItem('viewMode') || 'grid';
+	vm.viewMode = sessionStorage.getItem('viewMode') || 'list';
 
 	vm.setViewMode = function(mode) {
 		vm.viewMode = mode;
@@ -134,6 +136,10 @@ SearchController.resolve = /* @ngInject */ {
 				filters: searchService.getFiltersFromUrl(),
 				sort: searchService.getSortOptionFromUrl()
 			});
+	},
+	pinnedSuppliers: function(suppliersService) {
+		return suppliersService
+			.getPinnedSuppliers();
 	}
 };
 

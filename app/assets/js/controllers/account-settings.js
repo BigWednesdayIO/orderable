@@ -1,4 +1,4 @@
-function AccountSettingsController (suppliersService, membershipsService) {
+function AccountSettingsController ($mdToast, suppliersService, membershipsService) {
 	var vm = this;
 
 	vm.suppliers = suppliersService.getCurrentSuppliers();
@@ -10,7 +10,13 @@ function AccountSettingsController (suppliersService, membershipsService) {
 					supplier_id: supplierMembership.supplier.id,
 					membership_number: supplierMembership.number
 				};
-			}));
+			}))
+			.then(function() {
+				return $mdToast.show(
+					$mdToast.simple()
+						.content('Settings updated')
+				);
+			});
 	};
 }
 

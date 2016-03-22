@@ -8,7 +8,7 @@ function OpenOrdersController ($filter, $state, $q, $mdToast, ordersService, ope
 			$mdToast.simple()
 				.content(deliveries + ' ' + ((deliveries === 1) ? 'delivery' : 'deliveries') + ' marked as received')
 				.action('undo')
-				.hideDelay(3000)
+				.hideDelay(4000)
 		)
 			.then(function(response) {
 				if (response === 'ok') {

@@ -1,16 +1,20 @@
-function ProductDetailsController (basketService, productAttributes, productData, supplierInfo, _) {
+function ProductDetailsController ($window, basketService, productAttributes, productData, supplierInfo, breadcrumbs, _) {
 	var vm = this;
+
+	function nameAndValue (val) {
+		return {
+			name: val + '',
+			value: val
+		};
+	}
 
 	function setQuantities (quantity) {
 		vm.quantityInBasket = quantity;
-		if (vm.quantityInBasket > 0) {
-			vm.quantities = _.range(0, 10);
-			if (vm.quantityInBasket > 9) {
-				vm.quantities.push(vm.quantityInBasket);
-			}
-		} else {
-			vm.quantities = _.range(1, 10)
-		}
+		vm.quantities = _.range((quantity > 0 ? 0 : 1), 10).map(nameAndValue);
+		vm.quantities.push({
+			name: '10+',
+			value: 10
+		});
 	}
 
 	vm.product = productData;
@@ -45,6 +49,9 @@ function ProductDetailsController (basketService, productAttributes, productData
 
 	vm.changeQuantity = function() {
 		if (vm.quantityInBasket === 0) {
+			if (!vm.quantity) {
+				vm.quantity = 1;
+			}
 			return;
 		}
 		if (vm.quantity === 0) {
@@ -52,6 +59,13 @@ function ProductDetailsController (basketService, productAttributes, productData
 		}
 		return vm.addToBasket();
 
+	};
+
+	vm.breadcrumbs = breadcrumbs;
+
+	vm.backToResults = function($event) {
+		$event.preventDefault();
+		$window.history.back();
 	};
 
 	basketService
@@ -75,6 +89,20 @@ ProductDetailsController.resolve = /* @ngInject */ {
 	supplierInfo: function(productData, suppliersService) {
 		return suppliersService
 			.getSupplierInfo(productData.supplier_id);
+	},
+	breadcrumbs: function(breadcrumbsService, supplierInfo, productData) {
+		return breadcrumbsService
+			.getBreadcrumbs({
+				supplier_id: supplierInfo.id,
+				category_hierarchy: productData.category_path
+			})
+			.then(function(breadcrumbs) {
+				breadcrumbs.push({
+					name: productData.name,
+					href: 'product/' + productData.id + '/'
+				});
+				return breadcrumbs
+			});
 	}
 };
 

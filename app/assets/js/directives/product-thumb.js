@@ -29,14 +29,30 @@ function ProductThumbDirective () {
 				addToBasket(quantity);
 			};
 
-			vm.changeQuantity = function($event, quantity) {
-				$event.preventDefault();
-				vm.quantity += quantity;
-
+			function updateQuantity () {
 				$timeout.cancel(debounce);
 				debounce = $timeout(function() {
 					addToBasket(vm.quantity);
 				}, 300);
+			}
+
+			vm.changeQuantity = function($event, quantity) {
+				$event.preventDefault();
+
+				if (quantity === 0) {
+					return;
+				}
+
+				vm.quantity += quantity;
+				updateQuantity();
+			};
+
+			vm.quantityChanged = function() {
+				if (!vm.quantity && vm.quantity !== 0) {
+					return;
+				}
+
+				updateQuantity();
 			};
 
 			basketService

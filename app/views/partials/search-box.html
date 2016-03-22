@@ -7,6 +7,7 @@
 		md-items="hit in vm.getSearchSuggestions(vm.query)"
 		md-item-text="hit.query"
 		md-min-length="1"
+		placeholder="Search for products or categories..."
 		aria-label="Search for products or categories">
 		<md-item-template>
 			<span md-highlight-text="vm.query" md-highlight-flags="^i">{{ hit.query }}</span>

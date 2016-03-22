@@ -48,8 +48,10 @@
 							</span>
 						</a>
 					</h2>
+					<span class="flex"></span>
 					<search-box></search-box>
 					<span class="flex"></span>
+					<div style="width: 106px; height: 1px;"></div>
 				</div>
 			</md-toolbar>
 			<md-toolbar class="md-toolbar-secondary layout-row md-whiteframe-z1 hide-sm hide-md" ng-if="$mdMedia('gt-md')" ng-controller="MenuController as vm">
@@ -67,9 +69,7 @@
 										<md-button class="md-icon-button pin-grid__pin pin-button" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">
 											<md-icon md-svg-src="assets/images/icons/pin.svg" ng-class="{'is-pinned': vm.isPinned[supplier.id]}"></md-icon>
 										</md-button>
-										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="supplier__link">
-											<div class="supplier-logo--placeholder" style="background-color: {{ supplier.colour }}; height: 60px; line-height: 60px; font-size: {{ 60 * 0.425 }}px; text-decoration: none;" ng-bind="supplier.initials || supplier.name.substring(0, 2)" title="{{ ::supplier.name }}"></div>
-										</a>
+										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="supplier__link" supplier-logo supplier="::supplier" size="60"></a>
 									</li>
 								</ul>
 							</md-content>
@@ -109,6 +109,7 @@
 						<div class="account-nav__items md-whiteframe-z1" dropdown-items>
 							<a ng-repeat="link in ::vm.accountLinks" ng-href="{{ ::link.url }}" ng-bind="::link.name"></a>
 							<a href="#" ng-show="vm.isSignedIn" ng-click="vm.signOut()">Sign out</a>
+							<a href="/sign-in/" ng-hide="vm.isSignedIn">Sign in</a>
 						</div>
 					</nav>
 					<div class="postcode-wrapper" ng-controller="PostcodeController as vm">
@@ -210,6 +211,9 @@
 								</md-list-item>
 								<md-list-item ng-show="vm.isSignedIn">
 									<md-button class="menu-link" ng-click="vm.signOut()">Sign out</md-button>
+								</md-list-item>
+								<md-list-item ng-hide="vm.isSignedIn">
+									<md-button class="menu-link" ng-href="/sign-in/">Sign in</md-button>
 								</md-list-item>
 							</md-list>
 						</div>

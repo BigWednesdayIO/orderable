@@ -57,6 +57,19 @@
 
 	&__quantity {
 		font-size: 18px;
+		text-align: center;
+		width: 30px;
+		border: 0 none;
+		margin: 0 -8px;
+
+		&::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		&--large {
+			width: 38px;
+		}
 	}
 
 	&__stock {

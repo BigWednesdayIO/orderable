@@ -54,6 +54,15 @@
 		}
 	}
 
+	&__delivery-note {
+		opacity: .5;
+		transition: opacity $transition;
+
+		&.with-note {
+			opacity: 1;
+		}
+	}
+
 	&__sign-option,
 	&__delivery-option {
 		font-size: 16px;
@@ -70,8 +79,14 @@
 	}
 
 	&__summary {
-		@media (min-width: $bp-medium) {
+		@media (min-width: $bp-large) {
 			width: 320px;
+
+			&__inner {
+				position: fixed;
+				top: 128px;
+				width: inherit;
+			}
 		}
 
 		&__details {

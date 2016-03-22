@@ -12,3 +12,8 @@
 		max-width: 940px;
 	}
 }
+
+.layout-row-reverse {
+	display: flex;
+	flex-direction: row-reverse;
+}

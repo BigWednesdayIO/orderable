@@ -9,6 +9,9 @@
 				<md-button class="md-primary md-raised" ng-click="vm.beginCheckout()">Go to checkout</md-button>
 				<div class="basket__actions__subtotal">Subtotal: <strong ng-bind="vm.basket.subtotal | currency: '£'"></strong></div>
 			</div>
+			<div class="basket__actions" ng-hide="vm.basket.order_forms.length">
+				<md-button class="md-primary md-raised" ng-href="search/" style="margin: 0;">Shop now</md-button>
+			</div>
 		</div>
 
 		<div ng-show="vm.basket.order_forms.length">

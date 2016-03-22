@@ -1,9 +1,16 @@
-function OrderHistoryController (orderHistory, supplierInfo) {
+function OrderHistoryController ($state, orderHistory, supplierInfo) {
 	var vm = this;
 
 	vm.orders = orderHistory;
 
 	vm.supplierInfo = supplierInfo;
+
+	vm.viewPurchaseOrder = function(orderId, id) {
+		$state.go('purchase-order', {
+			orderId: orderId,
+			id: id
+		});
+	};
 }
 
 OrderHistoryController.resolve = /* @ngInject */ {
