@@ -67,9 +67,7 @@
 										<md-button class="md-icon-button pin-grid__pin pin-button" ng-click="vm.pinSupplier(supplier)" aria-label="Pin supplier">
 											<md-icon md-svg-src="assets/images/icons/pin.svg" ng-class="{'is-pinned': vm.isPinned[supplier.id]}"></md-icon>
 										</md-button>
-										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="supplier__link">
-											<div class="supplier-logo--placeholder" style="background-color: {{ supplier.colour }}; height: 60px; line-height: 60px; font-size: {{ 60 * 0.425 }}px; text-decoration: none;" ng-bind="supplier.initials || supplier.name.substring(0, 2)" title="{{ ::supplier.name }}"></div>
-										</a>
+										<a ng-href="{{ ::vm.getUrlForSupplier(supplier.id) }}" class="supplier__link" supplier-logo supplier="::supplier" size="60"></a>
 									</li>
 								</ul>
 							</md-content>
