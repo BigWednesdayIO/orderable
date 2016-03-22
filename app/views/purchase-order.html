@@ -51,13 +51,19 @@
 			<div class="flex md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 12px 24px;">
 				<h2 class="md-subheader md-caption" style="margin: 4px 0 12px;">Vendor</h2>
 				<address-summary address="::vm.order.billing_address"></address-summary>
-				<p style="margin-bottom: 4px" ng-show="vm.membership"><strong>Membership number:</strong> <span ng-bind="vm.membership.membership_number"></span></p>
+				<p style="margin: 1em 0 6px"><strong>Email address:</strong> <span ng-bind="vm.order.billing_address.email"></span></p>
+				<p style="margin: 6px 0 4px" ng-show="vm.membership"><strong>Membership number:</strong> <span ng-bind="vm.membership.membership_number"></span></p>
 			</div>
 
 			<div class="flex md-whiteframe md-whiteframe-z1 layout-margin" style="padding: 12px 24px;">
 				<h2 class="md-subheader md-caption" style="margin: 4px 0 12px;">Deliver to</h2>
 				<address-summary address="::vm.order.delivery_address"></address-summary>
-				<p style="margin-bottom: 4px"><strong>Expected delivery date:</strong> <span ng-bind="::vm.order.delivery_window.start | date: 'dd/MM/yyyy'"></span></p>
+				<p style="margin: 1em 0 6px">
+					<strong>Signature required:</strong>
+					<span ng-show="::vm.order.sign_for">Yes</span>
+					<span ng-hide="::vm.order.sign_for">No</span>
+				</p>
+				<p style="margin: 6px 0 4px"><strong>Expected delivery date:</strong> <span ng-bind="::vm.order.delivery_window.start | date: 'dd/MM/yyyy'"></span></p>
 			</div>
 		</div>
 
@@ -88,7 +94,7 @@
 			</div>
 		</div>
 
-		<div class="layout-margin layout-row layout-align-end" style="page-break-inside: avoid">
+		<div class="layout-margin layout-row layout-align-end" style="page-break-inside: avoid;">
 			<table class="material-table md-whiteframe md-whiteframe-z1" style="width: auto;">
 				<tfoot>
 					<tr>
@@ -112,6 +118,10 @@
 					</tr>
 				</tfoot>
 			</table>
+		</div>
+
+		<div class="layout-margin">
+			<p><strong>Notes:</strong> <span ng-bind="::vm.order.delivery_note"></span></p>
 		</div>
 	</main>
 </div>
