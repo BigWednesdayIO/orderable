@@ -5,8 +5,18 @@
 			<md-button type="submit" class="md-primary md-raised" style="margin: 0;">Save</md-button>
 		</div>
 
-		<div class="md-whiteframe md-whiteframe-z1 layout-padding layout-margin">
-			<h2 class="md-subhead">Loyalty programs</h2>
+		<div class="md-whiteframe md-whiteframe-z1 layout-padding layout-margin" style="margin-bottom: 25px;">
+			<h2 class="md-subhead" style="margin-top: 8px;">Sign for deliveries</h2>
+			<p>By default, do you want to require deliveries to be signed for?</p>
+			<md-radio-group ng-model="vm.defaultSignFor">
+				<md-radio-button class="md-primary" ng-value="true"><strong>Yes</strong>, require a signature by default</md-radio-button>
+				<md-radio-button class="md-primary" ng-value="false"><strong>No</strong>, only if I specify</md-radio-button>
+			</md-radio-group>
+			<p>This can be changed for each supplier during checkout</p>
+		</div>
+
+		<div class="md-whiteframe md-whiteframe-z1 layout-padding layout-margin" style="margin-bottom: 16px;">
+			<h2 class="md-subhead" style="margin-top: 8px;">Loyalty programs</h2>
 			<p>We support these suppliers' loyalty programs. Enter your membership info to earn benefits as you shop. Your membership info allows these suppliers to associate you with your past and future purchases from them, just like when you place an order directly with them. Review the terms of the suppliers' loyalty programs to understand how they can use your information, such as names, email and billing addresses and orders.</p>
 
 			<loyalty-list suppliers="vm.suppliers" loyalty-schemes="vm.supplierMemberships"></loyalty-list>
