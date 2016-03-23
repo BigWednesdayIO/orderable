@@ -12,11 +12,35 @@ function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, brow
 		return $q.reject(error);
 	}
 
+	function updateCurrentSuppliers () {
+		var postcode = browserStorage.getItem('postcode');
+
+		service
+			.getSuppliersForPostcode(postcode)
+			.then(function(suppliers) {
+				var newLength = suppliers.length;
+				var oldLength = currentSuppliers.length;
+
+				_(suppliers)
+					.sortBy('name')
+					.forEach(function(supplier, i) {
+						currentSuppliers[i] = supplier;
+					})
+					.value();
+
+				if (oldLength > newLength) {
+					currentSuppliers.splice(oldLength, oldLength - newLength);
+				}
+
+				browserStorage.setItem('suppliers', currentSuppliers);
+			});
+	}
+
 	service.saveSuppliers = function(suppliers) {
 		currentSuppliers = suppliers;
 		browserStorage.setItem('suppliers', currentSuppliers);
 		$rootScope.$emit('suppliersUpdated', currentSuppliers);
-	}
+	};
 
 	service.getAllSuppliers = function() {
 		return $http({
@@ -134,7 +158,9 @@ function SuppliersService ($rootScope, $mdToast, $mdDialog, $http, $q, API, brow
 			},
 			clickOutsideToClose: true
 		});
-	}
+	};
+
+	updateCurrentSuppliers();
 
 	return service;
 }
