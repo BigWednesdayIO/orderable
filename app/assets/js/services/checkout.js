@@ -13,21 +13,24 @@ function CheckoutService ($http, $q, $mdDialog, $mdToast, basketService, custome
 
 	service.beginCheckout = function(basket) {
 		// Post basket to API to kick things off
-		checkout = {
-			delivery_address: {},
-			billing_address: {},
-			basket: basket,
-			customer_id: customerService.getSessionInfo().id
-		};
+		return customerService
+			.getInfo()
+			.then(function(info) {
+				checkout = {
+					delivery_address: {},
+					billing_address: {},
+					basket: basket,
+					customer_id: customerService.getSessionInfo().id
+				};
 
-		checkout.basket.order_forms = checkout.basket.order_forms.map(function(order_form) {
-			order_form.sign_for = false;
-			order_form.delivery_method = 'Standard';
-			order_form.delivery_date = new Date();
-			return order_form;
-		});
+				checkout.basket.order_forms.forEach(function(order_form) {
+					order_form.sign_for = info.default_sign_for || false;
+					order_form.delivery_method = 'Standard';
+					order_form.delivery_date = new Date();
+				});
 
-		return $q.when(checkout);
+				return checkout;
+			});
 	};
 
 	service.getCheckout = function(id) {
