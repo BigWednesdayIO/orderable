@@ -136,6 +136,22 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 			});
 	}
 
+	function getFacetsDirectly (params) {
+		return $http({
+			method: 'POST',
+			url: API.products + '/query',
+			data: params,
+			headers: {
+				Authorization: 'Bearer NG0TuV~u2ni#BP|'
+			}
+		})
+			.then(function(response) {
+				return response.facets || [];
+			}, function() {
+				return [];
+			});
+	}
+
 	service.getResults = function(params) {
 		var filters = params.filters || [];
 		var suppliers = _.remove(filters, function(filter) {
@@ -172,15 +188,23 @@ function SearchService ($rootScope, $location, $mdToast, $http, $q, API, supplie
 			.then(function(response) {
 				var hitsBySupplier = _.groupBy(response.hits, 'supplier_id');
 				var suppliers = _.keys(hitsBySupplier);
-				var categoryIndex = _.findIndex(response.facets, {field: 'category_path'});
-				var supplierIndex = _.findIndex(response.facets, {field: 'supplier_id'});
 
 				response.hitsBySupplier = hitsBySupplier;
 				response.suppliers = suppliers;
 
-				if (!response.facets) {
+				if (response.facets && response.facets.length) {
 					return response;
 				}
+
+				return getFacetsDirectly(params)
+					.then(function(facets) {
+						response.facets = facets;
+						return response;
+					});
+			})
+			.then(function(response) {
+				var categoryIndex = _.findIndex(response.facets, {field: 'category_path'});
+				var supplierIndex = _.findIndex(response.facets, {field: 'supplier_id'});
 
 				return $q.all({
 					categories: mapCategories(response.facets[categoryIndex].values, params),
